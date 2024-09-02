@@ -1,0 +1,102 @@
+name: abakon
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.1 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+  cupertino_icons: ^1.0.6
+  intl: ^0.19.0
+  flutter_screenutil: ^5.9.3
+  flutter_load_kit: ^0.0.2
+  flutter_svg: ^2.0.10+1
+  flutter_riverpod: ^2.5.1
+  dio: ^5.6.0
+  flutter_native_contact_picker: ^0.0.7
+  pinput: ^5.0.0
+  json_annotation: ^4.9.0
+  equatable: ^2.0.5
+  local_auth: ^2.3.0
+  retrofit: ^4.2.0
+  json_serializable: ^6.8.0
+  flutter_secure_storage: ^4.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  retrofit_generator: ^8.1.0
+  build_runner: ^2.4.11
+  very_good_analysis: ^6.0.0
+
+
+  flutter_lints: ^3.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/abakon_logo.png"
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/logo/
+    - assets/fonts/
+    - assets/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+ 
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Thin.ttf
+          weight: 100 # FontWeight.w100 for thin
+        - asset: assets/fonts/Lato-ThinItalic.ttf
+          weight: 200 # FontWeight.w200 for extra light
+        - asset: assets/fonts/Lato-Light.ttf
+          weight: 300 # FontWeight.w300 for light
+        - asset: assets/fonts/Lato-LightItalic.ttf
+          weight: 300 # FontWeight.w300 for light
+        - asset: assets/fonts/Lato-Regular.ttf
+          weight: 400 # FontWeight.w400 for regular
+        - asset: assets/fonts/Lato-BoldItalic.ttf
+          weight: 600 # FontWeight.w600 for semi-bold
+        - asset: assets/fonts/Lato-Bold.ttf
+          weight: 700 # FontWeight.w700 for bold
+        - asset: assets/fonts/Lato-BlackItalic.ttf
+          weight: 800 # FontWeight.w800 for extra bold
+        - asset: assets/fonts/Lato-Black.ttf
+          weight: 900 # FontWeight.w900 for black
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
