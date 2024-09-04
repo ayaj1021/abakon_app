@@ -74,7 +74,14 @@ class _RegisterState extends ConsumerState<RegisterOne> {
 
   void _goToRegisterTwo() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const RegisterTwo()));
+        context,
+        MaterialPageRoute(
+            builder: (_) => RegisterTwo(
+                  firstName: _firstNamecontroller.text.trim(),
+                  lastName: _lastNamecontroller.text.trim(),
+                  phoneNumber: _phoneNumberController.text.trim(),
+                  email: _emailAddressController.text.trim(),
+                )));
   }
 
   @override

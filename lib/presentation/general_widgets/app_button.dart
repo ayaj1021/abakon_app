@@ -40,7 +40,7 @@ class _AbakonSendButtonState extends State<AbakonSendButton> {
           decoration: BoxDecoration(
               color: widget.isEnabled
                   ? widget.backgroundColor
-                  : AppColors.primaryFFCBBA,
+                  : AppColors.secondaryColor,
               borderRadius: BorderRadius.circular(16),
               border: Border.fromBorderSide(
                 widget.hasBorder

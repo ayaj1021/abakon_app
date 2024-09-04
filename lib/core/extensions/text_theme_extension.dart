@@ -19,6 +19,8 @@ extension TextThem on TextTheme {
       TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700);
   TextStyle get s24w700 =>
       TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700);
+  TextStyle get s20w700 =>
+      TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w700);
   TextStyle get s18w700 =>
       TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700);
   TextStyle get s14w700 =>
@@ -73,6 +75,10 @@ extension TextThem on TextTheme {
       TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500);
   TextStyle get s10w500 =>
       TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w500);
+  TextStyle get s8w500 =>
+      TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w500);
+  TextStyle get s6w500 =>
+      TextStyle(fontSize: 6.sp, fontWeight: FontWeight.w500);
 
   //SIZE 400
   TextStyle get s10w400 =>

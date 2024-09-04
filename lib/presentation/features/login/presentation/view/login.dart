@@ -4,6 +4,7 @@ import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
+import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/presentation/notifier/login_notifier.dart';
 import 'package:abakon/presentation/features/login/presentation/widgets/forgot_password_bottomsheet.dart';
@@ -47,6 +48,15 @@ class _LoginState extends ConsumerState<Login> {
     _phoneNumberController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _goToDashboard() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const Dashboard(),
+      ),
+    );
   }
 
   @override
@@ -113,7 +123,8 @@ class _LoginState extends ConsumerState<Login> {
                         return AbakonSendButton(
                           isLoading: isLoading,
                           isEnabled: r && !isLoading,
-                          onTap: _login,
+                          onTap: _goToDashboard,
+                          //_login,
                           title: Strings.login,
                         );
                       },
@@ -149,6 +160,8 @@ class _LoginState extends ConsumerState<Login> {
                     ),
                   ],
                 ),
+             
+             
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 
 
+import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/login/presentation/view/login.dart';
 import 'package:abakon/presentation/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/view/register_one.dart';
@@ -14,7 +15,7 @@ class AppRouter {
     Login.routeName: (context) => const Login(),
     OnboardingScreen.routeName: (context) => const OnboardingScreen(),
     // OTPVerification.routeName: (context) => const OTPVerification(),
-   // Dashboard.routeName: (context) => const Dashboard(),
+    Dashboard.routeName: (context) => const Dashboard(),
 
 
   };

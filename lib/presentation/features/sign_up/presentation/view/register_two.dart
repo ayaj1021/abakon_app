@@ -4,6 +4,7 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/core/utils/validators.dart';
+import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/notifier/register_notifier.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/widgets/register_two_input_field_section.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
@@ -13,7 +14,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegisterTwo extends ConsumerStatefulWidget {
-  const RegisterTwo({super.key});
+  const RegisterTwo({
+    super.key,
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+    required this.email,
+  });
+
+  final String firstName;
+  final String lastName;
+  final String phoneNumber;
+  final String email;
 
   static const routeName = '/registerTwo';
 
@@ -61,6 +73,15 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
     } else {
       return false;
     }
+  }
+
+  void _goToDashboard() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const Dashboard(),
+      ),
+    );
   }
 
   //   void _validateInput() {
@@ -146,10 +167,10 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
                   const VerticalSpacing(100),
                   Consumer(
                     builder: (context, r, c) {
-                      final isLoading = r.watch(
-                        registerNotifier
-                            .select((v) => v.registerState.isLoading),
-                      );
+                      // final isLoading = r.watch(
+                      //   registerNotifier
+                      //       .select((v) => v.registerState.isLoading),
+                     // );
                       return AbakonSendButton(
                         isEnabled: _validateInput(),
 
@@ -160,7 +181,8 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
 //                             ) &&
 //                             !isLoading,
 //                         isLoading: isLoading,
-                        onTap: _signUp,
+                        onTap: _goToDashboard,
+                        //_signUp,
                         title: Strings.register,
                       );
                     },

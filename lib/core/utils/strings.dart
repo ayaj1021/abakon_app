@@ -59,7 +59,7 @@ class Strings {
   static const String howCanWeHelp = 'how can we help?';
   static const String inviteFriendsAndEarn = 'Invite friends and earn N1000';
   static const String inviteAFriendGetBonus =
-      'Invite a friend and you both get bonus when they sign up while also enjoying other benefits';
+      ' Invite Your Friends & Get 2% of Every Transaction';
   static const String noReferralYet = 'No Referral yet';
   static const String referralLink = 'Referral Link';
   static const String referAndEarn = 'Refer & Earn';
@@ -123,7 +123,7 @@ class Strings {
   static const String virtualAccountDetails = 'Virtual Account Details';
   static const String moreDetails = 'More Details';
   static const String recentTransactions = 'Recent Transactions';
-  static const String seeAll = 'See All';
+  static const String viewAll = 'View All';
   static const String buyRmb = 'Buy RMB';
   static const String airtime = 'Airtime';
   static const String data = 'Data';
