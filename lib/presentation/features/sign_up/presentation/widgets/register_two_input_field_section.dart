@@ -26,7 +26,7 @@ class RegisterTwoInputFieldSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DSFormfield(
+        AbakonFormfield(
           validateFunction: Validators.name(),
           controller: statecontroller,
           hintText: Strings.state,
@@ -35,7 +35,7 @@ class RegisterTwoInputFieldSection extends StatelessWidget {
             fit: BoxFit.scaleDown,
           ),
         ),
-        DSPasswordField(
+        AbakonPasswordField(
           validateFunction: Validators.password(),
           controller: passwordController,
           hintText: Strings.password,
@@ -46,7 +46,7 @@ class RegisterTwoInputFieldSection extends StatelessWidget {
             ? const SizedBox.shrink()
             : PasswordValidatorWidget(password: passwordController.text),
         const VerticalSpacing(11),
-        DSPasswordField(
+        AbakonPasswordField(
           validateFunction: (val) => Validators.confirmPass(
             val,
             passwordController.text,
@@ -64,7 +64,7 @@ class RegisterTwoInputFieldSection extends StatelessWidget {
                 text: 'Password match',
               ),
         const VerticalSpacing(11),
-        DSFormfield(
+        AbakonFormfield(
           validateFunction: Validators.pin(),
           controller: pinController,
           hintText: Strings.setTransactionPin,

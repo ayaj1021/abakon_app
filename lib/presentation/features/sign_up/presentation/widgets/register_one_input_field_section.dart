@@ -23,16 +23,18 @@ class RegisterOneInputFieldSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DSFormfield(
+        AbakonFormfield(
           validateFunction: Validators.name(),
           controller: firstNamecontroller,
           hintText: Strings.firstName,
-          prefixIcon: const Icon(
+          prefixIcon: 
+          
+          const Icon(
             Icons.person,
             color: AppColors.primary591E0C,
           ),
         ),
-        DSFormfield(
+        AbakonFormfield(
           validateFunction: Validators.name(),
           controller: lastNamecontroller,
           hintText: Strings.lastName,
@@ -42,7 +44,7 @@ class RegisterOneInputFieldSection extends StatelessWidget {
           ),
         ),
 
-        DSFormfield(
+        AbakonFormfield(
           validateFunction: Validators.phone(),
           controller: phoneNumbercontroller,
           hintText: Strings.phoneNumber,
@@ -59,7 +61,7 @@ class RegisterOneInputFieldSection extends StatelessWidget {
           controller: emailAddressController,
           hintText: Strings.emailAddress,
           prefixIcon: SvgPicture.asset(
-            'assets/icons/email_icon.svg',
+            'assets/icons/@icon.svg',
             fit: BoxFit.scaleDown,
           ),
         ),

@@ -18,7 +18,7 @@ class LoginInputSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DSFormfield(
+        AbakonFormfield(
           validateFunction: Validators.phone(),
           controller: phoneNumbercontroller,
           hintText: Strings.phoneNumber,
@@ -29,7 +29,7 @@ class LoginInputSection extends StatelessWidget {
             color: AppColors.primary591E0C,
           ),
         ),
-        DSPasswordField(
+        AbakonPasswordField(
           controller: passwordController,
           validateFunction: Validators.notEmpty(),
           hintText: 'Password',

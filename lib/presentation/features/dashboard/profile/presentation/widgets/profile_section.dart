@@ -1,5 +1,10 @@
+import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
+import 'package:abakon/presentation/features/change_transaction_pin/presentation/view/change_transaction_pin_view.dart';
 import 'package:abakon/presentation/features/dashboard/profile/presentation/widgets/profile_widget.dart';
+import 'package:abakon/presentation/features/my_information/presentation/view/my_information_page.dart';
+import 'package:abakon/presentation/features/support/presentation/view/support_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSection extends StatelessWidget {
@@ -12,7 +17,9 @@ class ProfileSection extends StatelessWidget {
       children: [
         ProfileWidget(
           title: 'My Information',
-          onTap: () {},
+          onTap: () {
+            context.pushNamed(MyInformationPage.routeName);
+          },
           icon: Icons.person,
         ),
         ProfileWidget(
@@ -22,17 +29,23 @@ class ProfileSection extends StatelessWidget {
         ),
         ProfileWidget(
           title: 'Change Password',
-          onTap: () {},
+          onTap: () {
+            context.pushNamed(ChangePasswordView.routeName);
+          },
           icon: Icons.lock_outline,
         ),
         ProfileWidget(
           title: 'Change Transaction Pin',
-          onTap: () {},
+          onTap: () {
+            context.pushNamed(ChangeTransactionPinView.routeName);
+          },
           icon: Icons.pin,
         ),
         ProfileWidget(
           title: 'Support',
-          onTap: () {},
+          onTap: () {
+            context.pushNamed(SupportPage.routeName);
+          },
           icon: Icons.support_agent_outlined,
         ),
         ProfileWidget(
@@ -52,4 +65,3 @@ class ProfileSection extends StatelessWidget {
     );
   }
 }
-

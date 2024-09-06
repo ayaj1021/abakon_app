@@ -9,6 +9,7 @@ import 'package:abakon/presentation/features/login/data/models/login_request.dar
 import 'package:abakon/presentation/features/login/presentation/notifier/login_notifier.dart';
 import 'package:abakon/presentation/features/login/presentation/widgets/forgot_password_bottomsheet.dart';
 import 'package:abakon/presentation/features/login/presentation/widgets/login_input_section.dart';
+import 'package:abakon/presentation/features/sign_up/presentation/view/register_one.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/gestures.dart';
@@ -148,7 +149,7 @@ class _LoginState extends ConsumerState<Login> {
                             TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  context.pushNamed(Login.routeName);
+                                  context.pushNamed(RegisterOne.routeName);
                                 },
                               text: Strings.register,
                               style: context.textTheme.s12w900

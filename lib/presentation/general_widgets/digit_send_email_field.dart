@@ -150,7 +150,7 @@ class _DSEmailFieldState extends State<DSEmailField> {
                 filled: true,
                 fillColor: widget.backgroundColor,
                 prefixIcon: SvgPicture.asset(
-                  'assets/icons/email_icon.svg',
+                  'assets/icons/@icon.svg',
                   fit: BoxFit.scaleDown,
                 ),
                 prefix: widget.prefix,

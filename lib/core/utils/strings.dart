@@ -45,7 +45,7 @@ class Strings {
       'You are unable to edit this profile because your account has already been verified. If you feel that you need to edit, please reach out to customer support.';
   static const String selectPreferredHotline =
       'Select your preferred hotline to speak with a support agent';
-  static const String callCenter = 'Call center';
+  static const String contactUs = 'Contact Us';
   static const String experiencingIssues = 'Experiencing issues?';
   static const String callGeneralSupport = 'Call our general support hotline';
   static const String reachOutToSupport =
@@ -100,7 +100,7 @@ class Strings {
   static const String accountLimits = 'Account Limits';
   static const String dailyLimits = 'Daily Limits';
   static const String weeklyLimits = 'Weekly Limits';
-  static const String monthlyLimits = 'Monthly Limits';
+  static const String myInformation = 'My Infomation';
   static const String limits = '7.00/5,000.00 NGN';
   static const String convertNairaToRmb = 'Convert your Naira to RMB';
   static const String youAreConverting = 'You are converting';
@@ -133,7 +133,7 @@ class Strings {
   static const String proceedToCompleteKyc =
       'Proceed to completing your KYC to enjoy seamless experience';
   static const String camera = 'Camera';
-  static const String getStarted = 'Get Started >';
+  static const String getInTouch = 'Get in touch with us';
   static const String cameraRoll = 'Camera Roll';
   static const String gallery = 'Gallery';
 
@@ -169,7 +169,10 @@ class Strings {
   static const String invalidPin = 'Invalid Pin';
   static const String login = 'Login';
   static const String changePassword = 'Change Password';
-  static const String addVirtualAccount = 'Add your virtual account';
+  static const String changeTransactionPin = 'Change Transaction Pin';
+  static const String changeTransactionPinNote =
+      'Note: The Default Transaction Pin Is \'1234\'. Your Transaction Pin should be a four digit number.';
+
   static const String lastName = 'Last name';
 
   static const String openAnewAccount = 'Open a new account';
@@ -184,7 +187,7 @@ class Strings {
   static const String newAccount = 'Open a New Account';
   static const String signUp = 'Sign up';
   static const String shareReceipt = 'Share Receipt';
-  static  String welcome(String name)  => 'Welcome back, $name';
+  static String welcome(String name) => 'Welcome back, $name';
   static const String logInYourAccount = 'Log in to your account';
   static const String privacy = 'Privacy Policy';
   static const String resend = 'Resend';

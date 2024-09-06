@@ -1,10 +1,11 @@
-import 'package:abakon/presentation/features/dashboard/profile/presentation/widgets/profile_header_section.dart';
-import 'package:abakon/presentation/features/dashboard/profile/presentation/widgets/profile_section.dart';
+import 'package:abakon/presentation/features/support/presentation/widgets/support_page_header.dart';
+import 'package:abakon/presentation/features/support/presentation/widgets/support_section.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({super.key});
+class SupportPage extends StatelessWidget {
+  const SupportPage({super.key});
+  static const routeName = '/supportPage';
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,11 @@ class Profile extends StatelessWidget {
             horizontal: 20,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfileHeaderSection(),
+              SupportPageHeader(),
               VerticalSpacing(32),
-              ProfileSection()
+              SupportSection()
             ],
           ),
         ),

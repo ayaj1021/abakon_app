@@ -75,7 +75,7 @@ class _DsSelectorState<T> extends State<DsSelector<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return DSFormfield(
+    return AbakonFormfield(
       validateFunction: Validators.notEmpty(),
       onTap: () async {
         if (widget.isLoading) {

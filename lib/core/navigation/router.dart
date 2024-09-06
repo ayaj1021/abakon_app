@@ -1,9 +1,13 @@
 
 
+import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
+import 'package:abakon/presentation/features/change_transaction_pin/presentation/view/change_transaction_pin_view.dart';
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/login/presentation/view/login.dart';
+import 'package:abakon/presentation/features/my_information/presentation/view/my_information_page.dart';
 import 'package:abakon/presentation/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/view/register_one.dart';
+import 'package:abakon/presentation/features/support/presentation/view/support_page.dart';
 import 'package:abakon/presentation/general_widgets/splash_screen.dart';
 import 'package:flutter/widgets.dart';
 
@@ -16,6 +20,10 @@ class AppRouter {
     OnboardingScreen.routeName: (context) => const OnboardingScreen(),
     // OTPVerification.routeName: (context) => const OTPVerification(),
     Dashboard.routeName: (context) => const Dashboard(),
+    SupportPage.routeName: (context) => const SupportPage(),
+    MyInformationPage.routeName: (context) => const MyInformationPage(),
+    ChangePasswordView.routeName: (context) => const ChangePasswordView(),
+    ChangeTransactionPinView.routeName: (context) => const ChangeTransactionPinView(),
 
 
   };

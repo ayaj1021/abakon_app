@@ -7,8 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 
-class DSPasswordField extends StatefulWidget {
-  const DSPasswordField({
+class AbakonPasswordField extends StatefulWidget {
+  const AbakonPasswordField({
     super.key,
     this.textStyle,
     this.width,
@@ -97,10 +97,10 @@ class DSPasswordField extends StatefulWidget {
   final bool showError;
 
   @override
-  State<DSPasswordField> createState() => _DSPasswordFieldState();
+  State<AbakonPasswordField> createState() => _AbakonPasswordFieldState();
 }
 
-class _DSPasswordFieldState extends State<DSPasswordField> {
+class _AbakonPasswordFieldState extends State<AbakonPasswordField> {
   String? error;
   bool obscure = true;
 

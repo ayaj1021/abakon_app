@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DSFormfield extends StatefulWidget {
-  const DSFormfield({
+class AbakonFormfield extends StatefulWidget {
+  const AbakonFormfield({
     super.key,
     this.textStyle,
     this.width,
@@ -97,10 +97,10 @@ class DSFormfield extends StatefulWidget {
   final Widget? prefix;
 
   @override
-  State<DSFormfield> createState() => _DSFormfieldState();
+  State<AbakonFormfield> createState() => _AbakonFormfieldState();
 }
 
-class _DSFormfieldState extends State<DSFormfield> {
+class _AbakonFormfieldState extends State<AbakonFormfield> {
   String? error;
 
   @override
