@@ -17,7 +17,8 @@ class SupportSection extends StatelessWidget {
           onTap: () => makePhoneCall('09022193069'),
         ),
         const VerticalSpacing(20),
-        const SupportTypeWidget(
+        SupportTypeWidget(
+          onTap: () => mailSupport(),
           supportType: 'Email:',
           supportTypeImage: 'assets/icons/email_icon.svg',
           supportTypeContent: 'support@abakon.ng',
