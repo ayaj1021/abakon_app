@@ -1,47 +1,3 @@
-import 'dart:async';
-
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-// class LocalStorageImpl implements LocalStorage {
-//   LocalStorageImpl(this.box);
-//   final Box box;
-//   @override
-//   Future<void> put(dynamic key, dynamic value) async {
-//     return box.put(key, value);
-//   }
-
-//   @override
-//   dynamic get<T>(String key) {
-//     return box.get(key);
-//   }
-
-//   @override
-//   dynamic getAt(int key) {
-//     return box.getAt(key);
-//   }
-
-//   @override
-//   Future<int> add(dynamic value) {
-//     return box.add(value);
-//   }
-
-//   @override
-//   Future<int> clear() {
-//     return box.clear();
-//   }
-
-//   @override
-//   Future<void> delete(dynamic value) {
-//     return box.delete(value);
-//   }
-
-//   @override
-//   Future<void> putAll(Map<String, dynamic> entries) async {
-//     return box.putAll(entries);
-//   }
-// }
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage {
@@ -146,7 +102,3 @@ class SecureStorage {
   //   return null;
   // }
 }
-
-final localStorageProvider = Provider<SecureStorage>(
-  (ref) => SecureStorage(),
-);

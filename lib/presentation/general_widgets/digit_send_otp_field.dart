@@ -8,8 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:pinput/pinput.dart';
 
-class DigitSendOtpField extends StatefulWidget {
-  const DigitSendOtpField({
+class AbakonSendOtpField extends StatefulWidget {
+  const AbakonSendOtpField({
     super.key,
     this.label,
     this.onChanged,
@@ -60,10 +60,10 @@ class DigitSendOtpField extends StatefulWidget {
   final bool autoFocus;
 
   @override
-  State<DigitSendOtpField> createState() => _DigitSendOtpFieldState();
+  State<AbakonSendOtpField> createState() => _AbakonSendOtpFieldState();
 }
 
-class _DigitSendOtpFieldState extends State<DigitSendOtpField> {
+class _AbakonSendOtpFieldState extends State<AbakonSendOtpField> {
   late FocusNode _focusNode;
 
   @override
@@ -94,6 +94,7 @@ class _DigitSendOtpFieldState extends State<DigitSendOtpField> {
             length: widget.length,
             focusNode: _focusNode,
             forceErrorState: widget.hasError,
+            keyboardType: TextInputType.text,
             onCompleted: widget.onCompleted,
           //  obscureText: widget.obscureText,
             onChanged: widget.onChanged,
@@ -118,7 +119,7 @@ class _DigitSendOtpFieldState extends State<DigitSendOtpField> {
             submittedPinTheme: widget.submittedPinTheme ?? submittedPinTheme,
             closeKeyboardWhenCompleted: widget.closeKeyboardWhenCompleted,
             disabledPinTheme: widget.pinTheme ?? defaultPinTheme,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+           // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: widget.validator ??
                 (text) {
                   if (text == null ||

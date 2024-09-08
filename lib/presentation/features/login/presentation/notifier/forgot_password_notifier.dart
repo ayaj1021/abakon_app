@@ -28,7 +28,7 @@ class ForgotPasswordNotifier extends AutoDisposeNotifier<ForgotPasswordState> {
       final value = await _forgotPasswordRepository.forgotPassword(
         data,
       );
-      if (!value.status) throw value.message.toException;
+      if (!value.status!) throw value.message.toException;
 
       state = state.copyWith(forgotPasswordState: LoadState.idle);
       onSuccess();

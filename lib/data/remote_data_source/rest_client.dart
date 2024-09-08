@@ -5,6 +5,7 @@ import 'package:abakon/core/config/interceptors/header_interceptor.dart';
 import 'package:abakon/domain/repository/user_auth_repository.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/data/models/login_response.dart';
+import 'package:abakon/presentation/features/otp_validation/data/models/verify_otp_request.dart';
 import 'package:abakon/presentation/features/sign_up/data/models/sign_up_request.dart';
 import 'package:abakon/presentation/features/sign_up/data/models/sign_up_response.dart';
 import 'package:dio/dio.dart';
@@ -47,10 +48,11 @@ abstract class RestClient {
 //     @Body() ResetPasswordRequest request,
 //   );
 
-//   @POST('/auth/verify-signup-otp')
-//   Future<BaseResponse<LoginResponse>> verifySignUpOtp(
-//     @Body() VerifyOtpRequest request,
-//   );
+  @POST('/activate')
+  Future<BaseResponse<LoginResponse>> verifySignUpOtp(
+    @Body() VerifyOtpRequest request,
+    // @Queries() Map<String, dynamic> queries,
+  );
 
 //   @POST('/auth/update-password')
 //   Future<BaseResponse<ChangePasswordResponse>> changePassword(

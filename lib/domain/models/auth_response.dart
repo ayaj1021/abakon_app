@@ -19,13 +19,17 @@ abstract class AuthResponse extends Equatable {
     required this.email,
     required this.firstName,
     required this.lastName,
+    required this.phoneNumber,
+    required this.id,
   });
 
   AuthResponse.fromJson(Map<String, dynamic> json)
       : tokens = Tokens.fromJson(json['tokens'] as Map<String, dynamic>? ?? {}),
         email = json['email'] as String? ?? '',
         firstName = json['first_name'] as String? ?? '',
-        lastName = json['last_name'] as String? ?? '';
+        lastName = json['last_name'] as String? ?? '',
+        phoneNumber = json['phone_number'] as String? ?? '',
+        id = json['id'] as String? ?? '';
 
   final Tokens? tokens;
   final String? email;
@@ -33,6 +37,8 @@ abstract class AuthResponse extends Equatable {
   final String? firstName;
 
   final String? lastName;
+  final String? phoneNumber;
+  final String? id;
 
   @override
   List<Object?> get props => [
@@ -46,23 +52,18 @@ abstract class AuthResponse extends Equatable {
 @JsonSerializable()
 class Tokens extends Equatable {
   const Tokens({
-    required this.accessToken,
-    required this.refreshToken,
+    required this.token,
   });
 
   factory Tokens.fromJson(Map<String, dynamic> json) => _$TokensFromJson(json);
 
-  @JsonKey(name: 'access_token')
-  final String? accessToken;
-
-  @JsonKey(name: 'refresh_token')
-  final String? refreshToken;
+  @JsonKey(name: 'token')
+  final String? token;
 
   Map<String, dynamic> toJson() => _$TokensToJson(this);
 
   @override
   List<Object?> get props => [
-        accessToken,
-        refreshToken,
+        token,
       ];
 }

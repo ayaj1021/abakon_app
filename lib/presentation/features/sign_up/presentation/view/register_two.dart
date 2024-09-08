@@ -1,10 +1,12 @@
 import 'package:abakon/core/extensions/build_context_extension.dart';
+import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/core/utils/validators.dart';
-import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
+import 'package:abakon/presentation/features/otp_validation/presentation/view/otp_verification.dart';
+import 'package:abakon/presentation/features/sign_up/data/models/sign_up_request.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/notifier/register_notifier.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/widgets/register_two_input_field_section.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
@@ -34,7 +36,7 @@ class RegisterTwo extends ConsumerStatefulWidget {
 }
 
 class _RegisterState extends ConsumerState<RegisterTwo> {
-  late TextEditingController _pinController;
+  late TextEditingController _transactionPinController;
   late TextEditingController _passwordController;
   late TextEditingController _confirmPasswordController;
   late TextEditingController _stateController;
@@ -43,7 +45,7 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
 
   @override
   void dispose() {
-    _pinController.dispose();
+    _transactionPinController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     _stateController.dispose();
@@ -58,70 +60,83 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
     _passwordController = TextEditingController()..addListener(_validateInput);
     _confirmPasswordController = TextEditingController()
       ..addListener(_validateInput);
-    _pinController = TextEditingController()..addListener(_validateInput);
+    _transactionPinController = TextEditingController()
+      ..addListener(_validateInput);
   }
 
-  _validateInput() {
-    //ref.read(registerNotifier.notifier).allInputValid(
-    if (Validators.password()(_passwordController.text) == null &&
-        Validators.password()(_confirmPasswordController.text) == null &&
-        _passwordController.text == _confirmPasswordController.text &&
-        Validators.notEmpty()(_stateController.text) == null &&
-        Validators.phone()(_pinController.text) == null) {
-      //);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void _goToDashboard() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const Dashboard(),
-      ),
-    );
-  }
-
-  //   void _validateInput() {
-  //   ref.read(registerNotifier.notifier).allInputValid(
-  //         emailValid: Validators.email()(_emailAddressController.text) == null,
-  //         passwordValid: Validators.password()(_passwordController.text) ==
-  //                 null &&
-  //             Validators.password()(_confirmPasswordController.text) == null &&
-  //             _passwordController.text == _confirmPasswordController.text,
-  //         nameValid: Validators.name()(_firstNamecontroller.text) == null &&
-  //             Validators.name()(_lastNamecontroller.text) == null,
-  //         usernameValid:
-  //             Validators.notEmpty()(_usernamecontroller.text) == null,
-  //         dateValid: Validators.date()(_phoneNumberController.text) == null,
-  //       );
+  // _validateInput() {
+  //   //ref.read(registerNotifier.notifier).allInputValid(
+  //   if (Validators.password()(_passwordController.text) == null &&
+  //       Validators.password()(_confirmPasswordController.text) == null &&
+  //       _passwordController.text == _confirmPasswordController.text &&
+  //       Validators.notEmpty()(_stateController.text) == null &&
+  //       Validators.phone()(_transactionPinController.text) == null) {
+  //     //);
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
   // }
 
-  void _signUp() {
-    // print('xclusive@gmail.com'.redactedEmail);
-    // ref.read(registerNotifier.notifier).signUp(
-    //       data: SignUpRequest(
-    //         email: _emailAddressController.text.toLowerCase().trim(),
-    //         password: _passwordController.text,
-    //         firstName: _firstNamecontroller.text,
-    //         lastName: _lastNamecontroller.text.toLowerCase(),
-    //         username: _usernamecontroller.text,
-    //         //dateOfBirth: _datecontroller.text.split('/').reversed.join('-'),
-    //         alipayQrCode: 'aaaaa',
-    //         gender: '',
-    //       ),
-    //       onError: (error) {
-    //         context.showError(message: error);
-    //       },
-    //       onSuccess: () {
-    //         context.hideOverLay();
-    //         // ..push(
 
-    //         // );
-    //       },
-    //     );
+  void _validateInput() {
+    ref.read(registerNotifier.notifier).allInputValid(
+          emailValid: Validators.email()(widget.email) == null,
+          passwordValid: Validators.password()(_passwordController.text) ==
+                  null &&
+              Validators.password()(_confirmPasswordController.text) == null &&
+              _passwordController.text == _confirmPasswordController.text,
+          firstNameValid: Validators.name()(widget.firstName) == null,
+          lastNameValid: Validators.notEmpty()(widget.lastName) == null,
+          phoneNumberValid: Validators.phone()(widget.phoneNumber) == null,
+          transactionPinValid:
+              Validators.pin()(_transactionPinController.text) == null,
+          stateValid: Validators.name()(_stateController.text) == null,
+        );
+  }
+
+  void _signUp() {
+    //print('xclusive@gmail.com'.redactedEmail);
+    ref.read(registerNotifier.notifier).signUp(
+          data: SignUpRequest(
+            email: widget.email.toLowerCase().trim(),
+            password: _passwordController.text.toLowerCase(),
+            firstName: widget.firstName.toLowerCase(),
+            lastName: widget.lastName.toLowerCase(),
+            phone: widget.phoneNumber.toLowerCase(),
+            transactionPin: _transactionPinController.text.toLowerCase(),
+            state: _stateController.text.toLowerCase(),
+          ),
+          onError: (error) {
+            context.showError(message: error);
+          },
+          onSuccess: () {
+            context.hideOverLay();
+
+            showModalBottomSheet<void>(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return OTPVerification(
+                    email: widget.email,
+                    // otpVerificationArgs: OtpVerificationArgs<LoginResponse>(
+                    //   username: widget.email.toLowerCase(),
+                    //   otpType: OtpType.email,
+                    //   onCompleted: (LoginResponse data) {},
+                    // onCompleted: (data) async {
+                    //   final f = ref.read(registerNotifier.notifier);
+                    //   await f.saveToken(data.tokens!);
+                    //   await f.saveUser(data);
+                    //   if (mounted) {
+                    //     await context
+                    //         .popAndPushNamed(TransactionPin.routeName);
+                    //   }
+                    // },
+                    // ),
+                  );
+                });
+          },
+        );
   }
 
   @override
@@ -162,27 +177,26 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
                     statecontroller: _stateController,
                     passwordController: _passwordController,
                     confirmPasswordController: _confirmPasswordController,
-                    pinController: _pinController,
+                    pinController: _transactionPinController,
                   ),
-                  const VerticalSpacing(100),
+                  const VerticalSpacing(80),
                   Consumer(
                     builder: (context, r, c) {
-                      // final isLoading = r.watch(
-                      //   registerNotifier
-                      //       .select((v) => v.registerState.isLoading),
-                     // );
+                      final isLoading = r.watch(
+                        registerNotifier
+                            .select((v) => v.registerState.isLoading),
+                      );
                       return AbakonSendButton(
-                        isEnabled: _validateInput(),
+                        isEnabled: r.watch(
+                              //_validateInput()
 
-//                         r.watch(
-// _validateInput()
-
-//                              // registerNotifier.select((v) => v.inputValid),
-//                             ) &&
-//                             !isLoading,
-//                         isLoading: isLoading,
-                        onTap: _goToDashboard,
-                        //_signUp,
+                              registerNotifier.select((v) => v.inputValid),
+                            ) &&
+                            !isLoading,
+                        isLoading: isLoading,
+                        onTap:
+                            //_goToDashboard,
+                            _signUp,
                         title: Strings.register,
                       );
                     },

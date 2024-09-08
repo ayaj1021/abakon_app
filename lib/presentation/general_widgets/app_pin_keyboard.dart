@@ -38,7 +38,7 @@ class _PayOffPinKeyboardState extends State<PayOffPinKeyboard> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: DigitSendOtpField(
+          child: AbakonSendOtpField(
             boxHeight: 54,
             boxWidth: 54,
             controller: _controller,
