@@ -18,9 +18,8 @@ class SignUpResponse extends DSUser {
 
 @JsonSerializable()
 class DSUser extends Equatable {
-  @JsonKey(defaultValue: '')
   final bool success;
-  @JsonKey(defaultValue: '')
+
   final String message;
 
   const DSUser({

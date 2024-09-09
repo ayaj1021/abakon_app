@@ -13,16 +13,16 @@ part 'verify_otp_request.g.dart';
 @JsonSerializable(createFactory: false)
 class VerifyOtpRequest implements EquatableMixin {
   const VerifyOtpRequest({
-    required this.otp,
+    required this.activationToken,
   });
 
-  final String otp;
+  final String activationToken;
 
   Map<String, dynamic> toJson() => _$VerifyOtpRequestToJson(this);
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  List<Object> get props => [otp];
+  List<Object> get props => [activationToken];
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override

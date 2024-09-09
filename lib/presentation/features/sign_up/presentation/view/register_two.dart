@@ -78,7 +78,6 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
   //   }
   // }
 
-
   void _validateInput() {
     ref.read(registerNotifier.notifier).allInputValid(
           emailValid: Validators.email()(widget.email) == null,
@@ -112,8 +111,12 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
           },
           onSuccess: () {
             context.hideOverLay();
+            context.showSuccess(
+                message: "Please check your email to activate your account");
 
             showModalBottomSheet<void>(
+             showDragHandle: true,
+                
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
@@ -194,9 +197,7 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
                             ) &&
                             !isLoading,
                         isLoading: isLoading,
-                        onTap:
-                            //_goToDashboard,
-                            _signUp,
+                        onTap: _signUp,
                         title: Strings.register,
                       );
                     },

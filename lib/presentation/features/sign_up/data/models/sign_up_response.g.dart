@@ -8,13 +8,13 @@ part of 'sign_up_response.dart';
 
 SignUpResponse _$SignUpResponseFromJson(Map<String, dynamic> json) =>
     SignUpResponse(
-      success: json['success'] as bool? ?? false,
-      message: json['message'] as String? ?? '',
+      success: json['success'] as bool,
+      message: json['message'] as String,
     );
 
 DSUser _$DSUserFromJson(Map<String, dynamic> json) => DSUser(
-      success: json['success'] as bool? ?? false,
-      message: json['message'] as String? ?? '',
+      success: json['success'] as bool,
+      message: json['message'] as String,
     );
 
 Map<String, dynamic> _$DSUserToJson(DSUser instance) => <String, dynamic>{

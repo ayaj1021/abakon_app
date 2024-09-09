@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 
-/// [DsBottomSheet] is a bottomsheet widget built
+/// [AbakonBottomSheet] is a bottomsheet widget built
 /// with flutter widgets.
 /// ### Params:
 /// * [title] - An optional title of the view.
@@ -15,8 +15,8 @@ import 'package:flutter_svg/svg.dart';
 /// * [content] - required body for the sheet where all your custom views
 /// goes in.
 ///
-class DsBottomSheet extends StatelessWidget {
-  const DsBottomSheet({
+class AbakonBottomSheet extends StatelessWidget {
+  const AbakonBottomSheet({
     required this.content,
     super.key,
     this.title,

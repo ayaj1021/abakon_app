@@ -1,9 +1,6 @@
 // ignore_for_file: avoid_positional_boolean_parameters
 
-import 'dart:convert';
-
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
-import 'package:abakon/domain/models/auth_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserAuthRepository {
@@ -12,9 +9,23 @@ class UserAuthRepository {
   );
   final SecureStorage _secureStorage;
 
-  Future<void> saveToken(Tokens token) async {
-    final n = await _secureStorage.saveUserToken(json.encode(token.toJson()));
+  Future<void> saveToken(String token) async {
+    final n = await _secureStorage.saveUserToken(token);
     return n;
+  }
+
+  // Tokens getToken() {
+  //   final tokens = _secureStorage.getUserToken();
+  //   return Tokens.fromJson(
+  //     tokens == null
+  //         ? {}
+  //         : json.decode(tokens as String) as Map<String, dynamic>,
+  //   );
+  // }
+
+  Future<String?> getUserToken() async {
+    String? value = await _secureStorage.getUserToken();
+    return value;
   }
 
   // Tokens getToken() {

@@ -1,7 +1,7 @@
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
-import 'package:abakon/domain/models/auth_response.dart';
 import 'package:abakon/domain/repository/user_auth_repository.dart';
+import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/repository/verification_repository.dart';
 import 'package:abakon/presentation/features/otp_validation/presentation/notifier/verification_state.dart';
@@ -31,7 +31,7 @@ class OTPVerificationNotifier<T>
       if (!value.status!) throw value.message.toException;
       await Future.wait(
         [
-          _saveToken(value.data!.tokens!),
+          _saveToken(value.data!.token),
         ],
       );
 
@@ -48,26 +48,31 @@ class OTPVerificationNotifier<T>
     }
   }
 
-  Future<void> _saveToken(Tokens token) async {
+  Future<void> _saveToken(String token) async {
     await ref.read(userAuthRepositoryProvider).saveToken(token);
   }
 
-  // Future<void> resendOtp({
-  //   required ResendOtpRequest request,
-  //   required void Function(String error) onError,
-  // }) async {
-  //   state = state.copyWith(timerRunning: true);
+  Future<void> resendOtp({
+    required void Function() onSuccess,
+    required ResendOtpRequest request,
+    required void Function(String error) onError,
+  }) async {
+    // state = state.copyWith(timerRunning: true);
+    state = state.copyWith(otpVerificationState: LoadState.loading);
 
-  //   try {
-  //     final value = await _verificationRepository.resendOtp(
-  //       request,
-  //     );
-  //     if (!value.status) throw value.message.toException;
-  //   } catch (e) {
-  //     onError(e.toString());
-  //     state = state.copyWith(timerRunning: false);
-  //   }
-  // }
+    try {
+      final value = await _verificationRepository.resendOtp(
+        request,
+      );
+      if (!value.status!) throw value.message.toException;
+      state = state.copyWith(otpVerificationState: LoadState.idle);
+      onSuccess();
+    } catch (e) {
+      onError(e.toString());
+      state = state.copyWith(otpVerificationState: LoadState.idle);
+      // state = state.copyWith(timerRunning: false);
+    }
+  }
 
   void stopTimer() {
     state = state.copyWith(

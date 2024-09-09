@@ -19,7 +19,7 @@ class ResetSuccessful extends StatefulWidget {
 class _ResetSuccessfulState extends State<ResetSuccessful> {
   @override
   Widget build(BuildContext context) {
-    return DsBottomSheet(
+    return AbakonBottomSheet(
       content: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [

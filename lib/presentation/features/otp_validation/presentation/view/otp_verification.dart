@@ -1,3 +1,4 @@
+import 'package:abakon/core/config/exception/logger.dart';
 import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
@@ -5,15 +6,16 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
+import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/presentation/notifier/otp_notifier.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/countdown_timer.dart';
 import 'package:abakon/presentation/general_widgets/digit_send_otp_field.dart';
+import 'package:abakon/presentation/general_widgets/ds_bottom_sheet.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OTPVerification<T> extends ConsumerStatefulWidget {
   const OTPVerification({required this.email, super.key});
@@ -56,12 +58,13 @@ class _OTPVerificationState<T> extends ConsumerState<OTPVerification<T>> {
   void _validateOtp() {
     ref.read(otpVerificationNotifierProvider.notifier).verifyOtp(
           request: VerifyOtpRequest(
-            otp: _otpController.text,
+            activationToken: _otpController.text.trim(),
           ),
           onError: (error) {
             context.showError(message: error);
           },
           onSuccess: () {
+            context.showSuccess(message: "Otp Validated");
             context.pushReplacementNamed(Dashboard.routeName);
           },
         );
@@ -70,19 +73,9 @@ class _OTPVerificationState<T> extends ConsumerState<OTPVerification<T>> {
   @override
   Widget build(BuildContext context) {
     final notifier = ref.read(otpVerificationNotifierProvider.notifier);
-    final state = ref.watch(otpVerificationNotifierProvider);
-    return Container(
-      height: 400.h,
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-      decoration: const BoxDecoration(
-        color: AppColors.primaryF3E5CC,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-      ),
-      child: Column(
+    // final state = ref.watch(otpVerificationNotifierProvider);
+    return AbakonBottomSheet(
+      content: Column(
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -93,7 +86,7 @@ class _OTPVerificationState<T> extends ConsumerState<OTPVerification<T>> {
           const VerticalSpacing(13),
           Text(
             Strings.enterVerificationCodeSub(
-              widget.email,
+              widget.email.toLowerCase(),
               // widget.otpVerificationArgs.otpType == OtpType.email
               //     ? widget.otpVerificationArgs.username.redactedEmail
               //     : widget.otpVerificationArgs.username,
@@ -108,20 +101,43 @@ class _OTPVerificationState<T> extends ConsumerState<OTPVerification<T>> {
             child: AbakonSendOtpField(
               length: 4,
               controller: _otpController,
-              
             ),
           ),
-
+      
           const VerticalSpacing(35),
-
+      
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                Strings.resend,
-                style: context.textTheme.s14w700.copyWith(
-                  color: AppColors.primaryColor,
-                ),
+              GestureDetector(
+                onTap: () {
+                  debugLog(widget.email);
+                  notifier.resendOtp(
+                    request: ResendOtpRequest(
+                      email: widget.email.toLowerCase().trim(),
+                    ),
+                    onError: (error) {
+                      context.showError(message: error);
+                    },
+                    onSuccess: () {
+                      context.showSuccess(
+                          message:
+                              'A new activation token has been sent to your email');
+                    },
+                  );
+                },
+                child: Consumer(builder: (context, r, c) {
+                  final isLoading = r.watch(
+                    otpVerificationNotifierProvider
+                        .select((v) => v.otpVerificationState.isLoading),
+                  );
+                  return Text(
+                    isLoading ? "Resending otp..." : Strings.resend,
+                    style: context.textTheme.s14w700.copyWith(
+                      color: AppColors.primaryColor,
+                    ),
+                  );
+                }),
               ),
               CountDownTimer(
                 startTimer:

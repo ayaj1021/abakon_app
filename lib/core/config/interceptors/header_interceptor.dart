@@ -1,26 +1,24 @@
 import 'dart:async';
 
-
 import 'package:abakon/core/config/exception/logger.dart';
 import 'package:abakon/domain/repository/user_auth_repository.dart';
 import 'package:dio/dio.dart';
-
 
 class HeaderInterCeptor extends Interceptor {
   HeaderInterCeptor({
     required this.dio,
     required this.authRepository,
-   // required this.onTokenExpired,
+    // required this.onTokenExpired,
   });
   final Dio dio;
   final UserAuthRepository authRepository;
 //  final void Function() onTokenExpired;
 
   final _authRoutes = [
-    '/auth/login',
-    '/auth/signup',
+    '/login',
+    '/register',
     '/auth/create-pin',
-    '/auth/resend-otp',
+    '/resendtoken',
     '/auth/verify-reset-otp',
     '/auth/forgot-password',
     '/auth/reset-password',
@@ -30,12 +28,15 @@ class HeaderInterCeptor extends Interceptor {
   FutureOr<dynamic> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
-  ) {
+  ) async {
     try {
-     // final token = authRepository.getToken();
-      // if (token.accessToken?.isNotEmpty ?? false) {
-      //   options.headers['Cookie'] = 'accessToken=${token.accessToken}';
-      // }
+      final token = await authRepository.getUserToken();
+      debugLog('[TOKEN]$token');
+      if (token?.isNotEmpty ?? false) {
+        options.headers['authorization'] = 'Bearer $token';
+        // options.headers['Cookie'] = 'accessToken=${token.token}';
+      }
+      //log("This is user token $token");
     } catch (e) {
       debugLog(e);
     }
@@ -63,7 +64,7 @@ class HeaderInterCeptor extends Interceptor {
     if (err.response?.statusCode == 401 ||
         err.response?.statusCode == 403 &&
             !_authRoutes.contains(err.requestOptions.path)) {
-     // onTokenExpired();
+      // onTokenExpired();
     }
     handler.next(err);
     return err;

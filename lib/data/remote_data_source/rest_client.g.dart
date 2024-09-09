@@ -73,7 +73,7 @@ class _RestClient implements RestClient {
     )
         .compose(
           _dio.options,
-          '/auth/login',
+          '/login',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -97,14 +97,51 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<BaseResponse<LoginResponse>> verifySignUpOtp(
+  Future<BaseResponse<dynamic>> resendOTP(ResendOtpRequest request) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<BaseResponse<dynamic>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/resendtoken',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<dynamic> _value;
+    try {
+      _value = BaseResponse<dynamic>.fromJson(
+        _result.data!,
+        (json) => json as dynamic,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponse<VerifyTokenResponse>> verifySignUpOtp(
       VerifyOtpRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<BaseResponse<LoginResponse>>(Options(
+    final _options = _setStreamType<BaseResponse<VerifyTokenResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -121,11 +158,11 @@ class _RestClient implements RestClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<LoginResponse> _value;
+    late BaseResponse<VerifyTokenResponse> _value;
     try {
-      _value = BaseResponse<LoginResponse>.fromJson(
+      _value = BaseResponse<VerifyTokenResponse>.fromJson(
         _result.data!,
-        (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
+        (json) => VerifyTokenResponse.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

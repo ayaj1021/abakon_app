@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:abakon/core/config/security/biometrics.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
-import 'package:abakon/domain/repository/user_auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,9 +22,9 @@ class FingerprintFacialauth extends StatelessWidget {
     return Consumer(
       builder: (context, ref, c) {
         final biometrics = ref.read(biometricsProvider);
-        final a = ref.read(
-          userAuthRepositoryProvider,
-        );
+        // final a = ref.read(
+        //   userAuthRepositoryProvider,
+        // );
         // final encryptedPin = switch (dataType) {
         //   BiometricDataType.password => a.userPassword,
         //   _ => a.userPin,

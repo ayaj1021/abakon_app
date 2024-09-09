@@ -27,37 +27,28 @@ class Login extends ConsumerStatefulWidget {
 
 class _LoginState extends ConsumerState<Login> {
   final ValueNotifier<bool> _isLoginEnabled = ValueNotifier(false);
-  late TextEditingController _phoneNumberController;
+  late TextEditingController _emailController;
   late TextEditingController _passwordController;
-  final _emailAddressController  = TextEditingController();
+  final _emailAddressController = TextEditingController();
 
   @override
   void initState() {
-    _phoneNumberController = TextEditingController()..addListener(_listener);
+    _emailController = TextEditingController()..addListener(_listener);
     _passwordController = TextEditingController()..addListener(_listener);
     super.initState();
   }
 
   void _listener() {
-    _isLoginEnabled.value = _phoneNumberController.text.isNotEmpty &&
+    _isLoginEnabled.value = _emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty;
   }
 
   @override
   void dispose() {
     _isLoginEnabled.dispose();
-    _phoneNumberController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  void _goToDashboard() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const Dashboard(),
-      ),
-    );
   }
 
   @override
@@ -93,7 +84,7 @@ class _LoginState extends ConsumerState<Login> {
                 const VerticalSpacing(70),
                 LoginInputSection(
                   passwordController: _passwordController,
-                  phoneNumbercontroller: _phoneNumberController,
+                  emailAddressController: _emailController,
                 ),
                 GestureDetector(
                   onTap: () => forgotPasswordBottomSheet(
@@ -124,8 +115,7 @@ class _LoginState extends ConsumerState<Login> {
                         return AbakonSendButton(
                           isLoading: isLoading,
                           isEnabled: r && !isLoading,
-                          onTap: _goToDashboard,
-                          //_login,
+                          onTap: _login,
                           title: Strings.login,
                         );
                       },
@@ -161,8 +151,6 @@ class _LoginState extends ConsumerState<Login> {
                     ),
                   ],
                 ),
-             
-             
               ],
             ),
           ),
@@ -174,7 +162,7 @@ class _LoginState extends ConsumerState<Login> {
   void _login() {
     final data = LoginRequest(
       password: _passwordController.text.trim(),
-      email: _phoneNumberController.text.toLowerCase().trim(),
+      email: _emailController.text.toLowerCase().trim(),
     );
     ref.read(loginNotifer.notifier).login(
           data: data,
@@ -183,7 +171,7 @@ class _LoginState extends ConsumerState<Login> {
           },
           onSuccess: () {
             _isLoginEnabled.value = false;
-            //context.replaceAll(Dashboard.routeName);
+            context.replaceAll(Dashboard.routeName);
           },
         );
   }

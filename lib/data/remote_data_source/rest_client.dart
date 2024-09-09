@@ -5,7 +5,9 @@ import 'package:abakon/core/config/interceptors/header_interceptor.dart';
 import 'package:abakon/domain/repository/user_auth_repository.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/data/models/login_response.dart';
+import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_otp_request.dart';
+import 'package:abakon/presentation/features/otp_validation/data/models/verify_token_response.dart';
 import 'package:abakon/presentation/features/sign_up/data/models/sign_up_request.dart';
 import 'package:abakon/presentation/features/sign_up/data/models/sign_up_response.dart';
 import 'package:dio/dio.dart';
@@ -24,7 +26,7 @@ abstract class RestClient {
     @Body() SignUpRequest signUpRequest,
   );
 
-  @POST('/auth/login')
+  @POST('/login')
   Future<BaseResponse<LoginResponse>> login(
     @Body() LoginRequest loginRequest,
   );
@@ -33,10 +35,10 @@ abstract class RestClient {
 //     @Body() CreatePinRequest loginRequest,
 //   );
 
-//   @POST('/auth/resend-otp')
-//   Future<BaseResponse<dynamic>> resendOTP(
-//     @Body() ResendOtpRequest request,
-//   );
+  @POST('/resendtoken')
+  Future<BaseResponse<dynamic>> resendOTP(
+    @Body() ResendOtpRequest request,
+  );
 
 //   @POST('/auth/verify-reset-otp')
 //   Future<BaseResponse<VerifyResetPasswordOtpResponse>> verifyResetPasswordOtp(
@@ -49,7 +51,7 @@ abstract class RestClient {
 //   );
 
   @POST('/activate')
-  Future<BaseResponse<LoginResponse>> verifySignUpOtp(
+  Future<BaseResponse<VerifyTokenResponse>> verifySignUpOtp(
     @Body() VerifyOtpRequest request,
     // @Queries() Map<String, dynamic> queries,
   );
