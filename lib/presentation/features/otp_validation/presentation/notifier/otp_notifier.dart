@@ -28,18 +28,18 @@ class OTPVerificationNotifier<T>
       final value = await _verificationRepository.validateSignUpOtp(
         request,
       );
-      if (!value.status!) throw value.message.toException;
-      await Future.wait(
-        [
-          _saveToken(value.data!.token),
-        ],
-      );
+      if (!value.status) throw value.message.toException;
 
       state = state.copyWith(
         verificationState: LoadState.idle,
       );
       // onSuccess(value.data! as T);
       onSuccess();
+      // await Future.wait(
+      //   [
+      //     _saveToken(value.data!.token),
+      //   ],
+      // );
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(
@@ -64,7 +64,7 @@ class OTPVerificationNotifier<T>
       final value = await _verificationRepository.resendOtp(
         request,
       );
-      if (!value.status!) throw value.message.toException;
+      if (!value.status) throw value.message.toException;
       state = state.copyWith(otpVerificationState: LoadState.idle);
       onSuccess();
     } catch (e) {

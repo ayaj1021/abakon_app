@@ -31,7 +31,7 @@ class BaseResponse<T> {
   }
   final T? data;
   @JsonKey(name: 'success')
-  final bool? status;
+  final bool status;
   final String? message;
 
   Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>

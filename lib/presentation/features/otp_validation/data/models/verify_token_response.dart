@@ -15,6 +15,7 @@ class VerifyTokenResponse extends DSUser {
     required super.phone,
     required super.email,
     required super.token,
+    required super.status,
   });
 
   factory VerifyTokenResponse.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +33,7 @@ class DSUser extends Equatable {
   final String phone;
   final String email;
   final String token;
+  final bool status;
 
   const DSUser({
     required this.message,
@@ -41,6 +43,7 @@ class DSUser extends Equatable {
     required this.phone,
     required this.email,
     required this.token,
+    required this.status,
   });
 
   factory DSUser.fromJson(Map<String, dynamic> json) => _$DSUserFromJson(json);
@@ -56,5 +59,6 @@ class DSUser extends Equatable {
         phone,
         email,
         token,
+        status,
       ];
 }

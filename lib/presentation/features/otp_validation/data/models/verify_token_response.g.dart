@@ -15,6 +15,7 @@ VerifyTokenResponse _$VerifyTokenResponseFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String,
       email: json['email'] as String,
       token: json['token'] as String,
+      status: json['status'] as bool,
     );
 
 DSUser _$DSUserFromJson(Map<String, dynamic> json) => DSUser(
@@ -25,6 +26,7 @@ DSUser _$DSUserFromJson(Map<String, dynamic> json) => DSUser(
       phone: json['phone'] as String,
       email: json['email'] as String,
       token: json['token'] as String,
+      status: json['status'] as bool,
     );
 
 Map<String, dynamic> _$DSUserToJson(DSUser instance) => <String, dynamic>{
@@ -35,4 +37,5 @@ Map<String, dynamic> _$DSUserToJson(DSUser instance) => <String, dynamic>{
       'phone': instance.phone,
       'email': instance.email,
       'token': instance.token,
+      'status': instance.status,
     };
