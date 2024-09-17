@@ -1,5 +1,6 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/general_widgets/small_button_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -54,34 +55,15 @@ class WalletBalanceSection extends StatelessWidget {
                 ),
               ],
             ),
-            Column(
+            const Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-              
-                const VerticalSpacing(61),
+                VerticalSpacing(61),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: AppColors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.add,
-                          color: AppColors.primary591E0C,
-                          size: 14,
-                        ),
-                        Text(
-                          'Fund wallet',
-                          style: context.textTheme.s12w600
-                              .copyWith(color: AppColors.primary591E0C),
-                        ),
-                      ],
-                    ),
+                  child: SmallButtonWidget(
+                    title: 'Fund wallet',
+                    buttonColor: AppColors.white,
                   ),
                 ),
               ],

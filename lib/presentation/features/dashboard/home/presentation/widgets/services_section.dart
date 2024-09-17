@@ -2,6 +2,7 @@ import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/cable/presentation/view/cable_screen.dart';
+import 'package:abakon/presentation/features/electricity/presentation/view/electricity_view.dart';
 import 'package:abakon/presentation/features/other_services/presentation/view/other_services_screen.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class ServicesSection extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: AppColors.white,
         ),
-        child:  Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ServicesWidget(
@@ -28,7 +29,8 @@ class ServicesSection extends StatelessWidget {
               serviceTitle: 'Cable tv',
               onTap: () => context.pushNamed(CableScreen.routeName),
             ),
-            const ServicesWidget(
+            ServicesWidget(
+              onTap: () => context.pushNamed(ElectricityView.routeName),
               image: 'assets/icons/electricity.svg',
               serviceTitle: 'Electricity',
             ),
@@ -36,7 +38,7 @@ class ServicesSection extends StatelessWidget {
               image: 'assets/icons/exam_pin.svg',
               serviceTitle: 'Exam pin',
             ),
-             ServicesWidget(
+            ServicesWidget(
               onTap: () => context.pushNamed(OtherServicesScreen.routeName),
               image: 'assets/icons/more.svg',
               serviceTitle: 'Other \nServices',

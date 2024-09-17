@@ -109,7 +109,8 @@ class Strings {
   static const String myInformation = 'My Infomation';
   static const String limits = '7.00/5,000.00 NGN';
   static const String convertNairaToRmb = 'Convert your Naira to RMB';
-  static const String youAreConverting = 'You are converting';
+  static const String yourEarnings = 'Your earnings';
+  static const String numberOfRefferals = 'Number of referrals';
   static const String kindlyReviewYourOrder =
       'Kindly review your order below before your proceed';
   static const String copyAccountNumber =
@@ -135,6 +136,7 @@ class Strings {
   static const String airtime = 'Airtime';
   static const String data = 'Data';
   static const String electricity = 'Electricity';
+  static const String electricityBill = 'Electricity Bill';
   static const String more = 'More';
   static const String completeKycLevel = 'Complete KYC Level 1';
   static const String proceedToCompleteKyc =
@@ -162,6 +164,8 @@ class Strings {
   static const String newPasswordSub =
       'New password must not be the same as the previous one';
   static const String confirmPassword = 'confirm password';
+  static const String commission = 'Commission';
+  static const String referralEarningsBreakdown = 'Referral Earnings Breakdown';
   static const String passwordReset = 'Password Reset Successful';
   static const String passwordResetSub =
       'Your password has been successfully reset, kindly go back to login in to your account.';

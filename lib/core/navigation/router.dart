@@ -4,6 +4,7 @@ import 'package:abakon/presentation/features/cable/presentation/view/cable_scree
 import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
 import 'package:abakon/presentation/features/change_transaction_pin/presentation/view/change_transaction_pin_view.dart';
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
+import 'package:abakon/presentation/features/electricity/presentation/view/electricity_view.dart';
 import 'package:abakon/presentation/features/login/presentation/view/login.dart';
 import 'package:abakon/presentation/features/my_information/presentation/view/my_information_page.dart';
 import 'package:abakon/presentation/features/onboarding/presentation/view/onboarding_view.dart';
@@ -28,6 +29,7 @@ class AppRouter {
     ChangeTransactionPinView.routeName: (context) => const ChangeTransactionPinView(),
     CableScreen.routeName: (context) => const CableScreen(),
     OtherServicesScreen.routeName: (context) => const OtherServicesScreen(),
+    ElectricityView.routeName: (context) => const ElectricityView(),
 
 
   };

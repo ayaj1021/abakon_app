@@ -3,7 +3,7 @@ import 'package:abakon/presentation/features/dashboard/airtime/presentation/view
 import 'package:abakon/presentation/features/dashboard/data/presentation/view/data.dart';
 import 'package:abakon/presentation/features/dashboard/home/presentation/view/home.dart';
 import 'package:abakon/presentation/features/dashboard/profile/presentation/view/profile.dart';
-import 'package:abakon/presentation/features/dashboard/support/presentation/view/support.dart';
+import 'package:abakon/presentation/features/dashboard/reward/presentation/view/reward.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
     const Airtime(),
     const Data(),
     const Home(),
-    const Support(),
+    const Reward(),
     const Profile()
   ];
 
