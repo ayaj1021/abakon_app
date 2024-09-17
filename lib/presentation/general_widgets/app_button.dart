@@ -13,11 +13,13 @@ class AbakonSendButton extends StatefulWidget {
     this.hasBorder = false,
     this.isLoading = false,
     this.width = double.infinity,
+    this.borderColor = AppColors.primary1D1446,
   });
 
   final bool isEnabled;
   final Color backgroundColor;
   final Color textColor;
+  final Color borderColor;
   final bool hasBorder;
   final String title;
   final void Function() onTap;
@@ -44,7 +46,7 @@ class _AbakonSendButtonState extends State<AbakonSendButton> {
               borderRadius: BorderRadius.circular(16),
               border: Border.fromBorderSide(
                 widget.hasBorder
-                    ? const BorderSide(color: AppColors.primary1D1446)
+                    ? BorderSide(color: widget.borderColor)
                     : BorderSide.none,
               )),
           child: Padding(

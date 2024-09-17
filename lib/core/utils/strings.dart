@@ -10,6 +10,12 @@ class Strings {
       'DigitSend would like to use your biometric to authenticate you';
 
   static String saveBeneficiary = 'Save Beneficiary';
+  static String cableTvSub = 'Cable TV Subscription';
+  static String areYouSure = 'Are you sure';
+  static String otherServices = 'Other Services';
+  static String lifeEssentials = 'Life essentials, simplified';
+  static String successfulTransaction = 'Successful Transaction';
+  static String thisIsToConfirmTransactionSuccessful = 'This is to confirm that your transaction was successful.';
 
   static String enterVerificationCodeSub(String user) =>
       '''Enter the 4-digits verification code sent to this mail $user.''';
@@ -98,7 +104,7 @@ class Strings {
   static const String kindlyNoteYourOrder =
       'Kindly note, your order will be credited to your Alipay account.';
   static const String accountLimits = 'Account Limits';
-  static const String dailyLimits = 'Daily Limits';
+  static const String disableNumberValidator = 'Disable number validator';
   static const String weeklyLimits = 'Weekly Limits';
   static const String myInformation = 'My Infomation';
   static const String limits = '7.00/5,000.00 NGN';
@@ -124,7 +130,8 @@ class Strings {
   static const String moreDetails = 'More Details';
   static const String recentTransactions = 'Recent Transactions';
   static const String viewAll = 'View All';
-  static const String buyRmb = 'Buy RMB';
+  static const String buyAirtime = 'Buy Airtime';
+  static const String buyDataBundle = 'Buy Data Bundle';
   static const String airtime = 'Airtime';
   static const String data = 'Data';
   static const String electricity = 'Electricity';
