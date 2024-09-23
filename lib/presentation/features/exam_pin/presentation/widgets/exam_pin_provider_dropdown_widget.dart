@@ -1,11 +1,9 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ElectricityProviderDropDown extends StatelessWidget {
-  const ElectricityProviderDropDown({super.key});
- 
+class ExamPinProviderDropDown extends StatelessWidget {
+  const ExamPinProviderDropDown({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,86 +34,18 @@ class ElectricityProviderDropDown extends StatelessWidget {
       items: cables.map((cables) {
         return DropdownMenuItem<String>(
           value: cables['title'],
-          child: Row(
-            children: [
-              SizedBox(
-                height: 32.h,
-                width: 32.w,
-                child: Image.asset(
-                  cables['logo'],
-                  // fit: BoxFit.cover,
-                ),
-              ),
-              Text(cables['title'],
-                  style: const TextStyle(color: Colors.black)),
-            ],
-          ),
+          child: Text(cables['title'],
+              style: const TextStyle(color: Colors.black)),
         );
       }).toList(),
       onChanged: (newValue) {},
     );
-    // Positioned(
-    //   top: -15,
-    //   left: 10,
-    //   child: Container(
-    //     padding: EdgeInsets.all(5),
-    //     // color: Colors.red,
-    //     child: Text('select provider'),
-    //   ),
-    // ),
-
-    // DropdownMenu(
-    //     width: MediaQuery.of(context).size.width - 20,
-    //     enableSearch: false,
-    //     menuStyle: const MenuStyle(
-    //       elevation: WidgetStatePropertyAll(0),
-    //     ),
-    //     inputDecorationTheme: const InputDecorationTheme(
-    //         outlineBorder: BorderSide(
-    //           color: AppColors.primaryBFBCBB,
-    //           width: 3,
-    //         ),
-    //         activeIndicatorBorder: BorderSide(
-    //           width: 4,
-    //           color: AppColors.primaryBFBCBB,
-    //         )),
-    //     label: Text(
-    //       labelText,
-    //       style: context.textTheme.s14w500.copyWith(
-    //         color: AppColors.primary595857,
-    //       ),
-    //     ),
-    //     dropdownMenuEntries: cables.map(
-    //       (cables) {
-    //         return DropdownMenuEntry(
-    //           value: Row(
-    //             children: [
-    //               SvgPicture.asset(
-    //                 cables['logo'],
-    //               ),
-    //               Text(cables['title'])
-    //             ],
-    //           ),
-    //           label: cables['title'],
-    //           leadingIcon: SvgPicture.asset(
-    //             cables['logo'],
-    //           ),
-    //         );
-    //       },
-    //     ).toList());
   }
 }
 
-//width: double.infinity,
-// padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-// decoration: BoxDecoration(
-//     borderRadius: BorderRadius.circular(5),
-//     border: Border.all(color: AppColors.primaryBFBCBB)),
-
 List cables = [
-  {"logo": "assets/logo/gotv.png", "title": "Gotv"},
-  {"logo": "assets/logo/dstv.png", "title": "Dstv"},
-  {"logo": "assets/logo/startimes.png", "title": "Startimes"},
+  {"title": "WAEC"},
+  {"title": "NECO"},
 ];
 
 // class DropDownWidget extends StatefulWidget {

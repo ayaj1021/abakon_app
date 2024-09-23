@@ -5,8 +5,8 @@ import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
-class ElectricityTitleSection extends StatelessWidget {
-  const ElectricityTitleSection({super.key});
+class ExamPinTitleSection extends StatelessWidget {
+  const ExamPinTitleSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ElectricityTitleSection extends StatelessWidget {
         ),
         const VerticalSpacing(10),
         Text(
-          Strings.electricityBill,
+          Strings.examPin,
           style: context.textTheme.s20w700.copyWith(
             color: AppColors.black,
           ),

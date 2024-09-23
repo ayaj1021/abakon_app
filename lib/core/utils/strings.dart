@@ -52,7 +52,7 @@ class Strings {
   static const String selectPreferredHotline =
       'Select your preferred hotline to speak with a support agent';
   static const String contactUs = 'Contact Us';
-  static const String experiencingIssues = 'Experiencing issues?';
+  static const String examPin = 'Exam Pin';
   static const String callGeneralSupport = 'Call our general support hotline';
   static const String reachOutToSupport =
       'Reach out to our specialized support line for transfers only.';

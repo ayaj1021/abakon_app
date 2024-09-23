@@ -3,6 +3,7 @@ import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/cable/presentation/view/cable_screen.dart';
 import 'package:abakon/presentation/features/electricity/presentation/view/electricity_view.dart';
+import 'package:abakon/presentation/features/exam_pin/presentation/view/exam_pin.dart';
 import 'package:abakon/presentation/features/other_services/presentation/view/other_services_screen.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,8 @@ class ServicesSection extends StatelessWidget {
               image: 'assets/icons/electricity.svg',
               serviceTitle: 'Electricity',
             ),
-            const ServicesWidget(
+            ServicesWidget(
+              onTap: () => context.pushNamed(ExamPinScreen.routeName),
               image: 'assets/icons/exam_pin.svg',
               serviceTitle: 'Exam pin',
             ),

@@ -1,11 +1,11 @@
-import 'package:abakon/presentation/features/electricity/presentation/widgets/electricity_input_section.dart';
-import 'package:abakon/presentation/features/electricity/presentation/widgets/electricity_title_section.dart';
+import 'package:abakon/presentation/features/exam_pin/presentation/widgets/exam_pin_input_section.dart';
+import 'package:abakon/presentation/features/exam_pin/presentation/widgets/exam_pin_title_section.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
-class ElectricityView extends StatelessWidget {
-  const ElectricityView({super.key});
-  static const routeName = '/electricityScreen';
+class ExamPinScreen extends StatelessWidget {
+  const ExamPinScreen({super.key});
+  static const routeName = '/examPinScreen';
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,10 @@ class ElectricityView extends StatelessWidget {
                     child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              VerticalSpacing(30),
+              ExamPinTitleSection(),
               VerticalSpacing(24),
-              ElectricityTitleSection(),
-              VerticalSpacing(24),
-              ElectricityInputSection(),
+              ExamPinInputSection()
             ],
                     ),
                   ),

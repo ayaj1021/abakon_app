@@ -12,13 +12,15 @@ class Airtime extends StatelessWidget {
       body: SafeArea(
           child: Padding(
         padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AirtimeTitleSection(),
-            VerticalSpacing(24),
-            AirtimeInputSection()
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AirtimeTitleSection(),
+              VerticalSpacing(24),
+              AirtimeInputSection()
+            ],
+          ),
         ),
       )),
     );

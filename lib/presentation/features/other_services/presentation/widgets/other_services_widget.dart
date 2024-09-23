@@ -7,9 +7,10 @@ import 'package:flutter_svg/svg.dart';
 
 class OtherServicesWidgets extends StatelessWidget {
   const OtherServicesWidgets(
-      {super.key, required this.icon, required this.title});
+      {super.key, required this.icon, required this.title, this.onTap});
   final String icon;
   final String title;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {

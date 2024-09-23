@@ -21,7 +21,7 @@ part 'rest_client.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
-  @POST('/register')
+  @POST('/auth/register')
   Future<BaseResponse<SignUpResponse>> signUp(
     @Body() SignUpRequest signUpRequest,
   );
@@ -116,7 +116,8 @@ abstract class RestClient {
 ProviderFamily<Dio, BaseEnv> _dio = Provider.family<Dio, BaseEnv>(
   (ref, env) {
     final dio = Dio();
-    dio.options.baseUrl = 'https://abakon.onrender.com/api/users';
+    dio.options.baseUrl = 'https://test.abakon.ng/api';
+   // dio.options.baseUrl = 'https://abakon.onrender.com/api/users';
     dio.options.headers = {
       'Content-Type': 'application/json',
       // 'accept': 'application/json',

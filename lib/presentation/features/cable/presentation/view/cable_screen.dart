@@ -11,15 +11,17 @@ class CableScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CableScreenHeaderSection(),
-              VerticalSpacing(24),
-              CableScreenInputSection(),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CableScreenHeaderSection(),
+                VerticalSpacing(24),
+                CableScreenInputSection(),
+              ],
+            ),
           ),
         ),
       ),
