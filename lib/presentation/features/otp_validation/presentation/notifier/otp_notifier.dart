@@ -20,7 +20,7 @@ class OTPVerificationNotifier<T>
   Future<void> verifyOtp({
     required VerifyOtpRequest request,
     required void Function(String error) onError,
-    required void Function() onSuccess,
+    required void Function(String message) onSuccess,
   }) async {
     state = state.copyWith(verificationState: LoadState.loading);
 
@@ -28,13 +28,13 @@ class OTPVerificationNotifier<T>
       final value = await _verificationRepository.validateSignUpOtp(
         request,
       );
-      if (!value.status) throw value.message.toException;
+      if (value.status == 'fail') throw value.msg.toException;
 
       state = state.copyWith(
         verificationState: LoadState.idle,
       );
       // onSuccess(value.data! as T);
-      onSuccess();
+      onSuccess("${value.msg}");
       // await Future.wait(
       //   [
       //     _saveToken(value.data!.token),
@@ -64,7 +64,7 @@ class OTPVerificationNotifier<T>
       final value = await _verificationRepository.resendOtp(
         request,
       );
-      if (!value.status) throw value.message.toException;
+      if (value.status == 'fail') throw value.msg.toException;
       state = state.copyWith(otpVerificationState: LoadState.idle);
       onSuccess();
     } catch (e) {

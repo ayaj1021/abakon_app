@@ -15,15 +15,15 @@ class AppException implements Exception {
     if (e.response != null && DioExceptionType.badResponse == e.type) {
       if ((e.response?.statusCode ?? 0) >= 500) {
         return BaseResponse(
-          status: false,
-          message: Strings.serverError,
+          status: 'fail',
+          msg: Strings.serverError,
           data: data,
         );
       }
       if (e.response?.statusCode == 413) {
         return BaseResponse(
-          status: false,
-          message: 'File size too large',
+          status: 'fail',
+          msg: 'File size too large',
           data: data,
         );
       }
@@ -42,15 +42,15 @@ class AppException implements Exception {
       } else if (e.response?.data is String) {
         debugLog(e.response?.data);
         return BaseResponse(
-          status: false,
-          message: e.response?.data as String,
+          status: 'fail',
+          msg: e.response?.data as String,
         );
       }
     }
     return BaseResponse(
-      status: false,
+      status: 'fail',
       data: data,
-      message: _mapException(e.type),
+      msg: _mapException(e.type),
     );
   }
 

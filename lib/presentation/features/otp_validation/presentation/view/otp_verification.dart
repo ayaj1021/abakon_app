@@ -58,13 +58,13 @@ class _OTPVerificationState<T> extends ConsumerState<OTPVerification<T>> {
   void _validateOtp() {
     ref.read(otpVerificationNotifierProvider.notifier).verifyOtp(
           request: VerifyOtpRequest(
-            activationToken: _otpController.text.trim(),
+            otp: _otpController.text.trim(), email: widget.email,
           ),
           onError: (error) {
             context.showError(message: error);
           },
-          onSuccess: () {
-            context.showSuccess(message: "Otp Validated");
+          onSuccess: (message) {
+            context.showSuccess(message: message);
             context.pushReplacementNamed(Dashboard.routeName);
           },
         );

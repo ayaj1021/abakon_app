@@ -57,7 +57,7 @@ class RegisterNotifier extends AutoDisposeNotifier<RegisterNotifierState> {
     try {
       final value = await _registerRepository.signUp(data);
       debugLog(data);
-      if (!value.status) throw value.message.toException;
+      if (value.status == 'fail' ) throw value.msg.toException;
 
       state = state.copyWith(registerState: LoadState.idle);
       onSuccess();

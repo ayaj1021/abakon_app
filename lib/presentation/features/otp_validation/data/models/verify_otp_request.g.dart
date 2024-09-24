@@ -8,5 +8,6 @@ part of 'verify_otp_request.dart';
 
 Map<String, dynamic> _$VerifyOtpRequestToJson(VerifyOtpRequest instance) =>
     <String, dynamic>{
-      'activationToken': instance.activationToken,
+      'email': instance.email,
+      'otp': instance.otp,
     };

@@ -26,7 +26,7 @@ abstract class RestClient {
     @Body() SignUpRequest signUpRequest,
   );
 
-  @POST('/login')
+  @POST('/auth/login')
   Future<BaseResponse<LoginResponse>> login(
     @Body() LoginRequest loginRequest,
   );
@@ -35,7 +35,7 @@ abstract class RestClient {
 //     @Body() CreatePinRequest loginRequest,
 //   );
 
-  @POST('/resendtoken')
+  @POST('/auth/recover')
   Future<BaseResponse<dynamic>> resendOTP(
     @Body() ResendOtpRequest request,
   );
@@ -50,7 +50,7 @@ abstract class RestClient {
 //     @Body() ResetPasswordRequest request,
 //   );
 
-  @POST('/activate')
+  @POST('/auth/verify')
   Future<BaseResponse<VerifyTokenResponse>> verifySignUpOtp(
     @Body() VerifyOtpRequest request,
     // @Queries() Map<String, dynamic> queries,

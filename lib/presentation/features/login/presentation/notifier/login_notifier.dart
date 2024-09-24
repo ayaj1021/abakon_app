@@ -25,7 +25,7 @@ class LoginNotifer extends AutoDisposeNotifier<LoginNotiferState> {
       final value = await _loginRepository.login(
         data,
       );
-      if (!value.status) throw value.message.toException;
+      if (value.status == 'fail') throw value.msg.toException;
 
       // await Future.wait([
       //   _saveUserPassword(data.password),

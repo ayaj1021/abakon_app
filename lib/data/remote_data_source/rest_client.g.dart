@@ -73,7 +73,7 @@ class _RestClient implements RestClient {
     )
         .compose(
           _dio.options,
-          '/login',
+          '/auth/login',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -110,7 +110,7 @@ class _RestClient implements RestClient {
     )
         .compose(
           _dio.options,
-          '/resendtoken',
+          '/auth/recover',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -148,7 +148,7 @@ class _RestClient implements RestClient {
     )
         .compose(
           _dio.options,
-          '/activate',
+          '/auth/verify',
           queryParameters: queryParameters,
           data: _data,
         )

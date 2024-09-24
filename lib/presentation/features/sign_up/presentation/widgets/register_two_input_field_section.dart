@@ -80,7 +80,7 @@ class RegisterTwoInputFieldSection extends StatelessWidget {
           child: Column(
             children: [
               PinInfoWidget(
-                info: 'Must be 4 digits',
+                info: 'Must be 5 digits',
               ),
               PinInfoWidget(
                 info: 'Must not be your phone number',
