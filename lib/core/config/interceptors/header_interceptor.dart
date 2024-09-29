@@ -1,17 +1,18 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:abakon/core/config/exception/logger.dart';
-import 'package:abakon/domain/repository/user_auth_repository.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:dio/dio.dart';
 
 class HeaderInterCeptor extends Interceptor {
   HeaderInterCeptor({
     required this.dio,
-    required this.authRepository,
+    required this.secureStorage,
     // required this.onTokenExpired,
   });
   final Dio dio;
-  final UserAuthRepository authRepository;
+  final SecureStorage secureStorage;
 //  final void Function() onTokenExpired;
 
   final _authRoutes = [
@@ -30,16 +31,29 @@ class HeaderInterCeptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     try {
-      final token = await authRepository.getUserToken();
+      final token = await secureStorage.getUserToken();
+      log("This is user accesstoken $token");
+
       debugLog('[TOKEN]$token');
-      if (token?.isNotEmpty ?? false) {
-        options.headers['authorization'] = 'Bearer $token';
+      if (token.toString().isNotEmpty) {
+        options.headers['Authorization'] = 'Bearer $token';
+        // options.headers['authorization'] = '$token';
         // options.headers['Cookie'] = 'accessToken=${token.token}';
       }
       //log("This is user token $token");
     } catch (e) {
       debugLog(e);
     }
+
+    // try {
+    //   final token = userRepository.getToken();
+    //   if (token.isNotEmpty) {
+    //     options.headers['Authorization'] = 'Bearer $token';
+    //     debugLog('[TOKEN]$token');
+    //   }
+    // } catch (e) {
+    //   debugLog(e);
+    // }
     debugLog('[URL]${options.uri}');
     debugLog('[BODY] ${options.data}');
     debugLog('[METHOD] ${options.method}');

@@ -8,12 +8,12 @@ part of 'sign_up_response.dart';
 
 SignUpResponse _$SignUpResponseFromJson(Map<String, dynamic> json) =>
     SignUpResponse(
-      status: json['status'] as String,
+      status: json['status'] as bool,
       msg: json['msg'] as String,
     );
 
 DSUser _$DSUserFromJson(Map<String, dynamic> json) => DSUser(
-      status: json['status'] as String,
+      status: json['status'] as bool,
       msg: json['msg'] as String,
     );
 

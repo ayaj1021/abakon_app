@@ -1,6 +1,5 @@
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
-import 'package:abakon/domain/repository/user_auth_repository.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/repository/verification_repository.dart';
@@ -28,18 +27,11 @@ class OTPVerificationNotifier<T>
       final value = await _verificationRepository.validateSignUpOtp(
         request,
       );
-      if (value.status == 'fail') throw value.msg.toException;
+      if (!value.status) throw value.msg.toException;
 
-      state = state.copyWith(
-        verificationState: LoadState.idle,
-      );
-      // onSuccess(value.data! as T);
-      onSuccess("${value.msg}");
-      // await Future.wait(
-      //   [
-      //     _saveToken(value.data!.token),
-      //   ],
-      // );
+      state = state.copyWith(verificationState: LoadState.idle);
+
+      onSuccess(value.msg.toString());
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(
@@ -48,9 +40,9 @@ class OTPVerificationNotifier<T>
     }
   }
 
-  Future<void> _saveToken(String token) async {
-    await ref.read(userAuthRepositoryProvider).saveToken(token);
-  }
+  // Future<void> _saveToken(String token) async {
+  //   await ref.read(userAuthRepositoryProvider).saveToken(token);
+  // }
 
   Future<void> resendOtp({
     required void Function() onSuccess,
@@ -64,7 +56,7 @@ class OTPVerificationNotifier<T>
       final value = await _verificationRepository.resendOtp(
         request,
       );
-      if (value.status == 'fail') throw value.msg.toException;
+      if (!value.status) throw value.msg.toException;
       state = state.copyWith(otpVerificationState: LoadState.idle);
       onSuccess();
     } catch (e) {

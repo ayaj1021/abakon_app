@@ -8,22 +8,42 @@ part of 'login_response.dart';
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
-      tokens: json['tokens'] == null
+      status: json['status'] as bool?,
+      msg: json['msg'] as String?,
+      token: json['token'] as String?,
+      accessToken: json['accessToken'] as String?,
+      user: json['user'] == null
           ? null
-          : Tokens.fromJson(json['tokens'] as Map<String, dynamic>),
-      email: json['email'] as String?,
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
-      phoneNumber: json['phoneNumber'] as String?,
-      id: json['id'] as String?,
+          : User.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{
-      'tokens': instance.tokens,
-      'email': instance.email,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'phoneNumber': instance.phoneNumber,
-      'id': instance.id,
+      'status': instance.status,
+      'msg': instance.msg,
+      'token': instance.token,
+      'accessToken': instance.accessToken,
+      'user': instance.user,
+    };
+
+User _$UserFromJson(Map<String, dynamic> json) => User(
+      sId: json['sId'] as String?,
+      sFname: json['sFname'] as String?,
+      sLname: json['sLname'] as String?,
+      sEmail: json['sEmail'] as String?,
+      sPhone: json['sPhone'] as String? ?? '',
+      sState: json['sState'] as String?,
+      sType: json['sType'] as num?,
+      sRegStatus: json['sRegStatus'] as num?,
+    );
+
+Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'sId': instance.sId,
+      'sFname': instance.sFname,
+      'sLname': instance.sLname,
+      'sEmail': instance.sEmail,
+      'sPhone': instance.sPhone,
+      'sState': instance.sState,
+      'sType': instance.sType,
+      'sRegStatus': instance.sRegStatus,
     };

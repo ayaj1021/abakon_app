@@ -18,7 +18,7 @@ class OTPVerificationRepository {
   ) async {
     try {
       final response = await _restClient.verifySignUpOtp(req);
-      return response;
+      return BaseResponse(status: true, data: response);
     } on DioException catch (e) {
       return AppException.handleError(e);
     }

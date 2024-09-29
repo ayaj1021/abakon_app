@@ -1,8 +1,8 @@
-import 'package:abakon/core/config/base_response/base_response.dart';
 import 'package:abakon/core/config/env/base_env.dart';
 import 'package:abakon/core/config/env/prod_env.dart';
 import 'package:abakon/core/config/interceptors/header_interceptor.dart';
-import 'package:abakon/domain/repository/user_auth_repository.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
+import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/data/models/login_response.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_request.dart';
@@ -22,12 +22,12 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @POST('/auth/register')
-  Future<BaseResponse<SignUpResponse>> signUp(
+  Future<SignUpResponse> signUp(
     @Body() SignUpRequest signUpRequest,
   );
 
   @POST('/auth/login')
-  Future<BaseResponse<LoginResponse>> login(
+  Future<LoginResponse> login(
     @Body() LoginRequest loginRequest,
   );
 //   @POST('/auth/create-pin')
@@ -36,7 +36,7 @@ abstract class RestClient {
 //   );
 
   @POST('/auth/recover')
-  Future<BaseResponse<dynamic>> resendOTP(
+  Future<dynamic> resendOTP(
     @Body() ResendOtpRequest request,
   );
 
@@ -51,10 +51,15 @@ abstract class RestClient {
 //   );
 
   @POST('/auth/verify')
-  Future<BaseResponse<VerifyTokenResponse>> verifySignUpOtp(
+  Future<VerifyTokenResponse> verifySignUpOtp(
     @Body() VerifyOtpRequest request,
     // @Queries() Map<String, dynamic> queries,
   );
+
+  @GET('/user')
+  Future<GetAllUserDetailsResponse> getAllUserDetails(
+      // @Queries() Map<String, dynamic> queries,
+      );
 
 //   @POST('/auth/update-password')
 //   Future<BaseResponse<ChangePasswordResponse>> changePassword(
@@ -117,16 +122,19 @@ ProviderFamily<Dio, BaseEnv> _dio = Provider.family<Dio, BaseEnv>(
   (ref, env) {
     final dio = Dio();
     dio.options.baseUrl = 'https://test.abakon.ng/api';
-   // dio.options.baseUrl = 'https://abakon.onrender.com/api/users';
+    // dio.options.baseUrl = 'https://abakon.onrender.com/api/users';
+
     dio.options.headers = {
       'Content-Type': 'application/json',
+
+      // 'Authorization': 'Bearer ${ref.read(tokenProvider)}',
       // 'accept': 'application/json',
     };
 
     dio.interceptors.add(
       HeaderInterCeptor(
         dio: dio,
-        authRepository: ref.read(userAuthRepositoryProvider),
+        secureStorage: ref.read(localStorageProvider),
         // onTokenExpired: () {
         //ref.read(logoutProvider.notifier).state = ActivityStatus.loggedOut;
         // },

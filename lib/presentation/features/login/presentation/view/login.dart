@@ -4,6 +4,7 @@ import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
+import 'package:abakon/presentation/features/dashboard/home/presentation/notifier/get_all_user_details_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/presentation/notifier/login_notifier.dart';
@@ -27,32 +28,40 @@ class Login extends ConsumerStatefulWidget {
 
 class _LoginState extends ConsumerState<Login> {
   final ValueNotifier<bool> _isLoginEnabled = ValueNotifier(false);
-  late TextEditingController _emailController;
+  late TextEditingController _phoneNumberController;
   late TextEditingController _passwordController;
   final _emailAddressController = TextEditingController();
 
   @override
   void initState() {
-    _emailController = TextEditingController()..addListener(_listener);
+    _phoneNumberController = TextEditingController()..addListener(_listener);
     _passwordController = TextEditingController()..addListener(_listener);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref
+          .read(getUserDetailsNotifierProvider.notifier)
+          .getAllUserDetails();
+    });
     super.initState();
   }
 
   void _listener() {
-    _isLoginEnabled.value = _emailController.text.isNotEmpty &&
+    _isLoginEnabled.value = _phoneNumberController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty;
   }
 
   @override
   void dispose() {
     _isLoginEnabled.dispose();
-    _emailController.dispose();
+    _phoneNumberController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final firstName = ref.watch(getUserDetailsNotifierProvider
+        .select((v) => v.getAllDetails.data?.allDetails?.sFname));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -71,11 +80,12 @@ class _LoginState extends ConsumerState<Login> {
                   ),
                 ),
                 Text(
-                  Strings.welcome('Joseph'),
+                  Strings.welcome(firstName ?? ''),
                   style: context.textTheme.s20w900.copyWith(
                     color: AppColors.primary591E0C,
                   ),
                 ),
+                //email: ayaj1021+v@gmail.com, phone: 09123456703
                 Text(
                   Strings.logInYourAccount,
                   style: context.textTheme.s12w400
@@ -84,7 +94,7 @@ class _LoginState extends ConsumerState<Login> {
                 const VerticalSpacing(70),
                 LoginInputSection(
                   passwordController: _passwordController,
-                  emailAddressController: _emailController,
+                  phoneNumberController: _phoneNumberController,
                 ),
                 GestureDetector(
                   onTap: () => forgotPasswordBottomSheet(
@@ -115,9 +125,9 @@ class _LoginState extends ConsumerState<Login> {
                         return AbakonSendButton(
                           isLoading: isLoading,
                           isEnabled: r && !isLoading,
-                          onTap: ()=> context.pushNamed(Dashboard.routeName),
-                          
-                          //_login,
+                          onTap: () => _login(),
+                          //context.pushNamed(Dashboard.routeName),
+
                           title: Strings.login,
                         );
                       },
@@ -164,15 +174,17 @@ class _LoginState extends ConsumerState<Login> {
   void _login() {
     final data = LoginRequest(
       password: _passwordController.text.trim(),
-      email: _emailController.text.toLowerCase().trim(),
+      phone: _phoneNumberController.text.toLowerCase().trim(),
     );
     ref.read(loginNotifer.notifier).login(
           data: data,
           onError: (error) {
             context.showError(message: error);
           },
-          onSuccess: () {
+          onSuccess: (message) {
             _isLoginEnabled.value = false;
+            context.showSuccess(message: 'Login Successful');
+            // log('Login successfull');
             context.replaceAll(Dashboard.routeName);
           },
         );

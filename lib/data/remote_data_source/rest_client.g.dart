@@ -22,14 +22,13 @@ class _RestClient implements RestClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<SignUpResponse>> signUp(
-      SignUpRequest signUpRequest) async {
+  Future<SignUpResponse> signUp(SignUpRequest signUpRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(signUpRequest.toJson());
-    final _options = _setStreamType<BaseResponse<SignUpResponse>>(Options(
+    final _options = _setStreamType<SignUpResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -46,12 +45,9 @@ class _RestClient implements RestClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<SignUpResponse> _value;
+    late SignUpResponse _value;
     try {
-      _value = BaseResponse<SignUpResponse>.fromJson(
-        _result.data!,
-        (json) => SignUpResponse.fromJson(json as Map<String, dynamic>),
-      );
+      _value = SignUpResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -60,13 +56,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<BaseResponse<LoginResponse>> login(LoginRequest loginRequest) async {
+  Future<LoginResponse> login(LoginRequest loginRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(loginRequest.toJson());
-    final _options = _setStreamType<BaseResponse<LoginResponse>>(Options(
+    final _options = _setStreamType<LoginResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -83,12 +79,9 @@ class _RestClient implements RestClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<LoginResponse> _value;
+    late LoginResponse _value;
     try {
-      _value = BaseResponse<LoginResponse>.fromJson(
-        _result.data!,
-        (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
-      );
+      _value = LoginResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -97,13 +90,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<BaseResponse<dynamic>> resendOTP(ResendOtpRequest request) async {
+  Future<dynamic> resendOTP(ResendOtpRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<BaseResponse<dynamic>>(Options(
+    final _options = _setStreamType<dynamic>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -119,29 +112,19 @@ class _RestClient implements RestClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<dynamic> _value;
-    try {
-      _value = BaseResponse<dynamic>.fromJson(
-        _result.data!,
-        (json) => json as dynamic,
-      );
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 
   @override
-  Future<BaseResponse<VerifyTokenResponse>> verifySignUpOtp(
-      VerifyOtpRequest request) async {
+  Future<VerifyTokenResponse> verifySignUpOtp(VerifyOtpRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<BaseResponse<VerifyTokenResponse>>(Options(
+    final _options = _setStreamType<VerifyTokenResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -158,12 +141,42 @@ class _RestClient implements RestClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<VerifyTokenResponse> _value;
+    late VerifyTokenResponse _value;
     try {
-      _value = BaseResponse<VerifyTokenResponse>.fromJson(
-        _result.data!,
-        (json) => VerifyTokenResponse.fromJson(json as Map<String, dynamic>),
-      );
+      _value = VerifyTokenResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<GetAllUserDetailsResponse> getAllUserDetails() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<GetAllUserDetailsResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/user',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetAllUserDetailsResponse _value;
+    try {
+      _value = GetAllUserDetailsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

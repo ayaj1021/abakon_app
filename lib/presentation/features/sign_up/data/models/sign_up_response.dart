@@ -18,7 +18,7 @@ class SignUpResponse extends DSUser {
 
 @JsonSerializable()
 class DSUser extends Equatable {
-  final String status;
+  final bool status;
 
   final String msg;
 

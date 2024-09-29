@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/data/repository/login_repository.dart';
 import 'package:abakon/presentation/features/login/presentation/notifier/login_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 class LoginNotifer extends AutoDisposeNotifier<LoginNotiferState> {
   LoginNotifer();
@@ -18,24 +20,30 @@ class LoginNotifer extends AutoDisposeNotifier<LoginNotiferState> {
   Future<void> login({
     required LoginRequest data,
     required void Function(String error) onError,
-    required void Function() onSuccess,
+    required void Function(String message) onSuccess,
   }) async {
     try {
       state = state.copyWith(loginState: LoadState.loading);
       final value = await _loginRepository.login(
         data,
       );
-      if (value.status == 'fail') throw value.msg.toException;
+      if (!value.status) throw value.msg.toException;
+
+      // await  SecureStorage().saveUserToken(value.data!.accessToken.toString());
 
       // await Future.wait([
-      //   _saveUserPassword(data.password),
-      //   _saveUser(value.data!),
-      //   _saveToken(value.data!.tokens!),
-      //   _saveCurrentState(),
+      //  _saveUserPassword(data.password),
+      // _saveUser(value.data!),
+    await SecureStorage().saveUserToken(value.data!.accessToken.toString());
+    
+     // _saveToken(value.data?.accessToken.toString());
+      // _saveCurrentState(),
+
+      log("This is token ${value.data?.accessToken.toString()}");
       // ]);
 
       state = state.copyWith(loginState: LoadState.idle);
-      onSuccess();
+      onSuccess(value.msg.toString());
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(loginState: LoadState.idle);
@@ -51,36 +59,43 @@ class LoginNotifer extends AutoDisposeNotifier<LoginNotiferState> {
   //   await ref.read(userRepositoryProvider).updateUser(user);
   // }
 
-  // Future<void> _saveToken(Tokens token) async {
-  //   await ref.read(userAuthRepositoryProvider).saveToken(token);
-  // }
+  // Future<void> _saveToken(String? token) async {
+  //   if (token == null || token.isEmpty) {
+  //     // Handle null or empty token case, perhaps show an error or log it
+  //     print("Token is null or empty, cannot save.");
+  //     return;
+  //   }
 
-  // Future<void> _saveUserPassword(String password) async {
-  //   await ref.read(userAuthRepositoryProvider).saveUserPassword(password);
-  // }
+//   final storage = SecureStorage();
+//   await storage.saveUserToken(token);
+//   // await ref.read(userAuthRepositoryProvider).saveToken(token);
+// }
 
-  // Future<void> _saveCurrentState() async {
-  //   await ref
-  //       .read(userAuthRepositoryProvider)
-  //       .saveCurrentState(CurrentState.onboarded);
-  // }
+    // Future<void> _saveToken(token) async {
+    //   // final storage = SecureStorage();
+    //   // await storage.saveUserToken(token);
+    //   await ref.read(localStorageProvider.select((v)=> v.saveUserToken(token)));
+    // }
 
-  Future<void> logout({
-    required void Function(String error) onError,
-    required void Function() onSuccess,
-  }) async {
-    try {
-      state = state.copyWith(logoutState: LoadState.loading);
-     // final res = await _loginRepository.logout();
-    //  if (!res.status) throw res.message.toException;
-      state = state.copyWith(logoutState: LoadState.success);
-      onSuccess();
-    } catch (e) {
-      onError(e.toString());
-      state = state.copyWith(loginState: LoadState.idle);
+ 
+
+    Future<void> logout({
+      required void Function(String error) onError,
+      required void Function() onSuccess,
+    }) async {
+      try {
+        state = state.copyWith(logoutState: LoadState.loading);
+        // final res = await _loginRepository.logout();
+        //  if (!res.status) throw res.message.toException;
+        state = state.copyWith(logoutState: LoadState.success);
+        onSuccess();
+      } catch (e) {
+        onError(e.toString());
+        state = state.copyWith(loginState: LoadState.idle);
+      }
     }
   }
-}
+
 
 final loginNotifer =
     NotifierProvider.autoDispose<LoginNotifer, LoginNotiferState>(
