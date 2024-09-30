@@ -122,9 +122,9 @@ class Strings {
 
   static const String accountNumberText = 'Account Number';
   static const String accountName = 'Account Name';
-  static const String bankNumber = 'Bank Number';
-  static const String referFriendAndFamily =
-      'Refer your friend and family to Digitsend and get a chance to earn big';
+  static const String bankDeposit = 'Bank Deposit';
+  static const String fundsTransferredToThisAccounts =
+      'Funds transferred to this bank accounts are instantly credited to your Abakon wallet!';
 
   static const String upload = 'Upload Image from';
   static const String virtualAccountDetails = 'Virtual Account Details';

@@ -1,6 +1,8 @@
+import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/presentation/features/bank_deposits/presentation/view/banks.dart';
 import 'package:abakon/presentation/features/dashboard/home/presentation/notifier/get_all_user_details_notifier.dart';
 import 'package:abakon/presentation/general_widgets/small_button_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
@@ -94,13 +96,14 @@ class _WalletBalanceSectionState extends ConsumerState<WalletBalanceSection> {
                   }),
                 ],
               ),
-              const Column(
+               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  VerticalSpacing(61),
+                  const VerticalSpacing(61),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: SmallButtonWidget(
+                      onTap: () => context.pushNamed(BankScreen.routeName),
                       title: 'Fund wallet',
                       buttonColor: AppColors.white,
                     ),

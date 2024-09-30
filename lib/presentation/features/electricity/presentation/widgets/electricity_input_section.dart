@@ -2,6 +2,7 @@ import 'package:abakon/presentation/features/electricity/presentation/widgets/el
 import 'package:abakon/presentation/features/electricity/presentation/widgets/electricity_provider_dropdown_widget.dart';
 import 'package:abakon/presentation/features/electricity/presentation/widgets/electricity_text_field.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -32,9 +33,22 @@ class ElectricityInputSection extends StatelessWidget {
           labelText: 'Amount to pay',
         ),
         const VerticalSpacing(223),
-        AbakonSendButton(onTap: () {}, title: 'Continue')
+        AbakonSendButton(
+            onTap: () {
+              showModalBottomSheet<void>(
+                  // showDragHandle: true,
+
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return const PurchaseBottomSheetWidget(
+                      purchaseInfo:
+                          'You are about to purchase an "MTN" airtime of "100" for the phone number "08039334477"Do you wish to continue?',
+                    );
+                  });
+            },
+            title: 'Continue')
       ],
     );
   }
 }
-

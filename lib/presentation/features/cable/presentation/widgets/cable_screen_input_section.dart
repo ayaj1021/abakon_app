@@ -1,10 +1,10 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
-import 'package:abakon/presentation/features/cable/presentation/widgets/confirm_cable_tv_subscription.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/network_dropdown_widget.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/plan_dropdown_widget.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/subscription_type_section.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -57,10 +57,21 @@ class CableScreenInputSection extends StatelessWidget {
         const VerticalSpacing(223),
         AbakonSendButton(
             onTap: () {
-              showModalBottomSheet(
+              // showModalBottomSheet(
+              //     context: context,
+              //     builder: (context) {
+              //       return const ConfirmCableTvSubscription();
+              //     });
+              showModalBottomSheet<void>(
+                  // showDragHandle: true,
+
+                  isScrollControlled: true,
                   context: context,
                   builder: (context) {
-                    return const ConfirmCableTvSubscription();
+                    return const PurchaseBottomSheetWidget(
+                      purchaseInfo:
+                          'You are about to purchase an "MTN" airtime of "100" for the phone number "08039334477"Do you wish to continue?',
+                    );
                   });
             },
             title: 'Continue')

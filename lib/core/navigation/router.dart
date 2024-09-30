@@ -1,5 +1,6 @@
 
 
+import 'package:abakon/presentation/features/bank_deposits/presentation/view/banks.dart';
 import 'package:abakon/presentation/features/cable/presentation/view/cable_screen.dart';
 import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
 import 'package:abakon/presentation/features/change_transaction_pin/presentation/view/change_transaction_pin_view.dart';
@@ -32,6 +33,7 @@ class AppRouter {
     OtherServicesScreen.routeName: (context) => const OtherServicesScreen(),
     ElectricityView.routeName: (context) => const ElectricityView(),
     ExamPinScreen.routeName: (context) => const ExamPinScreen(),
+    BankScreen.routeName: (context) => const BankScreen(),
 
 
   };

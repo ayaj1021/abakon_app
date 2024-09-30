@@ -3,6 +3,7 @@ import 'package:abakon/presentation/features/dashboard/airtime/presentation/widg
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/widgets/airtime_network_dropdown_widget.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/widgets/airtime_type_dropdown_widget.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class AirtimeInputSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         const AirtimeNetWorkDropDown(),
         const VerticalSpacing(16),
@@ -25,11 +26,22 @@ class AirtimeInputSection extends StatelessWidget {
         const VerticalSpacing(197),
         const DisableNumberValidatorCheckbox(),
         const VerticalSpacing(12),
-        AbakonSendButton(onTap: (){}, title: 'Buy Airtime')
+        AbakonSendButton(
+            onTap: () {
+              showModalBottomSheet<void>(
+                  // showDragHandle: true,
 
-
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return const PurchaseBottomSheetWidget(
+                      purchaseInfo:
+                          'You are about to purchase an "MTN" airtime of "100" for the phone number "08039334477"Do you wish to continue?',
+                    );
+                  });
+            },
+            title: 'Buy Airtime')
       ],
     );
   }
 }
-
