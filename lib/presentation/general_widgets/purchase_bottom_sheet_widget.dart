@@ -9,9 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PurchaseBottomSheetWidget extends StatelessWidget {
-  const PurchaseBottomSheetWidget({super.key, required this.purchaseInfo});
+  const PurchaseBottomSheetWidget({super.key, required this.purchaseInfo,required this.onTap});
   final String purchaseInfo;
-  // final void Function()? onTap;
+   final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class PurchaseBottomSheetWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  height: 43.h,
+                //  height: 43.h,
                   width: 144.w,
                   child: AbakonSendButton(
                     onTap: () {
@@ -60,9 +60,9 @@ class PurchaseBottomSheetWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 43.h,
+                 // height: 43.h,
                   width: 144.w,
-                  child: AbakonSendButton(onTap: () {}, title: 'Yes'),
+                  child: AbakonSendButton(onTap: onTap, title: 'Yes'),
                 ),
               ],
             ),

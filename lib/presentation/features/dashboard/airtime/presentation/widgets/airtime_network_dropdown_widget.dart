@@ -1,14 +1,29 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AirtimeNetWorkDropDown extends StatelessWidget {
-  const AirtimeNetWorkDropDown({super.key});
+// ignore: must_be_immutable
+class AirtimeNetWorkDropDown extends StatefulWidget {
+  AirtimeNetWorkDropDown(
+      {super.key,
+      required this.dataPlans,
+      required this.onNetworkSelected,
+      required this.selectedNetwork});
+  final List<AirtimeDiscount> dataPlans;
+  String? selectedNetwork;
+  final Function(String) onNetworkSelected;
 
   @override
+  State<AirtimeNetWorkDropDown> createState() => _AirtimeNetWorkDropDownState();
+}
+
+class _AirtimeNetWorkDropDownState extends State<AirtimeNetWorkDropDown> {
+  @override
   Widget build(BuildContext context) {
+    final plans = widget.dataPlans.map((plan) => plan.network).toSet();
     return DropdownButtonFormField(
+      value: widget.selectedNetwork,
       elevation: 0,
       decoration: InputDecoration(
         labelText: 'Select network provider',
@@ -32,31 +47,34 @@ class AirtimeNetWorkDropDown extends StatelessWidget {
       ),
 
       // dropdownColor: Colors.transparent,
-      items: cables.map((cables) {
+      items: plans.map((airtime) {
         return DropdownMenuItem<String>(
-          value: cables['title'],
+          value: airtime,
           child: Row(
             children: [
-              SizedBox(
-                height: 32.h,
-                width: 32.w,
-                child: Image.asset(
-                  cables['logo'],
-                  // fit: BoxFit.cover,
-                ),
-              ),
-              Text(cables['title'],
+              // SizedBox(
+              //   height: 32.h,
+              //   width: 32.w,
+              //   child: Image.asset(
+              //     cables['logo'],
+              //     // fit: BoxFit.cover,
+              //   ),
+              // ),
+              Text(airtime.toString(),
                   style: const TextStyle(color: Colors.black)),
             ],
           ),
         );
       }).toList(),
-      onChanged: (newValue) {},
+      onChanged: (newValue) {
+        setState(() {
+          widget.selectedNetwork = newValue!;
+        });
+        widget.onNetworkSelected(newValue!);
+      },
     );
   }
 }
-
-
 
 List cables = [
   {"logo": "assets/logo/mtn.png", "title": "Mtn"},
@@ -64,4 +82,3 @@ List cables = [
   {"logo": "assets/logo/glo.png", "title": "Glo"},
   {"logo": "assets/logo/9mobile.png", "title": "9mobile"},
 ];
-

@@ -1,14 +1,38 @@
+
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DataNetWorkDropDown extends StatelessWidget {
-  const DataNetWorkDropDown({super.key});
+// ignore: must_be_immutable
+class DataNetWorkDropDown extends StatefulWidget {
+  DataNetWorkDropDown(
+      {super.key,
+      required this.dataPlans,
+      required this.selectedNetwork,
+      required this.onNetworkSelected});
+
+  final List<DataPlan> dataPlans;
+  String? selectedNetwork;
+  final Function(String) onNetworkSelected;
 
   @override
+  State<DataNetWorkDropDown> createState() => _DataNetWorkDropDownState();
+}
+
+class _DataNetWorkDropDownState extends State<DataNetWorkDropDown> {
+  @override
   Widget build(BuildContext context) {
+    final plans = widget.dataPlans.map((plan) => plan.network).toSet();
     return DropdownButtonFormField(
+      value: widget.selectedNetwork,
+      onChanged: (String? newValue) {
+        setState(() {
+          widget.selectedNetwork = newValue!;
+        });
+        widget.onNetworkSelected(newValue!);
+       
+      },
       elevation: 0,
       decoration: InputDecoration(
         labelText: 'Select network provider',
@@ -30,33 +54,35 @@ class DataNetWorkDropDown extends StatelessWidget {
           ),
         ),
       ),
+      items: plans
+          .map<DropdownMenuItem<String>>((dataPlans) {
+            return DropdownMenuItem<String>(
+              value: dataPlans,
+              child: Row(
+                children: [
+                  // SizedBox(
+                  //   height: 32.h,
+                  //   width: 32.w,
+                  //   child:
 
-      // dropdownColor: Colors.transparent,
-      items: cables.map((cables) {
-        return DropdownMenuItem<String>(
-          value: cables['title'],
-          child: Row(
-            children: [
-              SizedBox(
-                height: 32.h,
-                width: 32.w,
-                child: Image.asset(
-                  cables['logo'],
-                  // fit: BoxFit.cover,
-                ),
+                  //   Image.asset(
+                  //     //logo
+                  //    // logo
+                  //     networkProvidersImage[2],
+                  //     // fit: BoxFit.cover,
+                  //   ),
+                  // ),
+                  Text(dataPlans.toString(),
+                      style: const TextStyle(color: Colors.black)),
+                ],
               ),
-              Text(cables['title'],
-                  style: const TextStyle(color: Colors.black)),
-            ],
-          ),
-        );
-      }).toList(),
-      onChanged: (newValue) {},
+            );
+          })
+          .toSet()
+          .toList(),
     );
   }
 }
-
-
 
 List cables = [
   {"logo": "assets/logo/mtn.png", "title": "Mtn"},
@@ -65,3 +91,9 @@ List cables = [
   {"logo": "assets/logo/9mobile.png", "title": "9mobile"},
 ];
 
+List<String> networkProvidersImage = [
+  'assets/logo/mtn.png',
+  'assets/logo/glo.png',
+  'assets/logo/airtel.png',
+  'assets/logo/9mobile.png',
+];

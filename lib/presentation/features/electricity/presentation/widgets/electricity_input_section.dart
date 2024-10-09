@@ -41,9 +41,9 @@ class ElectricityInputSection extends StatelessWidget {
                   isScrollControlled: true,
                   context: context,
                   builder: (context) {
-                    return const PurchaseBottomSheetWidget(
+                    return  PurchaseBottomSheetWidget(
                       purchaseInfo:
-                          'You are about to purchase an "MTN" airtime of "100" for the phone number "08039334477"Do you wish to continue?',
+                          'You are about to purchase an "MTN" airtime of "100" for the phone number "08039334477"Do you wish to continue?', onTap: () {  },
                     );
                   });
             },

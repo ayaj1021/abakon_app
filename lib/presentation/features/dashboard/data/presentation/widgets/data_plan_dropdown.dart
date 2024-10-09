@@ -1,14 +1,32 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:flutter/material.dart';
 
-class DataPlanDropDown extends StatelessWidget {
-  const DataPlanDropDown({super.key});
+// ignore: must_be_immutable
+class DataPlanDropDown extends StatefulWidget {
+  DataPlanDropDown(
+      {super.key,
+      required this.dataPlans,
+      required this.onPlanSelected,
+      required this.selectedPlan});
+  final List<DataPlan> dataPlans;
 
+  String? selectedPlan;
+  String? selectedPlanId;
+  final Function(String, String) onPlanSelected;
 
   @override
+  State<DataPlanDropDown> createState() => _DataPlanDropDownState();
+}
+
+class _DataPlanDropDownState extends State<DataPlanDropDown> {
+  @override
   Widget build(BuildContext context) {
+    final plans = widget.dataPlans.map((plan) => plan.name).toSet();
+     widget.selectedPlanId = widget.dataPlans.where((e)=> e.pId == plans).toString();
     return DropdownButtonFormField(
+      value: widget.selectedPlan,
       elevation: 0,
       decoration: InputDecoration(
         labelText: 'Data Plan',
@@ -30,19 +48,23 @@ class DataPlanDropDown extends StatelessWidget {
           ),
         ),
       ),
-      // dropdownColor: Colors.transparent,
       items: plans.map((plans) {
         return DropdownMenuItem<String>(
-          value: plans['title'],
+          value: plans,
           child: Text(
-            plans['title'],
+            plans.toString(),
             style: context.textTheme.s12w500.copyWith(
               color: AppColors.black,
             ),
           ),
         );
       }).toList(),
-      onChanged: (newValue) {},
+      onChanged: (String? newValue) {
+        setState(() {
+          widget.selectedPlan = newValue!;
+        });
+        widget.onPlanSelected(newValue!,   widget.selectedPlanId.toString());
+      },
     );
   }
 }

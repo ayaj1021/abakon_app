@@ -26,7 +26,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     Timer(const Duration(seconds: 3), () async {
       final token = await secureStorage.getUserToken();
 
-      //  final token = await ref.read(localStorageProvider.select((v)=>v.getUserToken()));
       log('token is ${token.toString()}');
       if (token != null) {
         context.pushReplacementNamed(Dashboard.routeName);

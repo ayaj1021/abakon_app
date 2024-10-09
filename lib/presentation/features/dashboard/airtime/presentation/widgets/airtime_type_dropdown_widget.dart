@@ -1,13 +1,28 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:flutter/material.dart';
 
-class AirtimeTypeDropDown extends StatelessWidget {
-  const AirtimeTypeDropDown({super.key});
+// ignore: must_be_immutable
+class AirtimeTypeDropDown extends StatefulWidget {
+  AirtimeTypeDropDown(
+      {super.key,
+      required this.airtimePlans,
+      required this.onTypeSelected,
+      required this.selectedType});
 
+  final List<AirtimeDiscount> airtimePlans;
+  String? selectedType;
+  final Function(String) onTypeSelected;
 
   @override
+  State<AirtimeTypeDropDown> createState() => _AirtimeTypeDropDownState();
+}
+
+class _AirtimeTypeDropDownState extends State<AirtimeTypeDropDown> {
+  @override
   Widget build(BuildContext context) {
+    final plans = widget.airtimePlans.map((plan) => plan.aType).toSet();
     return DropdownButtonFormField(
       elevation: 0,
       decoration: InputDecoration(
@@ -33,21 +48,21 @@ class AirtimeTypeDropDown extends StatelessWidget {
       // dropdownColor: Colors.transparent,
       items: plans.map((plans) {
         return DropdownMenuItem<String>(
-          value: plans['title'],
+          value: plans,
           child: Text(
-            plans['title'],
+            plans.toString(),
             style: context.textTheme.s12w500.copyWith(
               color: AppColors.black,
             ),
           ),
         );
       }).toList(),
-      onChanged: (newValue) {},
+      onChanged: (newValue) {
+           setState(() {
+          widget.selectedType = newValue!;
+        });
+        widget.onTypeSelected(newValue!);
+      },
     );
   }
 }
-
-List plans = [
-  {"title": "Vtu"},
-  {"title": "Share and sell"},
-];

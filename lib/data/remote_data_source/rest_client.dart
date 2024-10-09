@@ -2,6 +2,11 @@ import 'package:abakon/core/config/env/base_env.dart';
 import 'package:abakon/core/config/env/prod_env.dart';
 import 'package:abakon/core/config/interceptors/header_interceptor.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
+import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
+import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_response.dart';
+import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
+import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_response.dart';
+import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/data/models/login_response.dart';
@@ -30,6 +35,19 @@ abstract class RestClient {
   Future<LoginResponse> login(
     @Body() LoginRequest loginRequest,
   );
+
+  @POST('/data')
+  Future<BuyDataResponse> buyData(
+    @Body() BuyDataRequest buyDataRequest,
+  );
+
+
+@POST('/airtime')
+  Future<BuyAirtimeResponse> buyAirtime(
+    @Body() BuyAirtimeRequest buyDataRequest,
+  );
+
+
 //   @POST('/auth/create-pin')
 //   Future<BaseResponse<LoginResponse>> createPin(
 //     @Body() CreatePinRequest loginRequest,
@@ -59,7 +77,17 @@ abstract class RestClient {
   @GET('/user')
   Future<GetAllUserDetailsResponse> getAllUserDetails(
       // @Queries() Map<String, dynamic> queries,
-      );
+  );
+
+  @GET('/settings')
+  Future<GetAllServicesResponse> getAllServices(
+      // @Queries() Map<String, dynamic> queries,
+  );
+
+  //       @GET('/user')
+  // Future<GetAllUserDetailsResponse> getTransaction(
+  //     // @Queries() Map<String, dynamic> queries,
+  //     );
 
 //   @POST('/auth/update-password')
 //   Future<BaseResponse<ChangePasswordResponse>> changePassword(
