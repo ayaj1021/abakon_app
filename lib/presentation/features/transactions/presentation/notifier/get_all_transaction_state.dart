@@ -1,6 +1,6 @@
 import 'package:abakon/core/config/network_utils/async_response.dart';
 import 'package:abakon/core/utils/enums.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
+import 'package:abakon/presentation/features/transactions/data/model/get_all_transactions_response.dart';
 
 class GetAllTransactionsState {
   final bool isLoading;
@@ -8,7 +8,7 @@ class GetAllTransactionsState {
   final String? error;
   final String? message;
   final LoadState loadState;
-  final AsyncResponse<GetAllServicesResponse> getAllServices;
+  final AsyncResponse<GetAllTransactionsResponse> getAllTransactions;
   // final GetAllUserDetailsResponse getAllDetails;
 
   GetAllTransactionsState({
@@ -17,7 +17,7 @@ class GetAllTransactionsState {
     this.error,
     this.message,
     required this.loadState,
-    required this.getAllServices,
+    required this.getAllTransactions,
   });
 
   factory GetAllTransactionsState.initial() {
@@ -27,8 +27,8 @@ class GetAllTransactionsState {
       error: null,
       message: '',
       loadState: LoadState.loading,
-      getAllServices: AsyncResponse.loading(),
-     // getAllDetails: GetAllUserDetailsResponse(),
+      getAllTransactions: AsyncResponse.loading(),
+    
     );
   }
 
@@ -38,15 +38,15 @@ class GetAllTransactionsState {
     String? error,
     String? message,
     LoadState? loadState,
-    AsyncResponse<GetAllServicesResponse>? getAllServices,
-    //GetAllUserDetailsResponse? getAllDetails,
+    AsyncResponse<GetAllTransactionsResponse>? getAllTransactions,
+
   }) {
     return GetAllTransactionsState(
       isLoading: isLoading ?? this.isLoading,
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
       error: message,
       loadState: loadState ?? this.loadState,
-      getAllServices: getAllServices ?? this.getAllServices,
+      getAllTransactions: getAllTransactions ?? this.getAllTransactions,
     );
   }
 }

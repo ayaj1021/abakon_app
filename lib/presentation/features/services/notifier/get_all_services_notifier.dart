@@ -6,16 +6,16 @@ import 'package:abakon/presentation/features/services/notifier/get_all_services_
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GetAllServicesNotifier
-    extends AutoDisposeNotifier<GetAllServicesState> {
+    extends AutoDisposeNotifier<GetAllTransactionsState> {
   GetAllServicesNotifier();
 
   late GetAllServicesRepository _getAllservicesRepository;
 
   @override
-  GetAllServicesState build() {
+  GetAllTransactionsState build() {
     _getAllservicesRepository = ref.read(getAllServicesRepositoryProvider);
 
-    return GetAllServicesState.initial();
+    return GetAllTransactionsState.initial();
   }
 
   Future<void> getAllServices() async {
@@ -43,6 +43,6 @@ class GetAllServicesNotifier
 
 
 final getAllServicesNotifierProvider =
-    NotifierProvider.autoDispose<GetAllServicesNotifier, GetAllServicesState>(GetAllServicesNotifier.new);
+    NotifierProvider.autoDispose<GetAllServicesNotifier, GetAllTransactionsState>(GetAllServicesNotifier.new);
 
 

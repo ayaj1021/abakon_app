@@ -1,5 +1,3 @@
-
-
 import 'package:abakon/presentation/features/bank_deposits/presentation/view/banks.dart';
 import 'package:abakon/presentation/features/cable/presentation/view/cable_screen.dart';
 import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
@@ -13,9 +11,10 @@ import 'package:abakon/presentation/features/onboarding/presentation/view/onboar
 import 'package:abakon/presentation/features/other_services/presentation/view/other_services_screen.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/view/register_one.dart';
 import 'package:abakon/presentation/features/support/presentation/view/support_page.dart';
+import 'package:abakon/presentation/features/transactions/presentation/view/transaction_details_view.dart';
+import 'package:abakon/presentation/features/transactions/presentation/view/transaction_view.dart';
 import 'package:abakon/presentation/general_widgets/splash_screen.dart';
 import 'package:flutter/widgets.dart';
-
 
 class AppRouter {
   static final Map<String, Widget Function(BuildContext)> _routes = {
@@ -28,14 +27,16 @@ class AppRouter {
     SupportPage.routeName: (context) => const SupportPage(),
     MyInformationPage.routeName: (context) => const MyInformationPage(),
     ChangePasswordView.routeName: (context) => const ChangePasswordView(),
-    ChangeTransactionPinView.routeName: (context) => const ChangeTransactionPinView(),
+    ChangeTransactionPinView.routeName: (context) =>
+        const ChangeTransactionPinView(),
     CableScreen.routeName: (context) => const CableScreen(),
     OtherServicesScreen.routeName: (context) => const OtherServicesScreen(),
     ElectricityView.routeName: (context) => const ElectricityView(),
     ExamPinScreen.routeName: (context) => const ExamPinScreen(),
     BankScreen.routeName: (context) => const BankScreen(),
-
-
+    TransactionView.routeName: (context) => const TransactionView(),
+    TransactionDetailsView.routeName: (context) =>
+        const TransactionDetailsView(),
   };
   static Map<String, Widget Function(BuildContext)> get routes => _routes;
 }

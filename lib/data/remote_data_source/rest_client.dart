@@ -15,6 +15,7 @@ import 'package:abakon/presentation/features/otp_validation/data/models/verify_o
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_token_response.dart';
 import 'package:abakon/presentation/features/sign_up/data/models/sign_up_request.dart';
 import 'package:abakon/presentation/features/sign_up/data/models/sign_up_response.dart';
+import 'package:abakon/presentation/features/transactions/data/model/get_all_transactions_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,12 +42,10 @@ abstract class RestClient {
     @Body() BuyDataRequest buyDataRequest,
   );
 
-
-@POST('/airtime')
+  @POST('/airtime')
   Future<BuyAirtimeResponse> buyAirtime(
     @Body() BuyAirtimeRequest buyDataRequest,
   );
-
 
 //   @POST('/auth/create-pin')
 //   Future<BaseResponse<LoginResponse>> createPin(
@@ -77,12 +76,17 @@ abstract class RestClient {
   @GET('/user')
   Future<GetAllUserDetailsResponse> getAllUserDetails(
       // @Queries() Map<String, dynamic> queries,
-  );
+      );
 
   @GET('/settings')
   Future<GetAllServicesResponse> getAllServices(
       // @Queries() Map<String, dynamic> queries,
-  );
+      );
+
+  @GET('/transactions')
+  Future<GetAllTransactionsResponse> getAllTransactions(
+      // @Queries() Map<String, dynamic> queries,
+      );
 
   //       @GET('/user')
   // Future<GetAllUserDetailsResponse> getTransaction(
@@ -94,35 +98,14 @@ abstract class RestClient {
 //     @Body() ChangePasswordRequest request,
 //   );
 
-//   @GET('/bills/providers/{name}')
-//   Future<BaseResponse<List<BillPaymentProvider>>> getBillPaymentProviders(
-//     @Path() String name,
-//   );
-
 //   @GET('/bills/packages/{providerId}')
 //   Future<BaseResponse<List<ProviderPackage>>> getPackages(
 //     @Path() String providerId,
 //   );
 
-//   @POST('/bills/pay')
-//   Future<BaseResponse<BillPaymentResponse>> makeBillPayment(
-//     @Body() MakeBillPaymentRequest body,
-//   );
-
 //   @POST('/auth/forgot-password')
 //   Future<BaseResponse<dynamic>> forgotPassword(
 //     @Body() ForgotPasswordRequest body,
-//   );
-
-//   @GET('/bills/verify-recipient/{providerId}/{recipient}')
-//   Future<BaseResponse<LookupRecipientResponse>> lookupRecipient(
-//     @Path() String providerId,
-//     @Path() String recipient,
-//   );
-
-//   @GET('/transactions')
-//   Future<BaseResponse<TransactionResponse>> getTransactions(
-//     @Queries() Map<String, dynamic> queries,
 //   );
 
 //   @GET('/transactions/{id}')

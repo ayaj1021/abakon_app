@@ -4,6 +4,7 @@ import 'package:abakon/presentation/features/dashboard/home/presentation/widgets
 import 'package:abakon/presentation/features/dashboard/home/presentation/widgets/refer_and_earn_section.dart';
 import 'package:abakon/presentation/features/dashboard/home/presentation/widgets/services_section.dart';
 import 'package:abakon/presentation/features/dashboard/home/presentation/widgets/wallet_balance_section.dart';
+import 'package:abakon/presentation/features/transactions/presentation/notifier/get_all_transactions_notifier.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,10 +22,13 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Future.wait([
         ref.read(getUserDetailsNotifierProvider.notifier).getAllUserDetails(),
       ]);
+      await ref
+          .read(getAllTransactionsNotifierProvider.notifier)
+          .getAllTransactions();
     });
   }
 
@@ -42,20 +46,29 @@ class _HomeState extends ConsumerState<Home> {
           ]);
         },
         child: Consumer(builder: (context, ref, child) {
-          return const SingleChildScrollView(
+          final loadState = ref.watch(
+              getAllTransactionsNotifierProvider.select((v) => v.loadState));
+
+          final transactionHistory = ref.watch(
+              getAllTransactionsNotifierProvider
+                  .select((v) => v.getAllTransactions.data?.data));
+          return SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 40),
+              padding: const EdgeInsets.symmetric(vertical: 40),
               child: Column(
                 children: [
-                  HomeHeaderSection(),
-                  VerticalSpacing(20),
-                  WalletBalanceSection(),
-                  VerticalSpacing(16),
-                  ReferAndEarnSection(),
-                  VerticalSpacing(20),
-                  ServicesSection(),
-                  VerticalSpacing(32),
-                  RecentTransactionsSection(),
+                  const HomeHeaderSection(),
+                  const VerticalSpacing(20),
+                  const WalletBalanceSection(),
+                  const VerticalSpacing(16),
+                  const ReferAndEarnSection(),
+                  const VerticalSpacing(20),
+                  const ServicesSection(),
+                  const VerticalSpacing(32),
+                  RecentTransactionsSection(
+                    transactionHistory: transactionHistory ?? [],
+                    loadState: loadState,
+                  ),
                 ],
               ),
             ),

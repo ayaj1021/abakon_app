@@ -58,12 +58,8 @@ class Strings {
       'Reach out to our specialized support line for transfers only.';
   static const String difficultiesWithTransfer = 'Difficulties with transfers';
   static const String followUsOnSocialMedia = 'Follow us on social media';
-  static const String joinOurSocialMedia =
-      'Join our social media to view latest information';
-  static const String fastToAnswer =
-      'Fast answer to all of the most common questions.';
-  static const String howCanWeHelp = 'how can we help?';
-  static const String inviteFriendsAndEarn = 'Invite friends and earn N1000';
+  static const String myTransactions = 'My Transactions';
+
   static const String inviteAFriendGetBonus =
       ' Invite Your Friends & Get 2% of Every Transaction';
   static const String noReferralYet = 'No Referral yet';
@@ -83,7 +79,7 @@ class Strings {
   static const String paySupplier = 'Pay Supplier';
   static const String billPayment = 'Bill Payment';
 
-  static const String selectImage = 'Select Image From';
+  static const String search = 'Search';
   static const String totalBalance = 'Total balance';
   static const String ourAvailableService =
       'Our Available service all made for you';
@@ -143,7 +139,7 @@ class Strings {
       'Proceed to completing your KYC to enjoy seamless experience';
   static const String camera = 'Camera';
   static const String getInTouch = 'Get in touch with us';
-  static const String cameraRoll = 'Camera Roll';
+  static const String yourLastTransactions = 'Your last 100 transactions.';
   static const String gallery = 'Gallery';
 
   static const String forgotPassword = 'Forgot Password';
