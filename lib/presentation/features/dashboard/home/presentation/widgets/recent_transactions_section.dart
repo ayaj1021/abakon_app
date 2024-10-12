@@ -69,7 +69,10 @@ class RecentTransactionsSection extends StatelessWidget {
                   )),
                 LoadState.error => const Text('Error'),
                 _ => Column(
-                    children: List.generate(3, (index) {
+                    children: List.generate(
+                        transactionHistory.isNotEmpty
+                            ? transactionHistory.length
+                            : 0, (index) {
                       final data = transactionHistory[index];
                       String dateTime = '${data.date}';
 
@@ -77,14 +80,17 @@ class RecentTransactionsSection extends StatelessWidget {
 
                       String formattedDate =
                           DateFormat('yyyy-MM-dd').format(parsedDate);
-                      return SingleChildScrollView(
-                        child: TransactionWidget(
-                          serviceName: "${data.servicename}",
-                          amount: '${data.amount}',
-                          serviceDescription: '${data.servicedesc}',
-                          date: formattedDate,
-                        ),
-                      );
+                      return transactionHistory.isEmpty
+                          ? const Text('No transactions found')
+                          : SingleChildScrollView(
+                              child: TransactionWidget(
+                                serviceName: "${data.servicename}",
+                                amount: '${data.amount}',
+                                serviceDescription: '${data.servicedesc}',
+                                date: formattedDate,
+                                status: data.status!.toInt(),
+                              ),
+                            );
                     }),
                   ),
               })

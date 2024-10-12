@@ -3,6 +3,7 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/features/transactions/data/model/get_all_transactions_response.dart';
+import 'package:abakon/presentation/features/transactions/presentation/view/transaction_details_view.dart';
 import 'package:abakon/presentation/features/transactions/presentation/widgets/transaction_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
@@ -66,11 +67,27 @@ class TransactionListSection extends StatelessWidget {
 
                     String formattedDate =
                         DateFormat('yyyy-MM-dd').format(parsedDate);
-                    return TransactionWidget(
-                      serviceName: "${data.servicename}",
-                      amount: '${data.amount}',
-                      serviceDescription: '${data.servicedesc}',
-                      date: formattedDate,
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        (MaterialPageRoute(
+                          builder: (_) => TransactionDetailsView(
+                            transactionNo: '${data.transref}',
+                            service: '${data.servicename}',
+                            transactionDescription: '${data.servicedesc}',
+                            amount: '${data.amount}',
+                            status: data.status!.toInt(),
+                            date: formattedDate,
+                          ),
+                        )),
+                      ),
+                      child: TransactionWidget(
+                        serviceName: "${data.servicename}",
+                        amount: '${data.amount}',
+                        serviceDescription: '${data.servicedesc}',
+                        date: formattedDate,
+                        status: data.status!.toInt(),
+                      ),
                     );
                   }),
             })

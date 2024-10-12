@@ -11,11 +11,13 @@ class TransactionWidget extends StatelessWidget {
     required this.amount,
     required this.serviceDescription,
     required this.date,
+    required this.status,
   });
   final String serviceName;
   final String serviceDescription;
   final String amount;
   final String date;
+  final int status;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,8 +31,20 @@ class TransactionWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: AppColors.primary4A89DC),
-                  child: SvgPicture.asset('assets/icons/data.svg'),
+                      color: serviceName.contains('Wallet Credit')
+                          ? const Color(0xffD63384)
+                          : serviceName.contains('Electricty')
+                              ? const Color(0xffFFC107)
+                              : serviceName.contains('Airtime')
+                                  ? const Color(0xff198754)
+                                  : AppColors.primary4A89DC),
+                  child: SvgPicture.asset(serviceName.contains('Wallet')
+                      ? 'assets/icons/wallet.svg'
+                      : serviceName.contains('Airtime')
+                          ? 'assets/icons/airtime.svg'
+                          : serviceName.contains('Electricity')
+                              ? 'assets/icons/electricy.svg'
+                              : 'assets/icons/data.svg'),
                 ),
                 const HorizontalSpacing(10),
                 Column(
@@ -71,12 +85,12 @@ class TransactionWidget extends StatelessWidget {
                     Text(
                       date,
                       style: context.textTheme.s8w500.copyWith(
-                        color: AppColors.green,
+                        color: status == 1 ? AppColors.red : AppColors.green,
                       ),
                     ),
-                    const Icon(
-                      Icons.check_circle,
-                      color: AppColors.green,
+                    Icon(
+                      status == 1 ? Icons.info : Icons.check_circle,
+                      color: status == 1 ? AppColors.red : AppColors.green,
                       size: 12,
                     )
                   ],

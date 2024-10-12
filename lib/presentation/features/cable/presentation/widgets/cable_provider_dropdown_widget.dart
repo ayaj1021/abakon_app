@@ -4,33 +4,30 @@ import 'package:abakon/presentation/features/services/data/model/get_all_service
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class AirtimeNetWorkDropDown extends StatefulWidget {
-  AirtimeNetWorkDropDown(
+class CableProviderDropDown extends StatefulWidget {
+  CableProviderDropDown(
       {super.key,
-      required this.airtimePlans,
-      required this.onNetworkSelected,
-      required this.selectedNetwork,
-      required this.onNidSelected,
-      required this.selectedNid});
-  final List<AirtimeDiscount> airtimePlans;
-  String? selectedNetwork;
-  int? selectedNid;
-  final Function(String) onNetworkSelected;
-  final Function(String) onNidSelected;
-
+      required this.labelText,
+      required this.cablePlans,
+      required this.selectedCableProvider,
+      required this.onCableProviderSelected});
+  final String labelText;
+  final List<CablePlan> cablePlans;
+  String? selectedCableProvider;
+  final Function(String) onCableProviderSelected;
   @override
-  State<AirtimeNetWorkDropDown> createState() => _AirtimeNetWorkDropDownState();
+  State<CableProviderDropDown> createState() => _CableProviderDropDownState();
 }
 
-class _AirtimeNetWorkDropDownState extends State<AirtimeNetWorkDropDown> {
+class _CableProviderDropDownState extends State<CableProviderDropDown> {
   @override
   Widget build(BuildContext context) {
-    final plans = widget.airtimePlans.map((plan) => plan.network).toSet();
+    final cableProvider = widget.cablePlans.map((plan) => plan.provider).toSet();
     return DropdownButtonFormField(
-      value: widget.selectedNetwork,
       elevation: 0,
+      value: widget.selectedCableProvider,
       decoration: InputDecoration(
-        labelText: 'Select network provider',
+        labelText: 'Select provider',
         labelStyle: context.textTheme.s12w500.copyWith(
           color: AppColors.primary595857,
         ),
@@ -51,9 +48,9 @@ class _AirtimeNetWorkDropDownState extends State<AirtimeNetWorkDropDown> {
       ),
 
       // dropdownColor: Colors.transparent,
-      items: plans.map((airtime) {
+      items: cableProvider.map((cablesPlans) {
         return DropdownMenuItem<String>(
-          value: airtime,
+          value: cablesPlans,
           child: Row(
             children: [
               // SizedBox(
@@ -64,7 +61,7 @@ class _AirtimeNetWorkDropDownState extends State<AirtimeNetWorkDropDown> {
               //     // fit: BoxFit.cover,
               //   ),
               // ),
-              Text(airtime.toString(),
+              Text(cablesPlans.toString(),
                   style: const TextStyle(color: Colors.black)),
             ],
           ),
@@ -72,21 +69,16 @@ class _AirtimeNetWorkDropDownState extends State<AirtimeNetWorkDropDown> {
       }).toList(),
       onChanged: (newValue) {
         setState(() {
-          widget.selectedNetwork = newValue!;
-          widget.selectedNid = widget.airtimePlans
-              .firstWhere((discount) => discount.network == newValue)
-              .nId;
+          widget.selectedCableProvider = newValue!;
         });
-        widget.onNetworkSelected(newValue!);
-        widget.onNidSelected( widget.selectedNid.toString());
+        widget.onCableProviderSelected(newValue!);
       },
     );
   }
 }
 
-List cables = [
-  {"logo": "assets/logo/mtn.png", "title": "Mtn"},
-  {"logo": "assets/logo/airtel.png", "title": "Airtel"},
-  {"logo": "assets/logo/glo.png", "title": "Glo"},
-  {"logo": "assets/logo/9mobile.png", "title": "9mobile"},
-];
+// List cables = [
+//   {"logo": "assets/logo/gotv.png", "title": "Gotv"},
+//   {"logo": "assets/logo/dstv.png", "title": "Dstv"},
+//   {"logo": "assets/logo/startimes.png", "title": "Startimes"},
+// ];

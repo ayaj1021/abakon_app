@@ -9,12 +9,16 @@ class DataPlanDropDown extends StatefulWidget {
       {super.key,
       required this.dataPlans,
       required this.onPlanSelected,
-      required this.selectedPlan});
+      required this.selectedPlan,
+      this.selectedNetwork,
+      this.selectedType});
   final List<DataPlan> dataPlans;
 
   String? selectedPlan;
-  String? selectedPlanId;
-  final Function(String, String) onPlanSelected;
+  final String? selectedNetwork;
+  final String? selectedType;
+
+  final Function(String) onPlanSelected;
 
   @override
   State<DataPlanDropDown> createState() => _DataPlanDropDownState();
@@ -23,8 +27,12 @@ class DataPlanDropDown extends StatefulWidget {
 class _DataPlanDropDownState extends State<DataPlanDropDown> {
   @override
   Widget build(BuildContext context) {
-    final plans = widget.dataPlans.map((plan) => plan.name).toSet();
-     widget.selectedPlanId = widget.dataPlans.where((e)=> e.pId == plans).toString();
+    final filteredPlans = widget.dataPlans
+        .where((plan) =>
+            plan.network == widget.selectedNetwork &&
+            plan.type == widget.selectedType)
+        .toList();
+       final plans = filteredPlans.map((plan) => plan.name).toSet();
     return DropdownButtonFormField(
       value: widget.selectedPlan,
       elevation: 0,
@@ -48,11 +56,11 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
           ),
         ),
       ),
-      items: plans.map((plans) {
+      items: plans.map(( plan) {
         return DropdownMenuItem<String>(
-          value: plans,
+          value: plan,
           child: Text(
-            plans.toString(),
+            plan.toString(),
             style: context.textTheme.s12w500.copyWith(
               color: AppColors.black,
             ),
@@ -63,7 +71,7 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
         setState(() {
           widget.selectedPlan = newValue!;
         });
-        widget.onPlanSelected(newValue!,   widget.selectedPlanId.toString());
+        widget.onPlanSelected(newValue!);
       },
     );
   }

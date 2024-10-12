@@ -6,6 +6,7 @@ import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_ai
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_response.dart';
+import 'package:abakon/presentation/features/bank_deposits/data/model/generate_account_response.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
@@ -80,6 +81,11 @@ abstract class RestClient {
 
   @GET('/settings')
   Future<GetAllServicesResponse> getAllServices(
+      // @Queries() Map<String, dynamic> queries,
+      );
+
+  @GET('/user/payvessel')
+  Future<GenerateAccountResponse> generateAccount(
       // @Queries() Map<String, dynamic> queries,
       );
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
@@ -9,6 +7,7 @@ import 'package:abakon/presentation/features/dashboard/data/presentation/widgets
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_plan_dropdown.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_text_field.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_type_dropdown_widget.dart';
+import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/services/notifier/get_all_services_notifier.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
@@ -31,7 +30,8 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
   String? _selectedNetwork;
   String? _selectedType;
   String? _selectedPlan;
-  String? _selectedPlanId;
+
+  String? _selectedNid;
   @override
   void initState() {
     _phoneNumberController = TextEditingController()..addListener(_listener);
@@ -49,22 +49,32 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
         _phoneNumberController.text.isNotEmpty;
   }
 
+  List<DataPlan> filteredPlans = [];
   void _onNetworkSelected(String selectedNetwork) {
     setState(() {
       _selectedNetwork = selectedNetwork; // This updates the selected network
+      _selectedType = null; // Reset type and name when network changes
+      _selectedPlan = null;
+    });
+  }
+
+  void _onNidSelected(String selectedNid) {
+    setState(() {
+      _selectedNid = selectedNid;
     });
   }
 
   void _onTypeSelected(String selectedNetwork) {
     setState(() {
-      _selectedType = selectedNetwork; // This updates the selected network
+      _selectedType = selectedNetwork;
+
+      _selectedPlan = null;
     });
   }
 
-  void _onPlanSelected(String selectedNetwork, String planId) {
+  void _onPlanSelected(String selectedNetwork) {
     setState(() {
       _selectedPlan = selectedNetwork;
-    _selectedPlanId = planId;
     });
   }
 
@@ -83,20 +93,25 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
             Column(
               children: [
                 DataNetWorkDropDown(
-                    dataPlans: dataPlans ?? [],
-                    selectedNetwork: _selectedNetwork,
-                    onNetworkSelected: _onNetworkSelected),
+                  dataPlans: dataPlans ?? [],
+                  selectedNetwork: _selectedNetwork,
+                  onNetworkSelected: _onNetworkSelected,
+                  onNidSelected: _onNidSelected,
+                  selectedNid: int.tryParse(_selectedNid.toString()),
+                ),
                 const VerticalSpacing(16),
                 DataTypeDropDown(
                   dataPlans: dataPlans ?? [],
-                  ontypeSelected: _onTypeSelected,
                   selectedType: _selectedType,
+                  ontypeSelected: _onTypeSelected,
                 ),
                 const VerticalSpacing(16),
                 DataPlanDropDown(
                   dataPlans: dataPlans ?? [],
                   onPlanSelected: _onPlanSelected,
                   selectedPlan: _selectedPlan,
+                  selectedNetwork: _selectedNetwork,
+                  selectedType: _selectedType,
                 ),
                 const VerticalSpacing(16),
                 DataTextField(
@@ -111,7 +126,6 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                         return AbakonSendButton(
                             isEnabled: r,
                             onTap: () {
-                              log('This is selected network $_selectedNetwork');
                               showModalBottomSheet<void>(
                                 isScrollControlled: true,
                                 context: context,
@@ -166,9 +180,8 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
   void _buyData() {
     final data = BuyDataRequest(
       phone: _phoneNumberController.text.toLowerCase().trim(),
-      network: '2',
-      //_selectedNetwork.toString(),
-      portedNumber: 'false',
+      network: _selectedNid.toString(),
+      portedNumber: 'true',
       dataPlan: _selectedPlan.toString(),
       ref: 'string',
     );

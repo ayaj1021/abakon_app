@@ -29,7 +29,7 @@ extension NavigationExtension on BuildContext {
     );
   }
 
-  Future<T?> push<T extends Object?>(Route<T> route) {
+  Future<T?> push<T extends Object?>(MaterialPageRoute<T> route) {
     return Navigator.of(this).push<T>(route);
   }
 

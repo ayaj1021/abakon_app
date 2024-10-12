@@ -1,4 +1,6 @@
 import 'package:abakon/core/extensions/overlay_extension.dart';
+import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/disable_number_validator_widget.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/notifier/buy_airtime_notifier.dart';
@@ -37,22 +39,27 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
 
   String? _selectedNetwork;
   String? _selectedType;
+  String? _selectedNid;
+
   void _listener() {
-    // _isBuyDataEnabled.value = _selectedNetwork != null &&
-    //     _selectedType != null &&
-    //     _selectedPlan != null &&
     _phoneNumberController.text.isNotEmpty && _amountController.text.isNotEmpty;
   }
 
   void _onNetworkSelected(String selectedNetwork) {
     setState(() {
-      _selectedNetwork = selectedNetwork; // This updates the selected network
+      _selectedNetwork = selectedNetwork;
+    });
+  }
+
+  void _onNidSelected(String selectedNid) {
+    setState(() {
+      _selectedNid = selectedNid;
     });
   }
 
   void onTypeSelected(String selectedType) {
     setState(() {
-      _selectedType = selectedType; // This updates the selected network
+      _selectedType = selectedType;
     });
   }
 
@@ -60,64 +67,88 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
   Widget build(BuildContext context) {
     final airtimePlans = ref.watch(getAllServicesNotifierProvider.select(
         (v) => v.getAllServices.data?.data?.airtimeDiscount?.toSet().toList()));
-    return Column(
-      children: [
-        AirtimeNetWorkDropDown(
-            dataPlans: airtimePlans ?? [],
-            selectedNetwork: _selectedNetwork,
-            onNetworkSelected: _onNetworkSelected),
-        const VerticalSpacing(16),
-        AirtimeTypeDropDown(
-          airtimePlans: airtimePlans ?? [],
-          onTypeSelected: onTypeSelected,
-          selectedType: _selectedType,
-        ),
-        const VerticalSpacing(16),
-        AirtimeTextField(
-          maxLength: 11,
-          labelText: 'Phone number',
-          controller: _phoneNumberController,
-        ),
-        const VerticalSpacing(16),
+    return Consumer(builder: (context, re, c) {
+      final isLoading = re.watch(
+        buyAirtimeNotifer.select((v) => v.buyAirtimeState.isLoading),
+      );
+      return Stack(
+        children: [
+          Column(
+            children: [
+              AirtimeNetWorkDropDown(
+                airtimePlans: airtimePlans ?? [],
+                selectedNetwork: _selectedNetwork,
+                onNetworkSelected: _onNetworkSelected,
+                onNidSelected: _onNidSelected,
+                selectedNid: int.tryParse(_selectedNid.toString()),
+              ),
+              const VerticalSpacing(16),
+              AirtimeTypeDropDown(
+                airtimePlans: airtimePlans ?? [],
+                onTypeSelected: onTypeSelected,
+                selectedType: _selectedType,
+              ),
+              const VerticalSpacing(16),
+              AirtimeTextField(
+                maxLength: 11,
+                labelText: 'Phone number',
+                controller: _phoneNumberController,
+              ),
+              const VerticalSpacing(16),
+              AirtimeTextField(
+                labelText: 'Amount to pay',
+                controller: _amountController,
+              ),
+              const VerticalSpacing(16),
+              const VerticalSpacing(197),
+              const DisableNumberValidatorCheckbox(),
+              const VerticalSpacing(12),
+              AbakonSendButton(
+                  onTap: () {
+                    showModalBottomSheet<void>(
+                        // showDragHandle: true,
 
-        AirtimeTextField(
-          labelText: 'Amount to pay',
-          controller: _amountController,
-        ),
-
-        const VerticalSpacing(16),
-        // const AirtimeTextField(labelText: 'Discount'),
-        const VerticalSpacing(197),
-        const DisableNumberValidatorCheckbox(),
-        const VerticalSpacing(12),
-        AbakonSendButton(
-            onTap: () {
-              showModalBottomSheet<void>(
-                  // showDragHandle: true,
-
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) {
-                    return PurchaseBottomSheetWidget(
-                      purchaseInfo:
-                          'You are about to purchase an $_selectedNetwork airtime of ${_amountController.text} for the phone number ${_phoneNumberController.text} Do you wish to continue?',
-                      onTap: _buyData,
-                    );
-                  });
-            },
-            title: 'Buy Airtime')
-      ],
-    );
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return PurchaseBottomSheetWidget(
+                              purchaseInfo:
+                                  'You are about to purchase an $_selectedNetwork airtime of ${_amountController.text} for the phone number ${_phoneNumberController.text} Do you wish to continue?',
+                              onTap: () {
+                                Navigator.pop(context);
+                                _buyAirtime();
+                              });
+                        });
+                  },
+                  title: 'Buy Airtime')
+            ],
+          ),
+          isLoading
+              ? Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration:
+                      BoxDecoration(color: AppColors.greyFill.withOpacity(0.2)),
+                  child: const CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                )
+              : const SizedBox.shrink()
+        ],
+      );
+    });
   }
 
-  void _buyData() {
+  void _buyAirtime() {
     final data = BuyAirtimeRequest(
       phone: _phoneNumberController.text.toLowerCase().trim(),
-      network: '2',
+      network: _selectedNid.toString(),
+      //'2',
       //_selectedNetwork.toString(),
       portedNumber: 'false',
       amount: _amountController.text.trim(),
-      airtimeType: '',
+      airtimeType: _selectedType.toString(),
       // _selectedPlan.toString(),
       ref: 'string',
     );

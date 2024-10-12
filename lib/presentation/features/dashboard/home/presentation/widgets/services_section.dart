@@ -32,7 +32,7 @@ class ServicesSection extends StatelessWidget {
             ),
             ServicesWidget(
               onTap: () => context.pushNamed(ElectricityView.routeName),
-              image: 'assets/icons/electricity.svg',
+              image: 'assets/icons/electricity_service.svg',
               serviceTitle: 'Electricity',
             ),
             ServicesWidget(

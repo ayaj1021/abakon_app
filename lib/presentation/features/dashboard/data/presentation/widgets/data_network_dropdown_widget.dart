@@ -1,4 +1,3 @@
-
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
@@ -10,11 +9,15 @@ class DataNetWorkDropDown extends StatefulWidget {
       {super.key,
       required this.dataPlans,
       required this.selectedNetwork,
-      required this.onNetworkSelected});
+      required this.onNetworkSelected,
+      required this.onNidSelected,
+      required this.selectedNid});
 
   final List<DataPlan> dataPlans;
   String? selectedNetwork;
+  int? selectedNid;
   final Function(String) onNetworkSelected;
+  final Function(String) onNidSelected;
 
   @override
   State<DataNetWorkDropDown> createState() => _DataNetWorkDropDownState();
@@ -29,9 +32,12 @@ class _DataNetWorkDropDownState extends State<DataNetWorkDropDown> {
       onChanged: (String? newValue) {
         setState(() {
           widget.selectedNetwork = newValue!;
+          widget.selectedNid = widget.dataPlans
+              .firstWhere((discount) => discount.network == newValue)
+              .nId;
         });
         widget.onNetworkSelected(newValue!);
-       
+        widget.onNidSelected(widget.selectedNid.toString());
       },
       elevation: 0,
       decoration: InputDecoration(

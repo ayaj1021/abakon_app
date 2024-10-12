@@ -11,7 +11,6 @@ import 'package:abakon/presentation/features/onboarding/presentation/view/onboar
 import 'package:abakon/presentation/features/other_services/presentation/view/other_services_screen.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/view/register_one.dart';
 import 'package:abakon/presentation/features/support/presentation/view/support_page.dart';
-import 'package:abakon/presentation/features/transactions/presentation/view/transaction_details_view.dart';
 import 'package:abakon/presentation/features/transactions/presentation/view/transaction_view.dart';
 import 'package:abakon/presentation/general_widgets/splash_screen.dart';
 import 'package:flutter/widgets.dart';
@@ -35,8 +34,8 @@ class AppRouter {
     ExamPinScreen.routeName: (context) => const ExamPinScreen(),
     BankScreen.routeName: (context) => const BankScreen(),
     TransactionView.routeName: (context) => const TransactionView(),
-    TransactionDetailsView.routeName: (context) =>
-        const TransactionDetailsView(),
+    // TransactionDetailsView.routeName: (context) =>
+    //     const TransactionDetailsView(),
   };
   static Map<String, Widget Function(BuildContext)> get routes => _routes;
 }
