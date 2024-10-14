@@ -5,6 +5,7 @@ class Strings {
   static const String continueRegister = 'Continue';
   static const String email = 'Email';
   static const String verifyYouAreTheOne = 'Verify you are the one';
+  static const String bankAccount = 'Bank Deposit';
 
   static const String biometricReason =
       'DigitSend would like to use your biometric to authenticate you';

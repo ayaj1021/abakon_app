@@ -27,8 +27,8 @@ class SupportPageHeader extends StatelessWidget {
             color: AppColors.black,
           ),
         ),
-            const VerticalSpacing(4),
-         Text(
+        const VerticalSpacing(4),
+        Text(
           Strings.getInTouch,
           style: context.textTheme.s14w400.copyWith(
             color: AppColors.black,

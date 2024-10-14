@@ -1,5 +1,4 @@
-
-
+import 'package:abakon/presentation/features/bank_deposit/presentation/views/account_details.dart';
 import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
 import 'package:abakon/presentation/features/change_transaction_pin/presentation/view/change_transaction_pin_view.dart';
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
@@ -10,7 +9,6 @@ import 'package:abakon/presentation/features/sign_up/presentation/view/register_
 import 'package:abakon/presentation/features/support/presentation/view/support_page.dart';
 import 'package:abakon/presentation/general_widgets/splash_screen.dart';
 import 'package:flutter/widgets.dart';
-
 
 class AppRouter {
   static final Map<String, Widget Function(BuildContext)> _routes = {
@@ -23,9 +21,9 @@ class AppRouter {
     SupportPage.routeName: (context) => const SupportPage(),
     MyInformationPage.routeName: (context) => const MyInformationPage(),
     ChangePasswordView.routeName: (context) => const ChangePasswordView(),
-    ChangeTransactionPinView.routeName: (context) => const ChangeTransactionPinView(),
-
-
+    ChangeTransactionPinView.routeName: (context) =>
+        const ChangeTransactionPinView(),
+    BankDetails.routeName: (context) => const BankDetails(),
   };
   static Map<String, Widget Function(BuildContext)> get routes => _routes;
 }
