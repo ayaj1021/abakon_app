@@ -5,6 +5,7 @@ import 'package:abakon/presentation/features/change_transaction_pin/presentation
 import 'package:abakon/presentation/features/dashboard/profile/presentation/widgets/profile_widget.dart';
 import 'package:abakon/presentation/features/my_information/presentation/view/my_information_page.dart';
 import 'package:abakon/presentation/features/support/presentation/view/support_page.dart';
+import 'package:abakon/presentation/features/transactions/presentation/view/transaction_view.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSection extends StatelessWidget {
@@ -24,7 +25,7 @@ class ProfileSection extends StatelessWidget {
         ),
         ProfileWidget(
           title: 'My Tranactions',
-          onTap: () {},
+          onTap: () => context.pushNamed(TransactionView.routeName),
           icon: Icons.swap_horiz_sharp,
         ),
         ProfileWidget(
