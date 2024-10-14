@@ -3,7 +3,6 @@ import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/cable_provider_dropdown_widget.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/plan_dropdown_widget.dart';
-import 'package:abakon/presentation/features/cable/presentation/widgets/subscription_type_section.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/services/notifier/get_all_services_notifier.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
@@ -88,8 +87,8 @@ class _CableScreenInputSectionState
             border: const OutlineInputBorder(),
           ),
         ),
-        const VerticalSpacing(16),
-        const SubcriptionTypeSection(),
+      //  const VerticalSpacing(16),
+        //const SubcriptionTypeSection(),
         const VerticalSpacing(16),
         TextField(
           decoration: InputDecoration(
