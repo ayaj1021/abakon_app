@@ -1,3 +1,9 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:abakon/core/extensions/build_context_extension.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
+import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,18 +19,20 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  SecureStorage secureStorage = SecureStorage();
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () async{
-      //   final storage = await SecureStorage();
-      // final token = await storage.getUserToken();
-     //debugPrint('token is $token');
-      // if (token != null) {
-      //   Navigator.pushReplacementNamed(context, Login.routeName);
-      // } else {
-        Navigator.pushReplacementNamed(context, OnboardingScreen.routeName);
-     // }
+    Timer(const Duration(seconds: 3), () async {
+      final token = await secureStorage.getUserToken();
+
+      log('token is ${token.toString()}');
+      if (token != null) {
+        context.pushReplacementNamed(Dashboard.routeName);
+      } else {
+        context.pushReplacementNamed(OnboardingScreen.routeName);
+      }
+      //context.pushReplacementNamed(Login.routeName);
       // final userState = ref.read(userAuthRepositoryProvider);
       // switch (userState.getCurrentState()) {
       //   case CurrentState.initial:

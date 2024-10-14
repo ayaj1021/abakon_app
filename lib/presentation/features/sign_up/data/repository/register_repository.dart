@@ -5,19 +5,18 @@ import 'package:abakon/presentation/features/sign_up/data/models/sign_up_request
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class RegisterRepository {
   RegisterRepository(this._restClient);
   final RestClient _restClient;
   Future<BaseResponse<dynamic>> signUp(SignUpRequest request) async {
     try {
-      return await _restClient.signUp(request);
+      final res = await _restClient.signUp(request);
+      return BaseResponse(status: true, data: res);
     } on DioException catch (e) {
       return AppException.handleError(e);
     }
   }
 }
-
 
 final registerRepositoryProvider = Provider<RegisterRepository>(
   (ref) => RegisterRepository(

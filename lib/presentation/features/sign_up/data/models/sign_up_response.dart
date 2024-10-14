@@ -8,8 +8,8 @@ part 'sign_up_response.g.dart';
 @JsonSerializable(createToJson: false)
 class SignUpResponse extends DSUser {
   const SignUpResponse({
-    required super.success,
-    required super.message,
+    required super.status,
+    required super.msg,
   });
 
   factory SignUpResponse.fromJson(Map<String, dynamic> json) =>
@@ -18,13 +18,13 @@ class SignUpResponse extends DSUser {
 
 @JsonSerializable()
 class DSUser extends Equatable {
-  final bool success;
+  final bool status;
 
-  final String message;
+  final String msg;
 
   const DSUser({
-    required this.success,
-    required this.message,
+    required this.status,
+    required this.msg,
   });
 
   factory DSUser.fromJson(Map<String, dynamic> json) => _$DSUserFromJson(json);
@@ -33,7 +33,7 @@ class DSUser extends Equatable {
 
   @override
   List<Object> get props => [
-        success,
-        message,
+        status,
+        msg,
       ];
 }

@@ -60,7 +60,7 @@ class SecureStorage {
       );
 
   Future<void> saveUserEmail(String userEmail) async {
-    _storage.write(key: 'user_email', value: userEmail);
+   await _storage.write(key: 'user_email', value: userEmail);
   }
 
   Future<String?> getUserEmail() async {
@@ -69,7 +69,7 @@ class SecureStorage {
   }
 
   Future<void> saveUserForgotPasswordCode(String userEmail) async {
-    _storage.write(key: 'code', value: userEmail);
+   await _storage.write(key: 'code', value: userEmail);
   }
 
   Future<String?> getUserForgotPasswordCode() async {
@@ -78,7 +78,7 @@ class SecureStorage {
   }
 
   Future<void> saveUserFirstName(String userEmail) async {
-    _storage.write(key: 'firstName', value: userEmail);
+  await  _storage.write(key: 'firstName', value: userEmail);
   }
 
   Future<String?> getUserFirstName() async {
@@ -87,7 +87,7 @@ class SecureStorage {
   }
 
   Future<void> saveUserPassword(String userPassword) async {
-    _storage.write(key: 'user_password', value: userPassword);
+   await _storage.write(key: 'user_password', value: userPassword);
   }
 
   Future<String?> getUserPassword() async {
@@ -96,7 +96,7 @@ class SecureStorage {
   }
 
   Future<void> saveUserToken(String token) async {
-    _storage.write(key: 'token', value: token);
+   await _storage.write(key: 'token', value: token);
   }
 
   Future<String?> getUserToken() async {
@@ -105,7 +105,7 @@ class SecureStorage {
   }
 
   Future<void> saveResetPasswordToken(String token) async {
-    _storage.write(key: 'token', value: token);
+  await  _storage.write(key: 'token', value: token);
   }
 
   Future<String?> getResetPasswordToken() async {
@@ -114,7 +114,7 @@ class SecureStorage {
   }
 
   Future<void> saveUserId(int id) async {
-    _storage.write(key: 'id', value: id.toString());
+  await  _storage.write(key: 'id', value: id.toString());
   }
 
   Future<String?> getUserId() async {
@@ -123,7 +123,7 @@ class SecureStorage {
   }
 
   Future<void> saveUserAccountName(String userEmail) async {
-    _storage.write(key: 'user_account_name', value: userEmail);
+  await  _storage.write(key: 'user_account_name', value: userEmail);
   }
 
   Future<String?> getUserAccountName() async {

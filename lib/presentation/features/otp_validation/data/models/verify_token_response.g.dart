@@ -8,34 +8,27 @@ part of 'verify_token_response.dart';
 
 VerifyTokenResponse _$VerifyTokenResponseFromJson(Map<String, dynamic> json) =>
     VerifyTokenResponse(
-      id: json['id'] as String,
-      message: json['message'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      phone: json['phone'] as String,
-      email: json['email'] as String,
-      token: json['token'] as String,
-      status: json['status'] as bool,
+      status: json['status'] as bool?,
+      msg: json['msg'] as String?,
+      data: json['data'] == null
+          ? null
+          : Data.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-DSUser _$DSUserFromJson(Map<String, dynamic> json) => DSUser(
-      message: json['message'] as String,
-      id: json['id'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      phone: json['phone'] as String,
-      email: json['email'] as String,
-      token: json['token'] as String,
-      status: json['status'] as bool,
-    );
-
-Map<String, dynamic> _$DSUserToJson(DSUser instance) => <String, dynamic>{
-      'message': instance.message,
-      'id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'phone': instance.phone,
-      'email': instance.email,
-      'token': instance.token,
+Map<String, dynamic> _$VerifyTokenResponseToJson(
+        VerifyTokenResponse instance) =>
+    <String, dynamic>{
       'status': instance.status,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+Data _$DataFromJson(Map<String, dynamic> json) => Data(
+      userId: json['userId'] as String?,
+      token: json['token'] as String?,
+    );
+
+Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+      'userId': instance.userId,
+      'token': instance.token,
     };

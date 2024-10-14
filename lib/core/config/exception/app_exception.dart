@@ -16,14 +16,14 @@ class AppException implements Exception {
       if ((e.response?.statusCode ?? 0) >= 500) {
         return BaseResponse(
           status: false,
-          message: Strings.serverError,
+          msg: Strings.serverError,
           data: data,
         );
       }
       if (e.response?.statusCode == 413) {
         return BaseResponse(
           status: false,
-          message: 'File size too large',
+          msg: 'File size too large',
           data: data,
         );
       }
@@ -43,14 +43,14 @@ class AppException implements Exception {
         debugLog(e.response?.data);
         return BaseResponse(
           status: false,
-          message: e.response?.data as String,
+          msg: e.response?.data as String,
         );
       }
     }
     return BaseResponse(
-      status: false,
+      status:false,
       data: data,
-      message: _mapException(e.type),
+      msg: _mapException(e.type),
     );
   }
 

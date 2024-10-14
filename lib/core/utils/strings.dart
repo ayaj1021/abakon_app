@@ -11,6 +11,12 @@ class Strings {
       'DigitSend would like to use your biometric to authenticate you';
 
   static String saveBeneficiary = 'Save Beneficiary';
+  static String cableTvSub = 'Cable TV Subscription';
+  static String areYouSure = 'Are you sure';
+  static String otherServices = 'Other Services';
+  static String lifeEssentials = 'Life essentials, simplified';
+  static String successfulTransaction = 'Successful Transaction';
+  static String thisIsToConfirmTransactionSuccessful = 'This is to confirm that your transaction was successful.';
 
   static String enterVerificationCodeSub(String user) =>
       '''Enter the 4-digits verification code sent to this mail $user.''';
@@ -47,18 +53,14 @@ class Strings {
   static const String selectPreferredHotline =
       'Select your preferred hotline to speak with a support agent';
   static const String contactUs = 'Contact Us';
-  static const String experiencingIssues = 'Experiencing issues?';
+  static const String examPin = 'Exam Pin';
   static const String callGeneralSupport = 'Call our general support hotline';
   static const String reachOutToSupport =
       'Reach out to our specialized support line for transfers only.';
   static const String difficultiesWithTransfer = 'Difficulties with transfers';
   static const String followUsOnSocialMedia = 'Follow us on social media';
-  static const String joinOurSocialMedia =
-      'Join our social media to view latest information';
-  static const String fastToAnswer =
-      'Fast answer to all of the most common questions.';
-  static const String howCanWeHelp = 'how can we help?';
-  static const String inviteFriendsAndEarn = 'Invite friends and earn N1000';
+  static const String myTransactions = 'My Transactions';
+
   static const String inviteAFriendGetBonus =
       ' Invite Your Friends & Get 2% of Every Transaction';
   static const String noReferralYet = 'No Referral yet';
@@ -78,7 +80,7 @@ class Strings {
   static const String paySupplier = 'Pay Supplier';
   static const String billPayment = 'Bill Payment';
 
-  static const String selectImage = 'Select Image From';
+  static const String search = 'Search';
   static const String totalBalance = 'Total balance';
   static const String ourAvailableService =
       'Our Available service all made for you';
@@ -99,12 +101,13 @@ class Strings {
   static const String kindlyNoteYourOrder =
       'Kindly note, your order will be credited to your Alipay account.';
   static const String accountLimits = 'Account Limits';
-  static const String dailyLimits = 'Daily Limits';
+  static const String disableNumberValidator = 'Disable number validator';
   static const String weeklyLimits = 'Weekly Limits';
   static const String myInformation = 'My Infomation';
   static const String limits = '7.00/5,000.00 NGN';
   static const String convertNairaToRmb = 'Convert your Naira to RMB';
-  static const String youAreConverting = 'You are converting';
+  static const String yourEarnings = 'Your earnings';
+  static const String numberOfRefferals = 'Number of referrals';
   static const String kindlyReviewYourOrder =
       'Kindly review your order below before your proceed';
   static const String copyAccountNumber =
@@ -116,26 +119,28 @@ class Strings {
 
   static const String accountNumberText = 'Account Number';
   static const String accountName = 'Account Name';
-  static const String bankNumber = 'Bank Number';
-  static const String referFriendAndFamily =
-      'Refer your friend and family to Digitsend and get a chance to earn big';
+  static const String bankDeposit = 'Bank Deposit';
+  static const String fundsTransferredToThisAccounts =
+      'Funds transferred to this bank accounts are instantly credited to your Abakon wallet!';
 
   static const String upload = 'Upload Image from';
   static const String virtualAccountDetails = 'Virtual Account Details';
   static const String moreDetails = 'More Details';
   static const String recentTransactions = 'Recent Transactions';
   static const String viewAll = 'View All';
-  static const String buyRmb = 'Buy RMB';
+  static const String buyAirtime = 'Buy Airtime';
+  static const String buyDataBundle = 'Buy Data Bundle';
   static const String airtime = 'Airtime';
   static const String data = 'Data';
   static const String electricity = 'Electricity';
+  static const String electricityBill = 'Electricity Bill';
   static const String more = 'More';
   static const String completeKycLevel = 'Complete KYC Level 1';
   static const String proceedToCompleteKyc =
       'Proceed to completing your KYC to enjoy seamless experience';
   static const String camera = 'Camera';
   static const String getInTouch = 'Get in touch with us';
-  static const String cameraRoll = 'Camera Roll';
+  static const String yourLastTransactions = 'Your last 100 transactions.';
   static const String gallery = 'Gallery';
 
   static const String forgotPassword = 'Forgot Password';
@@ -156,6 +161,8 @@ class Strings {
   static const String newPasswordSub =
       'New password must not be the same as the previous one';
   static const String confirmPassword = 'confirm password';
+  static const String commission = 'Commission';
+  static const String referralEarningsBreakdown = 'Referral Earnings Breakdown';
   static const String passwordReset = 'Password Reset Successful';
   static const String passwordResetSub =
       'Your password has been successfully reset, kindly go back to login in to your account.';

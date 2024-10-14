@@ -100,10 +100,10 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
           data: SignUpRequest(
             email: widget.email.toLowerCase().trim(),
             password: _passwordController.text.toLowerCase(),
-            firstName: widget.firstName.toLowerCase(),
-            lastName: widget.lastName.toLowerCase(),
+            firstname: widget.firstName.toLowerCase(),
+            lastname: widget.lastName.toLowerCase(),
             phone: widget.phoneNumber.toLowerCase(),
-            transactionPin: _transactionPinController.text.toLowerCase(),
+            transpin: _transactionPinController.text.toLowerCase(),
             state: _stateController.text.toLowerCase(),
           ),
           onError: (error) {
@@ -115,12 +115,14 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
                 message: "Please check your email to activate your account");
 
             showModalBottomSheet<void>(
-             showDragHandle: true,
+            // showDragHandle: true,
                 
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return OTPVerification(
+                  return 
+                  
+                  OTPVerification(
                     email: widget.email,
                     // otpVerificationArgs: OtpVerificationArgs<LoginResponse>(
                     //   username: widget.email.toLowerCase(),

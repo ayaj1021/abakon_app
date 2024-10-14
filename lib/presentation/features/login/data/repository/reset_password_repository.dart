@@ -17,7 +17,7 @@ class ResetPasswordRepository {
     try {
       // await Future<void>.delayed(const Duration(seconds: 2));
       //await _client.resetPassword(resetPasswordRequest);
-      return const BaseResponse(status: true);
+      return const BaseResponse(status: false);
     } on DioException catch (e) {
       return AppException.handleError(e);
     }

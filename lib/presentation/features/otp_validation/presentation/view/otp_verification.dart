@@ -5,7 +5,7 @@ import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
-import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
+import 'package:abakon/presentation/features/login/presentation/view/login.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/presentation/notifier/otp_notifier.dart';
@@ -58,14 +58,14 @@ class _OTPVerificationState<T> extends ConsumerState<OTPVerification<T>> {
   void _validateOtp() {
     ref.read(otpVerificationNotifierProvider.notifier).verifyOtp(
           request: VerifyOtpRequest(
-            activationToken: _otpController.text.trim(),
+            otp: _otpController.text.trim(), email: widget.email,
           ),
           onError: (error) {
             context.showError(message: error);
           },
-          onSuccess: () {
-            context.showSuccess(message: "Otp Validated");
-            context.pushReplacementNamed(Dashboard.routeName);
+          onSuccess: (message) {
+            context.showSuccess(message: 'Successfully verified');
+            context.pushReplacementNamed(Login.routeName);
           },
         );
   }
