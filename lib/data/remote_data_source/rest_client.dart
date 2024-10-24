@@ -2,11 +2,19 @@ import 'package:abakon/core/config/env/base_env.dart';
 import 'package:abakon/core/config/env/prod_env.dart';
 import 'package:abakon/core/config/interceptors/header_interceptor.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
+import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
+import 'package:abakon/presentation/features/cable/data/model/verify_cable_request.dart';
+import 'package:abakon/presentation/features/cable/data/model/verify_cable_response.dart';
+import 'package:abakon/presentation/features/change_password/data/model/change_password_request.dart';
+import 'package:abakon/presentation/features/change_password/data/model/change_password_response.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_response.dart';
 import 'package:abakon/presentation/features/bank_deposits/data/model/generate_account_response.dart';
+import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
+import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_request.dart';
+import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
@@ -38,6 +46,11 @@ abstract class RestClient {
     @Body() LoginRequest loginRequest,
   );
 
+  @POST('/user/change-password')
+  Future<ChangePasswordResponse> changePassword(
+    @Body() ChangePasswordRequest changePasswordRequest,
+  );
+
   @POST('/data')
   Future<BuyDataResponse> buyData(
     @Body() BuyDataRequest buyDataRequest,
@@ -48,10 +61,16 @@ abstract class RestClient {
     @Body() BuyAirtimeRequest buyDataRequest,
   );
 
-//   @POST('/auth/create-pin')
-//   Future<BaseResponse<LoginResponse>> createPin(
-//     @Body() CreatePinRequest loginRequest,
-//   );
+
+    @POST('/cabletv/verify')
+  Future<VerifyCableResponse> verifyCable(
+    @Body() VerifyCableRequest buyDataRequest,
+  );
+
+  @POST('/user/delete')
+  Future<LoginResponse> deleteUser(
+    @Body() DeleteUserRequest deleteUserRequest,
+  );
 
   @POST('/auth/recover')
   Future<dynamic> resendOTP(
@@ -81,6 +100,21 @@ abstract class RestClient {
 
   @GET('/settings')
   Future<GetAllServicesResponse> getAllServices(
+      // @Queries() Map<String, dynamic> queries,
+      );
+
+  @GET('/settings?setting=data_plans')
+  Future<DataResponse> getAllDataServices(
+      // @Queries() Map<String, dynamic> queries,
+      );
+
+  @GET('/settings?setting=exam_plans')
+  Future<GetAllExamData> getAllExamData(
+      // @Queries() Map<String, dynamic> queries,
+      );
+
+  @GET('/settings?setting=cable_plans')
+  Future<GetAllCableData> getAllCableData(
       // @Queries() Map<String, dynamic> queries,
       );
 

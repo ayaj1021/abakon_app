@@ -27,7 +27,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       final token = await secureStorage.getUserToken();
 
       log('token is ${token.toString()}');
-      if (token != null) {
+      if (token != null ) {
         context.pushReplacementNamed(Dashboard.routeName);
       } else {
         context.pushReplacementNamed(OnboardingScreen.routeName);

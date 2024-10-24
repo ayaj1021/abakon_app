@@ -1,13 +1,53 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
 import 'package:flutter/material.dart';
 
-class ExamPinProviderDropDown extends StatelessWidget {
-  const ExamPinProviderDropDown({super.key});
+// ignore: must_be_immutable
+class ExamPinProviderDropDown extends StatefulWidget {
+  ExamPinProviderDropDown({
+    super.key,
+    required this.examPlans,
+    required this.onNetworkSelected,
+    required this.onEidSelected,
+    required this.selectedProvider,
+    required this.selectedEid,
+    required this.selectedEPrice,
+    required this.onEPriceSelected,
+  });
+  final List<ExamData> examPlans;
+  String? selectedProvider;
+  int? selectedEid;
+  num? selectedEPrice;
+  final Function(String) onNetworkSelected;
+  final Function(String) onEidSelected;
+  final Function(num) onEPriceSelected;
 
   @override
+  State<ExamPinProviderDropDown> createState() =>
+      _ExamPinProviderDropDownState();
+}
+
+class _ExamPinProviderDropDownState extends State<ExamPinProviderDropDown> {
+  @override
   Widget build(BuildContext context) {
+    final provider = widget.examPlans.map((plan) => plan.provider).toSet();
     return DropdownButtonFormField(
+      value: widget.selectedProvider,
+      onChanged: (String? newValue) {
+        setState(() {
+          widget.selectedProvider = newValue!;
+          widget.selectedEid = widget.examPlans
+              .firstWhere((examProv) => examProv.provider == newValue)
+              .eId;
+          widget.selectedEPrice = widget.examPlans
+              .firstWhere((examProv) => examProv.provider == newValue)
+              .price;
+        });
+        widget.onNetworkSelected(newValue!);
+        widget.onEidSelected(widget.selectedEid.toString());
+        widget.onEPriceSelected(widget.selectedEPrice!);
+      },
       elevation: 0,
       decoration: InputDecoration(
         labelText: 'Select provider',
@@ -31,70 +71,13 @@ class ExamPinProviderDropDown extends StatelessWidget {
       ),
 
       // dropdownColor: Colors.transparent,
-      items: cables.map((cables) {
+      items: provider.map((providers) {
         return DropdownMenuItem<String>(
-          value: cables['title'],
-          child: Text(cables['title'],
+          value: providers,
+          child: Text(providers.toString(),
               style: const TextStyle(color: Colors.black)),
         );
       }).toList(),
-      onChanged: (newValue) {},
     );
   }
 }
-
-List cables = [
-  {"title": "WAEC"},
-  {"title": "NECO"},
-];
-
-// class DropDownWidget extends StatefulWidget {
-//   const DropDownWidget({super.key});
-
-//   @override
-//   State<DropDownWidget> createState() => _DropDownWidgetState();
-// }
-
-// class _DropDownWidgetState extends State<DropDownWidget> {
-//   String? selectedValue;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: DropdownButtonFormField<String>(
-//         value: selectedValue,
-//         decoration: InputDecoration(
-//           labelText: 'Select Item',
-//           border: OutlineInputBorder(
-//             borderRadius: BorderRadius.circular(8.0),
-//             borderSide: const BorderSide(
-//               color: Colors.blue,
-//               width: 2.0,
-//             ),
-//           ),
-//           focusedBorder: OutlineInputBorder(
-//             borderRadius: BorderRadius.circular(8.0),
-//             borderSide: const BorderSide(
-//               color: Colors.blueAccent,
-//               width: 2.0,
-//             ),
-//           ),
-//         ),
-//         items: ['Item 1', 'Item 2', 'Item 3'].map((String item) {
-//           return DropdownMenuItem<String>(
-//             value: item,
-//             child: Text(item),
-//           );
-//         }).toList(),
-//         onChanged: (String? newValue) {
-//           setState(() {
-//             selectedValue = newValue;
-//           });
-//         },
-//       ),
-//     );
-//   }
-// }
-
-
-

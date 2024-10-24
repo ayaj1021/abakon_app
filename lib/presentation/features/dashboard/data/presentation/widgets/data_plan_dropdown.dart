@@ -29,7 +29,7 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
   Widget build(BuildContext context) {
     final filteredPlans = widget.dataPlans
         .where((plan) =>
-            plan.network == widget.selectedNetwork &&
+            plan.name == widget.selectedNetwork &&
             plan.type == widget.selectedType)
         .toList();
        final plans = filteredPlans.map((plan) => plan.name).toSet();

@@ -1,52 +1,52 @@
 import 'package:abakon/core/config/network_utils/async_response.dart';
 import 'package:abakon/core/utils/enums.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
+import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 
-class GetAllServicesState {
+class GetAllDataServicesState {
   final bool isLoading;
   final bool isAuthenticated;
   final String? error;
   final String? message;
   final LoadState loadState;
-  final AsyncResponse<GetAllServicesResponse> getAllServices;
+  final AsyncResponse<DataResponse> getAllDataServices;
   // final GetAllUserDetailsResponse getAllDetails;
 
-  GetAllServicesState({
+  GetAllDataServicesState({
     required this.isLoading,
     required this.isAuthenticated,
     this.error,
     this.message,
     required this.loadState,
-    required this.getAllServices,
+    required this.getAllDataServices,
   });
 
-  factory GetAllServicesState.initial() {
-    return GetAllServicesState(
+  factory GetAllDataServicesState.initial() {
+    return GetAllDataServicesState(
       isLoading: false,
       isAuthenticated: false,
       error: null,
       message: '',
       loadState: LoadState.loading,
-      getAllServices: AsyncResponse.loading(),
+      getAllDataServices: AsyncResponse.loading(),
      // getAllDetails: GetAllUserDetailsResponse(),
     );
   }
 
-  GetAllServicesState copyWith({
+  GetAllDataServicesState copyWith({
     bool? isLoading,
     bool? isAuthenticated,
     String? error,
     String? message,
     LoadState? loadState,
-    AsyncResponse<GetAllServicesResponse>? getAllServices,
+    AsyncResponse<DataResponse>? getAllDataServices,
     //GetAllUserDetailsResponse? getAllDetails,
   }) {
-    return GetAllServicesState(
+    return GetAllDataServicesState(
       isLoading: isLoading ?? this.isLoading,
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
       error: message,
       loadState: loadState ?? this.loadState,
-      getAllServices: getAllServices ?? this.getAllServices,
+      getAllDataServices: getAllDataServices ?? this.getAllDataServices,
     );
   }
 }

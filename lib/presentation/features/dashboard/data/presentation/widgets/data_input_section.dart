@@ -14,8 +14,6 @@ import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:loading_progress_indicator/loading_progress_indicator.dart';
-import 'package:loading_progress_indicator/progress_indicator/ball_grid_pulse_progress_indicator.dart';
 
 class DataInputSection extends ConsumerStatefulWidget {
   const DataInputSection({super.key});
@@ -80,8 +78,8 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
 
   @override
   Widget build(BuildContext context) {
-    final dataPlans = ref.watch(getAllServicesNotifierProvider.select(
-        (v) => v.getAllServices.data?.data?.dataPlans?.toSet().toList()));
+    final dataPlans = ref.watch(getAllServicesNotifierProvider
+        .select((v) => v.getAllServices.data?.data?.dataPlans?.toSet().toList()));
 
     return Consumer(
       builder: (context, re, c) {
@@ -153,10 +151,8 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: AppColors.greyFill.withOpacity(0.2)),
-                    child: LoadingProgressIndicator(
-                      indicator: BallGridPulseProgressIndicator(),
-                      size: 50,
-                      color: Colors.indigo,
+                    child: const CircularProgressIndicator(
+                      color: AppColors.primaryColor,
                     ),
                   )
                 : const SizedBox.shrink()

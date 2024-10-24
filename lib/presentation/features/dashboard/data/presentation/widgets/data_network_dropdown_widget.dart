@@ -33,8 +33,8 @@ class _DataNetWorkDropDownState extends State<DataNetWorkDropDown> {
         setState(() {
           widget.selectedNetwork = newValue!;
           widget.selectedNid = widget.dataPlans
-              .firstWhere((discount) => discount.network == newValue)
-              .nId;
+              .firstWhere((discount) => discount.name == newValue)
+              .pId;
         });
         widget.onNetworkSelected(newValue!);
         widget.onNidSelected(widget.selectedNid.toString());
@@ -63,7 +63,7 @@ class _DataNetWorkDropDownState extends State<DataNetWorkDropDown> {
       items: plans
           .map<DropdownMenuItem<String>>((dataPlans) {
             return DropdownMenuItem<String>(
-              value: dataPlans,
+              value: dataPlans.toString(),
               child: Row(
                 children: [
                   // SizedBox(

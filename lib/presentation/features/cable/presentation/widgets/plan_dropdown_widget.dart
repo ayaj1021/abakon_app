@@ -1,6 +1,6 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
+import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -13,7 +13,7 @@ class CablePlansDown extends StatefulWidget {
       required this.selectedCablePlan,
       required this.selectedCableProvider});
   final String labelText;
-  final List<CablePlan> filteredPlans;
+  final List<CableData> filteredPlans;
   String? selectedCablePlan;
   String? selectedCableProvider;
   final Function(String) onCablePlanSelected;

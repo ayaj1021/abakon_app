@@ -1,6 +1,6 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
+import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -12,7 +12,7 @@ class CableProviderDropDown extends StatefulWidget {
       required this.selectedCableProvider,
       required this.onCableProviderSelected});
   final String labelText;
-  final List<CablePlan> cablePlans;
+  final List<CableData> cablePlans;
   String? selectedCableProvider;
   final Function(String) onCableProviderSelected;
   @override
@@ -22,7 +22,10 @@ class CableProviderDropDown extends StatefulWidget {
 class _CableProviderDropDownState extends State<CableProviderDropDown> {
   @override
   Widget build(BuildContext context) {
-    final cableProvider = widget.cablePlans.map((plan) => plan.provider).toSet();
+    final cableProvider =
+        widget.cablePlans.map((plan) => plan.cableprovider).toSet();
+    // final cableNames = widget.cablePlans.where(
+    //     (plan) => plan.cableprovider == cables.map((cable) => cable).toList());
     return DropdownButtonFormField(
       elevation: 0,
       value: widget.selectedCableProvider,
@@ -50,7 +53,7 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
       // dropdownColor: Colors.transparent,
       items: cableProvider.map((cablesPlans) {
         return DropdownMenuItem<String>(
-          value: cablesPlans,
+          value: cablesPlans.toString(),
           child: Row(
             children: [
               // SizedBox(
@@ -77,8 +80,8 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
   }
 }
 
-// List cables = [
-//   {"logo": "assets/logo/gotv.png", "title": "Gotv"},
-//   {"logo": "assets/logo/dstv.png", "title": "Dstv"},
-//   {"logo": "assets/logo/startimes.png", "title": "Startimes"},
-// ];
+List cables = [
+  "Gotv",
+  "Dstv",
+  "Startimes",
+];
