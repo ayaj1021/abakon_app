@@ -1,6 +1,6 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
+import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -10,7 +10,7 @@ class DataTypeDropDown extends StatefulWidget {
       required this.dataPlans,
       required this.ontypeSelected,
       required this.selectedType});
-  final List<DataPlan> dataPlans;
+  final List<Plan> dataPlans;
   String? selectedType;
   final Function(String) ontypeSelected;
   @override

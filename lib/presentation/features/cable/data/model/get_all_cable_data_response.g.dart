@@ -8,7 +8,7 @@ part of 'get_all_cable_data_response.dart';
 
 GetAllCableData _$GetAllCableDataFromJson(Map<String, dynamic> json) =>
     GetAllCableData(
-      status: json['status'] as String?,
+      status: json['status'] as bool?,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => CableData.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,24 +24,32 @@ CableData _$CableDataFromJson(Map<String, dynamic> json) => CableData(
       cpId: (json['cpId'] as num?)?.toInt(),
       name: json['name'] as String?,
       price: json['price'] as String?,
-      userprice: json['userprice'] as String?,
-      agentprice: json['agentprice'] as String?,
-      vendorprice: json['vendorprice'] as String?,
-      planid: json['planid'] as String?,
-      type: json['type'],
-      cableprovider: (json['cableprovider'] as num?)?.toInt(),
+      userPrice: json['userPrice'] as String?,
+      agentPrice: json['agentPrice'] as String?,
+      vendorPrice: json['vendorPrice'] as String?,
+      planId: json['planId'] as String?,
+      type: json['type'] as String?,
+      cableProvider: (json['cableProvider'] as num?)?.toInt(),
       day: json['day'] as String?,
+      cId: (json['cId'] as num?)?.toInt(),
+      cableId: json['cableId'] as String?,
+      provider: json['provider'] as String?,
+      providerStatus: json['providerStatus'] as String?,
     );
 
 Map<String, dynamic> _$CableDataToJson(CableData instance) => <String, dynamic>{
       'cpId': instance.cpId,
       'name': instance.name,
       'price': instance.price,
-      'userprice': instance.userprice,
-      'agentprice': instance.agentprice,
-      'vendorprice': instance.vendorprice,
-      'planid': instance.planid,
+      'userPrice': instance.userPrice,
+      'agentPrice': instance.agentPrice,
+      'vendorPrice': instance.vendorPrice,
+      'planId': instance.planId,
       'type': instance.type,
-      'cableprovider': instance.cableprovider,
+      'cableProvider': instance.cableProvider,
       'day': instance.day,
+      'cId': instance.cId,
+      'cableId': instance.cableId,
+      'provider': instance.provider,
+      'providerStatus': instance.providerStatus,
     };

@@ -10,11 +10,15 @@ class CableProviderDropDown extends StatefulWidget {
       required this.labelText,
       required this.cablePlans,
       required this.selectedCableProvider,
-      required this.onCableProviderSelected});
+      required this.selectedCableId,
+      required this.onCableProviderSelected,
+      required this.onCableIdSelected});
   final String labelText;
   final List<CableData> cablePlans;
   String? selectedCableProvider;
+  String? selectedCableId;
   final Function(String) onCableProviderSelected;
+  final Function(String) onCableIdSelected;
   @override
   State<CableProviderDropDown> createState() => _CableProviderDropDownState();
 }
@@ -23,7 +27,7 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
   @override
   Widget build(BuildContext context) {
     final cableProvider =
-        widget.cablePlans.map((plan) => plan.cableprovider).toSet();
+        widget.cablePlans.map((plan) => plan.provider).toSet();
     // final cableNames = widget.cablePlans.where(
     //     (plan) => plan.cableprovider == cables.map((cable) => cable).toList());
     return DropdownButtonFormField(
@@ -49,11 +53,9 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
           ),
         ),
       ),
-
-      // dropdownColor: Colors.transparent,
       items: cableProvider.map((cablesPlans) {
         return DropdownMenuItem<String>(
-          value: cablesPlans.toString(),
+          value: cablesPlans,
           child: Row(
             children: [
               // SizedBox(
@@ -73,15 +75,14 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
       onChanged: (newValue) {
         setState(() {
           widget.selectedCableProvider = newValue!;
+
+          widget.selectedCableId = widget.cablePlans
+              .firstWhere((discount) => discount.provider == newValue)
+              .cableId;
         });
         widget.onCableProviderSelected(newValue!);
+        widget.onCableIdSelected(widget.selectedCableId.toString());
       },
     );
   }
 }
-
-List cables = [
-  "Gotv",
-  "Dstv",
-  "Startimes",
-];

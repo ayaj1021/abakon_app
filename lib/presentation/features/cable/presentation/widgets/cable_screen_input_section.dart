@@ -9,7 +9,6 @@ import 'package:abakon/presentation/features/cable/presentation/notifer/verify_c
 import 'package:abakon/presentation/features/cable/presentation/widgets/cable_provider_dropdown_widget.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/plan_dropdown_widget.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
-import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,7 +39,8 @@ class _CableScreenInputSectionState
 
     super.initState();
   }
- final ValueNotifier<bool> _isVerifyCableEnabled = ValueNotifier(false);
+
+  final ValueNotifier<bool> _isVerifyCableEnabled = ValueNotifier(false);
   void _listener() {
     _phoneNumberController.text.isNotEmpty &&
         _amountController.text.isNotEmpty &&
@@ -49,6 +49,7 @@ class _CableScreenInputSectionState
 
   String? _selectedCableProvider;
   String? _selectedCablePlan;
+  String? _selectedCableId;
 
   List<CableData> filteredPlans = [];
 
@@ -57,7 +58,7 @@ class _CableScreenInputSectionState
     setState(() {
       _selectedCableProvider = selectedCableProvider;
       filteredPlans = allPlans
-          .where((plan) => plan.cableprovider == _selectedCableProvider)
+          .where((plan) => plan.provider == _selectedCableProvider)
           .toList();
       _selectedCablePlan = null;
     });
@@ -66,6 +67,12 @@ class _CableScreenInputSectionState
   void _onCablePlanSelected(String selectedCablePlan) {
     setState(() {
       _selectedCablePlan = selectedCablePlan;
+    });
+  }
+
+  void _onCableIdSelected(String selectedCableId) {
+    setState(() {
+      _selectedCableId = selectedCableId;
     });
   }
 
@@ -89,6 +96,8 @@ class _CableScreenInputSectionState
                 onCableProviderSelected: (selectedCableProvider) =>
                     _onCableProviderSelected(
                         selectedCableProvider, cablePlans ?? []),
+                selectedCableId: _selectedCableId,
+                onCableIdSelected: _onCableIdSelected,
               ),
               const VerticalSpacing(16),
               CablePlansDown(
@@ -172,11 +181,11 @@ class _CableScreenInputSectionState
       );
     });
   }
-    void _verifyCable() {
+
+  void _verifyCable() {
     final data = VerifyCableRequest(
       smartCardNumber: _iucNumberController.text.trim(),
-      cablename: _selectedCableProvider.toString(),
-  
+      cablename: _selectedCableId.toString(),
     );
     ref.read(verifyCableNotifer.notifier).verifyCable(
           data: data,
@@ -192,5 +201,3 @@ class _CableScreenInputSectionState
         );
   }
 }
-
-

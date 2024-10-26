@@ -1,35 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_all_data_service_response.dart';
+part of 'get_all_airtime_service_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-DataResponse _$DataResponseFromJson(Map<String, dynamic> json) => DataResponse(
+AirtimeResponse _$AirtimeResponseFromJson(Map<String, dynamic> json) =>
+    AirtimeResponse(
       status: json['status'] as bool?,
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => Plan.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => AirtimeData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$DataResponseToJson(DataResponse instance) =>
+Map<String, dynamic> _$AirtimeResponseToJson(AirtimeResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
       'data': instance.data,
     };
 
-Plan _$PlanFromJson(Map<String, dynamic> json) => Plan(
-      pId: (json['pId'] as num?)?.toInt(),
-      name: json['name'] as String?,
-      price: json['price'] as String?,
-      userprice: json['userprice'] as String?,
-      agentprice: json['agentprice'] as String?,
-      vendorprice: json['vendorprice'] as String?,
-      planid: json['planid'] as String?,
-      type: json['type'] as String?,
-      datanetwork: (json['datanetwork'] as num?)?.toInt(),
-      day: json['day'] as String?,
+AirtimeData _$AirtimeDataFromJson(Map<String, dynamic> json) => AirtimeData(
+      aId: (json['aId'] as num?)?.toInt(),
+      aNetwork: json['aNetwork'] as String?,
+      aBuyDiscount: (json['aBuyDiscount'] as num?)?.toInt(),
+      aUserDiscount: (json['aUserDiscount'] as num?)?.toInt(),
+      aAgentDiscount: (json['aAgentDiscount'] as num?)?.toInt(),
+      aVendorDiscount: (json['aVendorDiscount'] as num?)?.toInt(),
+      aType: json['aType'] as String?,
       nId: (json['nId'] as num?)?.toInt(),
       networkid: json['networkid'] as String?,
       smeId: json['smeId'] as String?,
@@ -54,17 +52,15 @@ Plan _$PlanFromJson(Map<String, dynamic> json) => Plan(
       couponStatus: json['couponStatus'] as String?,
     );
 
-Map<String, dynamic> _$PlanToJson(Plan instance) => <String, dynamic>{
-      'pId': instance.pId,
-      'name': instance.name,
-      'price': instance.price,
-      'userprice': instance.userprice,
-      'agentprice': instance.agentprice,
-      'vendorprice': instance.vendorprice,
-      'planid': instance.planid,
-      'type': instance.type,
-      'datanetwork': instance.datanetwork,
-      'day': instance.day,
+Map<String, dynamic> _$AirtimeDataToJson(AirtimeData instance) =>
+    <String, dynamic>{
+      'aId': instance.aId,
+      'aNetwork': instance.aNetwork,
+      'aBuyDiscount': instance.aBuyDiscount,
+      'aUserDiscount': instance.aUserDiscount,
+      'aAgentDiscount': instance.aAgentDiscount,
+      'aVendorDiscount': instance.aVendorDiscount,
+      'aType': instance.aType,
       'nId': instance.nId,
       'networkid': instance.networkid,
       'smeId': instance.smeId,

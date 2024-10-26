@@ -1,14 +1,29 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ElectricityProviderDropDown extends StatelessWidget {
-  const ElectricityProviderDropDown({super.key});
- 
+// ignore: must_be_immutable
+class ElectricityProviderDropDown extends StatefulWidget {
+  ElectricityProviderDropDown(
+      {super.key,
+      required this.electricityPlans,
+      required this.onElectricityProviderSelected,
+      required this.selectedElectricityProvider});
+  final List<ElectricityProvider> electricityPlans;
+  String? selectedElectricityProvider;
+  final Function(String) onElectricityProviderSelected;
+  @override
+  State<ElectricityProviderDropDown> createState() =>
+      _ElectricityProviderDropDownState();
+}
 
+class _ElectricityProviderDropDownState
+    extends State<ElectricityProviderDropDown> {
   @override
   Widget build(BuildContext context) {
+    final electricityProvider =
+        widget.electricityPlans.map((plan) => plan.provider).toSet();
     return DropdownButtonFormField(
       elevation: 0,
       decoration: InputDecoration(
@@ -32,27 +47,32 @@ class ElectricityProviderDropDown extends StatelessWidget {
         ),
       ),
 
-      // dropdownColor: Colors.transparent,
-      items: cables.map((cables) {
+  
+      items: electricityProvider.map((electricity) {
         return DropdownMenuItem<String>(
-          value: cables['title'],
+          value: electricity,
           child: Row(
             children: [
-              SizedBox(
-                height: 32.h,
-                width: 32.w,
-                child: Image.asset(
-                  cables['logo'],
-                  // fit: BoxFit.cover,
-                ),
-              ),
-              Text(cables['title'],
+              // SizedBox(
+              //   height: 32.h,
+              //   width: 32.w,
+              //   child: Image.asset(
+              //     cables['logo'],
+              //     // fit: BoxFit.cover,
+              //   ),
+              // ),
+              Text(electricity.toString(),
                   style: const TextStyle(color: Colors.black)),
             ],
           ),
         );
       }).toList(),
-      onChanged: (newValue) {},
+      onChanged: (newValue) {
+        setState(() {
+          widget.selectedElectricityProvider = newValue!;
+        });
+        widget.onElectricityProviderSelected(newValue!);
+      },
     );
     // Positioned(
     //   top: -15,

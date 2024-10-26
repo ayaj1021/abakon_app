@@ -9,11 +9,13 @@ import 'package:abakon/presentation/features/change_password/data/model/change_p
 import 'package:abakon/presentation/features/change_password/data/model/change_password_response.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_response.dart';
+import 'package:abakon/presentation/features/dashboard/airtime/data/model/get_all_airtime_service_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_response.dart';
 import 'package:abakon/presentation/features/bank_deposits/data/model/generate_account_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_request.dart';
+import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
 import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
@@ -61,8 +63,7 @@ abstract class RestClient {
     @Body() BuyAirtimeRequest buyDataRequest,
   );
 
-
-    @POST('/cabletv/verify')
+  @POST('/cabletv/verify')
   Future<VerifyCableResponse> verifyCable(
     @Body() VerifyCableRequest buyDataRequest,
   );
@@ -107,9 +108,18 @@ abstract class RestClient {
   Future<DataResponse> getAllDataServices(
       // @Queries() Map<String, dynamic> queries,
       );
+  @GET('/settings?setting=airtime_details')
+  Future<AirtimeResponse> getAllAirtimeServices(
+      // @Queries() Map<String, dynamic> queries,
+      );
 
   @GET('/settings?setting=exam_plans')
   Future<GetAllExamData> getAllExamData(
+      // @Queries() Map<String, dynamic> queries,
+      );
+
+  @GET('/settings?setting=electricity_settings')
+  Future<ElectricityResponse> getAllElectricityService(
       // @Queries() Map<String, dynamic> queries,
       );
 
@@ -172,7 +182,7 @@ abstract class RestClient {
 ProviderFamily<Dio, BaseEnv> _dio = Provider.family<Dio, BaseEnv>(
   (ref, env) {
     final dio = Dio();
-    dio.options.baseUrl = 'https://test.abakon.ng/api';
+    dio.options.baseUrl = 'https://api.abakon.ng/api';
     // dio.options.baseUrl = 'https://abakon.onrender.com/api/users';
 
     dio.options.headers = {

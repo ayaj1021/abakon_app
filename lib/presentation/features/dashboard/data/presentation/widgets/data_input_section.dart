@@ -3,12 +3,12 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/notifier/buy_data_notifier.dart';
+import 'package:abakon/presentation/features/dashboard/data/presentation/notifier/get_all_data_services_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_network_dropdown_widget.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_plan_dropdown.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_text_field.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_type_dropdown_widget.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
-import 'package:abakon/presentation/features/services/notifier/get_all_services_notifier.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
@@ -30,11 +30,14 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
   String? _selectedPlan;
 
   String? _selectedNid;
+  String? _selectedDataId;
   @override
   void initState() {
     _phoneNumberController = TextEditingController()..addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await ref.read(getAllServicesNotifierProvider.notifier).getAllServices();
+      await ref
+          .read(getAllDataServicesNotifierProvider.notifier)
+          .getAllDataServices();
     });
 
     super.initState();
@@ -62,6 +65,12 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
     });
   }
 
+  void _onDataIdSelected(String selectedDataId) {
+    setState(() {
+      _selectedDataId = selectedDataId;
+    });
+  }
+
   void _onTypeSelected(String selectedNetwork) {
     setState(() {
       _selectedType = selectedNetwork;
@@ -78,8 +87,8 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
 
   @override
   Widget build(BuildContext context) {
-    final dataPlans = ref.watch(getAllServicesNotifierProvider
-        .select((v) => v.getAllServices.data?.data?.dataPlans?.toSet().toList()));
+    final dataPlans = ref.watch(getAllDataServicesNotifierProvider
+        .select((v) => v.getAllDataServices.data?.data?.toSet().toList()));
 
     return Consumer(
       builder: (context, re, c) {
@@ -110,6 +119,9 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                   selectedPlan: _selectedPlan,
                   selectedNetwork: _selectedNetwork,
                   selectedType: _selectedType,
+                  onDataIdSelected: _onDataIdSelected,
+                  selectedDataId: _selectedDataId,
+                  //int.tryParse(_selectedDataId.toString()),
                 ),
                 const VerticalSpacing(16),
                 DataTextField(
@@ -178,7 +190,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
       phone: _phoneNumberController.text.toLowerCase().trim(),
       network: _selectedNid.toString(),
       portedNumber: 'true',
-      dataPlan: _selectedPlan.toString(),
+      dataPlan: _selectedDataId.toString(),
       ref: 'string',
     );
     ref.read(buyDataNotifer.notifier).buyData(

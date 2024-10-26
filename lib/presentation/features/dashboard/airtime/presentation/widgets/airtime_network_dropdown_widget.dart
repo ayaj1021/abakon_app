@@ -1,6 +1,6 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
+import 'package:abakon/presentation/features/dashboard/airtime/data/model/get_all_airtime_service_response.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -12,7 +12,7 @@ class AirtimeNetWorkDropDown extends StatefulWidget {
       required this.selectedNetwork,
       required this.onNidSelected,
       required this.selectedNid});
-  final List<AirtimeDiscount> airtimePlans;
+  final List<AirtimeData> airtimePlans;
   String? selectedNetwork;
   int? selectedNid;
   final Function(String) onNetworkSelected;

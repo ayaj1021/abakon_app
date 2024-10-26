@@ -1,6 +1,6 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
+import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -13,7 +13,7 @@ class DataNetWorkDropDown extends StatefulWidget {
       required this.onNidSelected,
       required this.selectedNid});
 
-  final List<DataPlan> dataPlans;
+  final List<Plan> dataPlans;
   String? selectedNetwork;
   int? selectedNid;
   final Function(String) onNetworkSelected;
@@ -32,9 +32,10 @@ class _DataNetWorkDropDownState extends State<DataNetWorkDropDown> {
       onChanged: (String? newValue) {
         setState(() {
           widget.selectedNetwork = newValue!;
+
           widget.selectedNid = widget.dataPlans
-              .firstWhere((discount) => discount.name == newValue)
-              .pId;
+              .firstWhere((discount) => discount.network == newValue)
+              .nId;
         });
         widget.onNetworkSelected(newValue!);
         widget.onNidSelected(widget.selectedNid.toString());

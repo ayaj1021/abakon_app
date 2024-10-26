@@ -4,10 +4,10 @@ import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/disable_number_validator_widget.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/notifier/buy_airtime_notifier.dart';
+import 'package:abakon/presentation/features/dashboard/airtime/presentation/notifier/get_all_airtime_service_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/widgets/airtime_text_field.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/widgets/airtime_network_dropdown_widget.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/widgets/airtime_type_dropdown_widget.dart';
-import 'package:abakon/presentation/features/services/notifier/get_all_services_notifier.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
@@ -31,7 +31,7 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
     _phoneNumberController = TextEditingController()..addListener(_listener);
     _amountController = TextEditingController()..addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await ref.read(getAllServicesNotifierProvider.notifier).getAllServices();
+      await ref.read(getAllAirtimeServicesNotifierProvider.notifier).getAllAirtimeServices();
     });
 
     super.initState();
@@ -65,8 +65,8 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
 
   @override
   Widget build(BuildContext context) {
-    final airtimePlans = ref.watch(getAllServicesNotifierProvider.select(
-        (v) => v.getAllServices.data?.data?.airtimeDiscount?.toSet().toList()));
+    final airtimePlans = ref.watch(getAllAirtimeServicesNotifierProvider.select(
+        (v) => v.getAllAirtimeServices.data?.data?.toSet().toList()));
     return Consumer(builder: (context, re, c) {
       final isLoading = re.watch(
         buyAirtimeNotifer.select((v) => v.buyAirtimeState.isLoading),

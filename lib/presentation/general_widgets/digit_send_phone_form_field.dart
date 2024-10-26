@@ -3,7 +3,7 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -91,7 +91,7 @@ class DSPhoneFormField extends StatefulWidget {
 class _DSPhoneFormFieldState extends State<DSPhoneFormField> {
   ValueNotifier<String?> error = ValueNotifier(null);
   final ValueNotifier<Contact?> _selectedContact = ValueNotifier(null);
-  final FlutterContactPicker _contactPicker = FlutterContactPicker();
+ // final FlutterContactPicker _contactPicker = FlutterContactPicker();
 
   @override
   void dispose() {
@@ -101,21 +101,21 @@ class _DSPhoneFormFieldState extends State<DSPhoneFormField> {
     super.dispose();
   }
 
-  Future<void> pickAndValidateContact() async {
-    final contact = await _contactPicker.selectContact();
-    if (contact != null && (contact.phoneNumbers?.isNotEmpty ?? false)) {
-      var cleanPhoneNumber =
-          contact.phoneNumbers?.first.replaceAll(RegExp(r'\D'), '');
+  // Future<void> pickAndValidateContact() async {
+  //   final contact = await _contactPicker.selectContact();
+  //   if (contact != null && (contact.phoneNumbers?.isNotEmpty ?? false)) {
+  //     var cleanPhoneNumber =
+  //         contact.phoneNumbers?.first.replaceAll(RegExp(r'\D'), '');
 
-      cleanPhoneNumber = cleanPhoneNumber!.startsWith('234')
-          ? cleanPhoneNumber.replaceFirst('234', '0')
-          : cleanPhoneNumber;
+  //     cleanPhoneNumber = cleanPhoneNumber!.startsWith('234')
+  //         ? cleanPhoneNumber.replaceFirst('234', '0')
+  //         : cleanPhoneNumber;
 
-      widget.controller?.text = cleanPhoneNumber;
-      error.value = (widget.validateFunction ?? Validators.phone())
-          .call(cleanPhoneNumber);
-    }
-  }
+  //     widget.controller?.text = cleanPhoneNumber;
+  //     error.value = (widget.validateFunction ?? Validators.phone())
+  //         .call(cleanPhoneNumber);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class _DSPhoneFormFieldState extends State<DSPhoneFormField> {
             prefix: widget.prefix,
             suffixIcon: widget.suffixIcon ??
                 InkWell(
-                  onTap: pickAndValidateContact,
+                  //onTap: pickAndValidateContact,
                   child: SvgPicture.asset(
                     'assets/icons/phone_book.svg',
                     fit: BoxFit.scaleDown,
