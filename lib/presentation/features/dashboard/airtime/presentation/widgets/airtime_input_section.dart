@@ -31,7 +31,9 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
     _phoneNumberController = TextEditingController()..addListener(_listener);
     _amountController = TextEditingController()..addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await ref.read(getAllAirtimeServicesNotifierProvider.notifier).getAllAirtimeServices();
+      await ref
+          .read(getAllAirtimeServicesNotifierProvider.notifier)
+          .getAllAirtimeServices();
     });
 
     super.initState();
@@ -65,8 +67,8 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
 
   @override
   Widget build(BuildContext context) {
-    final airtimePlans = ref.watch(getAllAirtimeServicesNotifierProvider.select(
-        (v) => v.getAllAirtimeServices.data?.data?.toSet().toList()));
+    final airtimePlans = ref.watch(getAllAirtimeServicesNotifierProvider
+        .select((v) => v.getAllAirtimeServices.data?.data?.toSet().toList()));
     return Consumer(builder: (context, re, c) {
       final isLoading = re.watch(
         buyAirtimeNotifer.select((v) => v.buyAirtimeState.isLoading),
@@ -144,12 +146,9 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
     final data = BuyAirtimeRequest(
       phone: _phoneNumberController.text.toLowerCase().trim(),
       network: _selectedNid.toString(),
-      //'2',
-      //_selectedNetwork.toString(),
       portedNumber: 'false',
       amount: _amountController.text.trim(),
       airtimeType: _selectedType.toString(),
-      // _selectedPlan.toString(),
       ref: 'string',
     );
     ref.read(buyAirtimeNotifer.notifier).buyAirtime(
@@ -160,8 +159,6 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
           onSuccess: (message) {
             _isBuyAirtimeEnabled.value = false;
             context.showSuccess(message: 'Login Successful');
-            // log('Login successfull');
-            // context.pu(Dashboard.routeName);
           },
         );
   }

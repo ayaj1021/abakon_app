@@ -2,6 +2,8 @@ import 'package:abakon/core/config/env/base_env.dart';
 import 'package:abakon/core/config/env/prod_env.dart';
 import 'package:abakon/core/config/interceptors/header_interceptor.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
+import 'package:abakon/presentation/features/cable/data/model/buy_cable_request.dart';
+import 'package:abakon/presentation/features/cable/data/model/buy_cable_response.dart';
 import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
 import 'package:abakon/presentation/features/cable/data/model/verify_cable_request.dart';
 import 'package:abakon/presentation/features/cable/data/model/verify_cable_response.dart';
@@ -16,6 +18,8 @@ import 'package:abakon/presentation/features/bank_deposits/data/model/generate_a
 import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
+import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_request.dart';
+import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_response.dart';
 import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
@@ -65,7 +69,17 @@ abstract class RestClient {
 
   @POST('/cabletv/verify')
   Future<VerifyCableResponse> verifyCable(
-    @Body() VerifyCableRequest buyDataRequest,
+    @Body() VerifyCableRequest verifyCableRequest,
+  );
+
+  @POST('/cabletv')
+  Future<BuyCableResponse> buyCable(
+    @Body() BuyCableRequest buyCableRequest,
+  );
+
+  @POST('/electricity/verify')
+  Future<VerifyElectricityResponse> verifyElectricity(
+    @Body() VerifyElectricityRequest verifyElectricityRequest,
   );
 
   @POST('/user/delete')

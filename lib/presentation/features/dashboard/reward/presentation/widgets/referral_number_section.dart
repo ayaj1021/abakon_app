@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReferralNumberSection extends StatelessWidget {
-  const ReferralNumberSection({super.key});
+  const ReferralNumberSection({super.key, required this.referralNumber});
+  final String referralNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class ReferralNumberSection extends StatelessWidget {
           ),
           const VerticalSpacing(8),
           Text(
-            '2',
+            referralNumber,
             style: context.textTheme.s20w700.copyWith(
               color: AppColors.primary010101,
             ),

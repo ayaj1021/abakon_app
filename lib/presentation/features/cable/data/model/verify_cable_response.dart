@@ -4,15 +4,15 @@ part 'verify_cable_response.g.dart';
 
 @JsonSerializable()
 class VerifyCableResponse {
+  final bool? status;
   final String? verifyCableResponseStatus;
-  final String? status;
   final String? msg;
   final String? name;
   final String? customerName;
 
   VerifyCableResponse({
-    this.verifyCableResponseStatus,
     this.status,
+    this.verifyCableResponseStatus,
     this.msg,
     this.name,
     this.customerName,

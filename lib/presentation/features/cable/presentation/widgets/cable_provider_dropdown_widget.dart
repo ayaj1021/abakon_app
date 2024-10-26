@@ -1,3 +1,4 @@
+
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
@@ -16,7 +17,7 @@ class CableProviderDropDown extends StatefulWidget {
   final String labelText;
   final List<CableData> cablePlans;
   String? selectedCableProvider;
-  String? selectedCableId;
+  int? selectedCableId;
   final Function(String) onCableProviderSelected;
   final Function(String) onCableIdSelected;
   @override
@@ -28,8 +29,7 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
   Widget build(BuildContext context) {
     final cableProvider =
         widget.cablePlans.map((plan) => plan.provider).toSet();
-    // final cableNames = widget.cablePlans.where(
-    //     (plan) => plan.cableprovider == cables.map((cable) => cable).toList());
+
     return DropdownButtonFormField(
       elevation: 0,
       value: widget.selectedCableProvider,
@@ -58,14 +58,6 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
           value: cablesPlans,
           child: Row(
             children: [
-              // SizedBox(
-              //   height: 32.h,
-              //   width: 32.w,
-              //   child: Image.asset(
-              //     cables['logo'],
-              //     // fit: BoxFit.cover,
-              //   ),
-              // ),
               Text(cablesPlans.toString(),
                   style: const TextStyle(color: Colors.black)),
             ],
@@ -78,10 +70,10 @@ class _CableProviderDropDownState extends State<CableProviderDropDown> {
 
           widget.selectedCableId = widget.cablePlans
               .firstWhere((discount) => discount.provider == newValue)
-              .cableId;
+              .cId;
         });
-        widget.onCableProviderSelected(newValue!);
         widget.onCableIdSelected(widget.selectedCableId.toString());
+        widget.onCableProviderSelected(newValue!);
       },
     );
   }

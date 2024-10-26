@@ -6,7 +6,8 @@ import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
 class YourEarningSection extends StatelessWidget {
-  const YourEarningSection({super.key});
+  const YourEarningSection({super.key, required this.referralAmount});
+  final String referralAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class YourEarningSection extends StatelessWidget {
               ),
               const VerticalSpacing(8),
               Text(
-                'N145',
+                'N$referralAmount',
                 style: context.textTheme.s20w700.copyWith(
                   color: AppColors.primary010101,
                 ),
@@ -50,7 +51,7 @@ class YourEarningSection extends StatelessWidget {
               const VerticalSpacing(8),
               const AppSmallButtonWidget(
                 title: 'Withdraw',
-                buttonColor: AppColors.primaryColor,
+                buttonColor: AppColors.primaryFFF7F3,
                 textColor: AppColors.white,
               ),
             ],

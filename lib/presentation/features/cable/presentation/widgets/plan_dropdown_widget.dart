@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
@@ -5,18 +7,23 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CablePlansDown extends StatefulWidget {
-  CablePlansDown(
-      {super.key,
-      required this.labelText,
-      required this.filteredPlans,
-      required this.onCablePlanSelected,
-      required this.selectedCablePlan,
-      required this.selectedCableProvider});
+  CablePlansDown({
+    super.key,
+    required this.labelText,
+    required this.filteredPlans,
+    required this.onCablePlanSelected,
+    required this.onPlanIdSelected,
+    required this.selectedCablePlan,
+    required this.selectedPlanId,
+    required this.selectedCableProvider,
+  });
   final String labelText;
   final List<CableData> filteredPlans;
   String? selectedCablePlan;
+  int? selectedPlanId;
   String? selectedCableProvider;
   final Function(String) onCablePlanSelected;
+  final Function(String) onPlanIdSelected;
 
   @override
   State<CablePlansDown> createState() => _CablePlansDownState();
@@ -64,7 +71,12 @@ class _CablePlansDownState extends State<CablePlansDown> {
       onChanged: (String? newValue) {
         setState(() {
           widget.selectedCablePlan = newValue!;
+          widget.selectedPlanId = widget.filteredPlans
+              .firstWhere((discount) => discount.name == newValue)
+              .cpId;
+              log(widget.selectedPlanId.toString());
         });
+        widget.onPlanIdSelected(widget.selectedPlanId.toString());
         widget.onCablePlanSelected(newValue!);
       },
     );

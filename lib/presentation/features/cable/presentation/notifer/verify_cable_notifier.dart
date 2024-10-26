@@ -1,5 +1,5 @@
-
 import 'package:abakon/core/config/exception/message_exception.dart';
+import 'package:abakon/core/config/network_utils/async_response.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/cable/data/model/verify_cable_request.dart';
 import 'package:abakon/presentation/features/cable/data/repository/verify_cable_repository.dart';
@@ -21,13 +21,17 @@ class VerifyCableNotifer extends AutoDisposeNotifier<VerifyCableNotiferState> {
     required void Function(String message) onSuccess,
   }) async {
     try {
-      state = state.copyWith(verifyCableState: LoadState.loading);
+      state = state.copyWith(
+        verifyCableState: LoadState.loading,
+      );
       final value = await _verifyCableRepository.verifyCable(
         data,
       );
       if (!value.status) throw value.msg.toException;
 
-      state = state.copyWith(verifyCableState: LoadState.idle);
+      state = state.copyWith(
+          verifyCableState: LoadState.idle,
+          verifyCable: AsyncResponse.success(value.data!));
       onSuccess(value.msg.toString());
     } catch (e) {
       onError(e.toString());

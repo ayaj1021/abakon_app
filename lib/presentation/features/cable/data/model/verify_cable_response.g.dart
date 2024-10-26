@@ -8,8 +8,8 @@ part of 'verify_cable_response.dart';
 
 VerifyCableResponse _$VerifyCableResponseFromJson(Map<String, dynamic> json) =>
     VerifyCableResponse(
+      status: json['status'] as bool?,
       verifyCableResponseStatus: json['verifyCableResponseStatus'] as String?,
-      status: json['status'] as String?,
       msg: json['msg'] as String?,
       name: json['name'] as String?,
       customerName: json['customerName'] as String?,
@@ -18,8 +18,8 @@ VerifyCableResponse _$VerifyCableResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$VerifyCableResponseToJson(
         VerifyCableResponse instance) =>
     <String, dynamic>{
-      'verifyCableResponseStatus': instance.verifyCableResponseStatus,
       'status': instance.status,
+      'verifyCableResponseStatus': instance.verifyCableResponseStatus,
       'msg': instance.msg,
       'name': instance.name,
       'customerName': instance.customerName,

@@ -1,14 +1,18 @@
+import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/presentation/features/cable/data/model/buy_cable_request.dart';
 import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
 import 'package:abakon/presentation/features/cable/data/model/verify_cable_request.dart';
+import 'package:abakon/presentation/features/cable/presentation/notifer/buy_cable_notifier.dart';
 import 'package:abakon/presentation/features/cable/presentation/notifer/get_all_cable_data_notifier.dart';
 import 'package:abakon/presentation/features/cable/presentation/notifer/verify_cable_notifier.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/cable_provider_dropdown_widget.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/plan_dropdown_widget.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,6 +54,7 @@ class _CableScreenInputSectionState
   String? _selectedCableProvider;
   String? _selectedCablePlan;
   String? _selectedCableId;
+  String? _selectedPlanId;
 
   List<CableData> filteredPlans = [];
 
@@ -67,6 +72,12 @@ class _CableScreenInputSectionState
   void _onCablePlanSelected(String selectedCablePlan) {
     setState(() {
       _selectedCablePlan = selectedCablePlan;
+    });
+  }
+
+  void _onPlanIdSelected(String selectedPlanId) {
+    setState(() {
+      _selectedPlanId = selectedPlanId;
     });
   }
 
@@ -96,7 +107,8 @@ class _CableScreenInputSectionState
                 onCableProviderSelected: (selectedCableProvider) =>
                     _onCableProviderSelected(
                         selectedCableProvider, cablePlans ?? []),
-                selectedCableId: _selectedCableId,
+                selectedCableId: int.tryParse(_selectedCableId.toString()),
+                // _selectedCableId,
                 onCableIdSelected: _onCableIdSelected,
               ),
               const VerticalSpacing(16),
@@ -106,6 +118,10 @@ class _CableScreenInputSectionState
                 onCablePlanSelected: _onCablePlanSelected,
                 selectedCablePlan: _selectedCablePlan,
                 selectedCableProvider: _selectedCableProvider,
+                selectedPlanId: int.tryParse(
+                  _selectedPlanId.toString(),
+                ),
+                onPlanIdSelected: _onPlanIdSelected,
               ),
               const VerticalSpacing(16),
               TextField(
@@ -117,11 +133,12 @@ class _CableScreenInputSectionState
                   border: const OutlineInputBorder(),
                 ),
               ),
-              //  const VerticalSpacing(16),
-              //const SubcriptionTypeSection(),
               const VerticalSpacing(16),
               TextField(
+                keyboardType: TextInputType.number,
+                maxLength: 11,
                 decoration: InputDecoration(
+                  counterText: '',
                   labelStyle: context.textTheme.s10w500.copyWith(
                     color: AppColors.primary595857,
                   ),
@@ -132,6 +149,7 @@ class _CableScreenInputSectionState
               const VerticalSpacing(16),
               TextField(
                 controller: _iucNumberController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'IUC number',
                   labelStyle: context.textTheme.s10w500.copyWith(
@@ -143,26 +161,9 @@ class _CableScreenInputSectionState
               const VerticalSpacing(223),
               AbakonSendButton(
                   onTap: () {
-                    // showModalBottomSheet(
-                    //     context: context,
-                    //     builder: (context) {
-                    //       return const ConfirmCableTvSubscription();
-                    //     });
                     _verifyCable();
-                    // showModalBottomSheet<void>(
-                    //     // showDragHandle: true,
-
-                    //     isScrollControlled: true,
-                    //     context: context,
-                    //     builder: (context) {
-                    //       return PurchaseBottomSheetWidget(
-                    //         purchaseInfo:
-                    //             'You are about to purchase an "MTN" airtime of "100" for the phone number "08039334477"Do you wish to continue?',
-                    //         onTap: _verifyCable,
-                    //       );
-                    //     });
                   },
-                  title: 'Continue')
+                  title: 'Continue'),
             ],
           ),
           isLoading
@@ -184,8 +185,8 @@ class _CableScreenInputSectionState
 
   void _verifyCable() {
     final data = VerifyCableRequest(
-      smartCardNumber: _iucNumberController.text.trim(),
-      cablename: _selectedCableId.toString(),
+      smartCardNumber: _iucNumberController.text,
+      cablename: "$_selectedCableId",
     );
     ref.read(verifyCableNotifer.notifier).verifyCable(
           data: data,
@@ -194,9 +195,42 @@ class _CableScreenInputSectionState
           },
           onSuccess: (message) {
             _isVerifyCableEnabled.value = false;
+
+            context.showSuccess(message: "IUC number verified, ");
+            showModalBottomSheet<void>(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return PurchaseBottomSheetWidget(
+                    purchaseInfo:
+                        'You are about to purchase an $_selectedCableProvider subscription of ${_amountController.text} for the phone number ${_iucNumberController.text} Do you wish to continue?',
+                    onTap: () {
+                      context.pop(context);
+                      _buyCable();
+                    },
+                  );
+                });
+          },
+        );
+  }
+
+  void _buyCable() {
+    final data = BuyCableRequest(
+      iucNumber: _iucNumberController.text.trim(),
+      cableName: "$_selectedCableId",
+      phone: _phoneNumberController.text.trim(),
+      cablePlan: '$_selectedPlanId',
+      subtype: '',
+    );
+    ref.read(buyCableNotifer.notifier).buyCable(
+          data: data,
+          onError: (error) {
+            context.showError(message: error);
+          },
+          onSuccess: (message) {
+            _isVerifyCableEnabled.value = false;
+
             context.showSuccess(message: message);
-            // log('Login successfull');
-            // context.pu(Dashboard.routeName);
           },
         );
   }

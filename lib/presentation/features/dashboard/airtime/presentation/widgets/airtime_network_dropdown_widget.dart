@@ -78,7 +78,7 @@ class _AirtimeNetWorkDropDownState extends State<AirtimeNetWorkDropDown> {
               .nId;
         });
         widget.onNetworkSelected(newValue!);
-        widget.onNidSelected( widget.selectedNid.toString());
+        widget.onNidSelected(widget.selectedNid.toString());
       },
     );
   }

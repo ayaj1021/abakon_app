@@ -195,12 +195,12 @@ class _RestClient implements RestClient {
 
   @override
   Future<VerifyCableResponse> verifyCable(
-      VerifyCableRequest buyDataRequest) async {
+      VerifyCableRequest verifyCableRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(buyDataRequest.toJson());
+    _data.addAll(verifyCableRequest.toJson());
     final _options = _setStreamType<VerifyCableResponse>(Options(
       method: 'POST',
       headers: _headers,
@@ -221,6 +221,75 @@ class _RestClient implements RestClient {
     late VerifyCableResponse _value;
     try {
       _value = VerifyCableResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BuyCableResponse> buyCable(BuyCableRequest buyCableRequest) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(buyCableRequest.toJson());
+    final _options = _setStreamType<BuyCableResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/cabletv',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BuyCableResponse _value;
+    try {
+      _value = BuyCableResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<VerifyElectricityResponse> verifyElectricity(
+      VerifyElectricityRequest verifyElectricityRequest) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(verifyElectricityRequest.toJson());
+    final _options = _setStreamType<VerifyElectricityResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/electricity/verify',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late VerifyElectricityResponse _value;
+    try {
+      _value = VerifyElectricityResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

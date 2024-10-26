@@ -1,16 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'buy_data_request.dart';
+part of 'buy_cable_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$BuyDataRequestToJson(BuyDataRequest instance) =>
+Map<String, dynamic> _$BuyCableRequestToJson(BuyCableRequest instance) =>
     <String, dynamic>{
-      'network': instance.network,
+      'iucnumber': instance.iucNumber,
+      'cablename': instance.cableName,
+      'cableplan': instance.cablePlan,
+      'subtype': instance.subtype,
       'phone': instance.phone,
-      'ported_number': instance.portedNumber,
-      'data_plan': instance.dataPlan,
-      'ref': instance.ref,
     };
