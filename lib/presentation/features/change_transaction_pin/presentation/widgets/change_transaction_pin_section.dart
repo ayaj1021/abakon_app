@@ -19,7 +19,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
           controller: oldPinController,
           hintText: 'Old transaction pin',
           keyboardType: TextInputType.number,
-          maxLength: 4,
+          maxLength: 5,
           prefixIcon: SvgPicture.asset(
             'assets/icons/pin_icon.svg',
             fit: BoxFit.scaleDown,
@@ -31,7 +31,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
           controller: newPinController,
           hintText: 'New transaction pin',
           keyboardType: TextInputType.number,
-          maxLength: 4,
+          maxLength: 5,
           prefixIcon: SvgPicture.asset(
             'assets/icons/pin_icon.svg',
             fit: BoxFit.scaleDown,
@@ -43,7 +43,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
           controller: confirmNewPinController,
           hintText: 'Confirm new transaction pin',
           keyboardType: TextInputType.number,
-          maxLength: 4,
+          maxLength: 5,
           prefixIcon: SvgPicture.asset(
             'assets/icons/pin_icon.svg',
             fit: BoxFit.scaleDown,

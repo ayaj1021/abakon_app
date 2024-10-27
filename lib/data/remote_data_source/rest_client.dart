@@ -9,6 +9,8 @@ import 'package:abakon/presentation/features/cable/data/model/verify_cable_reque
 import 'package:abakon/presentation/features/cable/data/model/verify_cable_response.dart';
 import 'package:abakon/presentation/features/change_password/data/model/change_password_request.dart';
 import 'package:abakon/presentation/features/change_password/data/model/change_password_response.dart';
+import 'package:abakon/presentation/features/change_transaction_pin/data/model/change_transaction_pin_request.dart';
+import 'package:abakon/presentation/features/change_transaction_pin/data/model/change_transaction_pin_response.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_response.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/get_all_airtime_service_response.dart';
@@ -56,6 +58,12 @@ abstract class RestClient {
   Future<ChangePasswordResponse> changePassword(
     @Body() ChangePasswordRequest changePasswordRequest,
   );
+
+  @POST('/user/change-pin')
+  Future<ChangeTransactionPinResponse> changeTransactionPin(
+    @Body() ChangeTransactionPinRequest changeTransactionPinRequest,
+  );
+
 
   @POST('/data')
   Future<BuyDataResponse> buyData(

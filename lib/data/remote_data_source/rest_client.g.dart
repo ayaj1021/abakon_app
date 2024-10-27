@@ -125,6 +125,41 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<ChangeTransactionPinResponse> changeTransactionPin(
+      ChangeTransactionPinRequest changeTransactionPinRequest) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(changeTransactionPinRequest.toJson());
+    final _options = _setStreamType<ChangeTransactionPinResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/user/change-pin',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ChangeTransactionPinResponse _value;
+    try {
+      _value = ChangeTransactionPinResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<BuyDataResponse> buyData(BuyDataRequest buyDataRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
