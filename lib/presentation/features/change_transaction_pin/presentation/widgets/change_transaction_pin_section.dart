@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ChangeTransactionPinSection extends StatelessWidget {
-  const ChangeTransactionPinSection({super.key});
+  const ChangeTransactionPinSection({super.key, required this.oldPinController, required this.newPinController, required this.confirmNewPinController});
+  final TextEditingController oldPinController;
+  final TextEditingController newPinController;
+  final TextEditingController confirmNewPinController;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
       children: [
         AbakonFormfield(
           validateFunction: Validators.pin(),
-          //  controller: pinController,
+          controller: oldPinController,
           hintText: 'Old transaction pin',
           keyboardType: TextInputType.number,
           maxLength: 4,
@@ -25,7 +28,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
         const VerticalSpacing(10),
         AbakonFormfield(
           validateFunction: Validators.pin(),
-          //  controller: pinController,
+          controller: newPinController,
           hintText: 'New transaction pin',
           keyboardType: TextInputType.number,
           maxLength: 4,
@@ -37,7 +40,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
         const VerticalSpacing(10),
         AbakonFormfield(
           validateFunction: Validators.pin(),
-          //  controller: pinController,
+          controller: confirmNewPinController,
           hintText: 'Confirm new transaction pin',
           keyboardType: TextInputType.number,
           maxLength: 4,

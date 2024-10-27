@@ -93,9 +93,13 @@ class _CableScreenInputSectionState
         .select((v) => v.getAllCableData.data?.data?.toSet().toList()));
 
     return Consumer(builder: (context, re, c) {
-      final isLoading = re.watch(
+      final isVerifyLoading = re.watch(
         verifyCableNotifer.select((v) => v.verifyCableState.isLoading),
       );
+      final isBuyLoading = re.watch(
+        buyCableNotifer.select((v) => v.buyCableState.isLoading),
+      );
+
       return Stack(
         children: [
           Column(
@@ -166,7 +170,7 @@ class _CableScreenInputSectionState
                   title: 'Continue'),
             ],
           ),
-          isLoading
+          isVerifyLoading
               ? Container(
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height,
@@ -177,7 +181,19 @@ class _CableScreenInputSectionState
                     color: AppColors.primaryColor,
                   ),
                 )
-              : const SizedBox.shrink()
+              : const SizedBox.shrink(),
+          isBuyLoading
+              ? Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration:
+                      BoxDecoration(color: AppColors.greyFill.withOpacity(0.2)),
+                  child: const CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                )
+              : const SizedBox.shrink(),
         ],
       );
     });

@@ -20,7 +20,7 @@ class ChangePasswordView extends ConsumerStatefulWidget {
 }
 
 class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
-  final ValueNotifier<bool> _isLoginEnabled = ValueNotifier(false);
+  final ValueNotifier<bool> _isChangePasswordEnabled = ValueNotifier(false);
   late TextEditingController _currentPasswordController;
   late TextEditingController _newPasswordController;
   late TextEditingController _confirmNewPasswordController;
@@ -41,14 +41,14 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
   }
 
   void _listener() {
-    _isLoginEnabled.value = _currentPasswordController.text.isNotEmpty &&
+    _isChangePasswordEnabled.value = _currentPasswordController.text.isNotEmpty &&
         _newPasswordController.text.isNotEmpty &&
         _confirmNewPasswordController.text.isNotEmpty;
   }
 
   @override
   void dispose() {
-    _isLoginEnabled.dispose();
+    _isChangePasswordEnabled.dispose();
     _currentPasswordController.dispose();
     _newPasswordController.dispose();
     _confirmNewPasswordController.dispose();
@@ -77,7 +77,7 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
               ),
               const VerticalSpacing(300),
               ValueListenableBuilder(
-                  valueListenable: _isLoginEnabled,
+                  valueListenable: _isChangePasswordEnabled,
                   builder: (context, r, c) {
                     return Consumer(builder: (context, re, c) {
                       final isLoading = re.watch(
@@ -112,7 +112,7 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
             context.showError(message: error);
           },
           onSuccess: (message) {
-            _isLoginEnabled.value = false;
+            _isChangePasswordEnabled.value = false;
             context.showSuccess(message: 'Login Successful');
             // log('Login successfull');
             context.replaceAll(Login.routeName);

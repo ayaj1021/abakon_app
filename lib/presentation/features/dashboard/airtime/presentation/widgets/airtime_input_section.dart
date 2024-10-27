@@ -1,7 +1,6 @@
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
-import 'package:abakon/presentation/features/cable/presentation/widgets/disable_number_validator_widget.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/notifier/buy_airtime_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/notifier/get_all_airtime_service_notifier.dart';
@@ -103,7 +102,7 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
               ),
               const VerticalSpacing(16),
               const VerticalSpacing(197),
-              const DisableNumberValidatorCheckbox(),
+             // const DisableNumberValidatorCheckbox(),
               const VerticalSpacing(12),
               AbakonSendButton(
                   onTap: () {
