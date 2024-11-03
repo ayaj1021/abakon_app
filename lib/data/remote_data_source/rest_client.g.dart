@@ -333,6 +333,41 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<BuyElectricityResponse> buyElectricity(
+      BuyElectricityRequest buyyElectricityRequest) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(buyyElectricityRequest.toJson());
+    final _options = _setStreamType<BuyElectricityResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/electricity',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BuyElectricityResponse _value;
+    try {
+      _value = BuyElectricityResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<LoginResponse> deleteUser(DeleteUserRequest deleteUserRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

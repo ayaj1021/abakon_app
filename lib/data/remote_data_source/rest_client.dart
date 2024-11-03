@@ -19,6 +19,8 @@ import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data
 import 'package:abakon/presentation/features/bank_deposits/data/model/generate_account_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_request.dart';
+import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_request.dart';
+import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_response.dart';
@@ -65,7 +67,6 @@ abstract class RestClient {
     @Body() ChangeTransactionPinRequest changeTransactionPinRequest,
   );
 
-
   @POST('/data')
   Future<BuyDataResponse> buyData(
     @Body() BuyDataRequest buyDataRequest,
@@ -90,6 +91,12 @@ abstract class RestClient {
   Future<VerifyElectricityResponse> verifyElectricity(
     @Body() VerifyElectricityRequest verifyElectricityRequest,
   );
+
+  @POST('/electricity')
+  Future<BuyElectricityResponse> buyElectricity(
+    @Body() BuyElectricityRequest buyyElectricityRequest,
+  );
+  //electricity
 
   @POST('/user/delete')
   Future<LoginResponse> deleteUser(

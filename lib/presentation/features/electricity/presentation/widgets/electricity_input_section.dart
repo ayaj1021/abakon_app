@@ -2,8 +2,10 @@ import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_request.dart';
+import 'package:abakon/presentation/features/electricity/presentation/notifier/buy_electricity_notifier.dart';
 import 'package:abakon/presentation/features/electricity/presentation/notifier/get_all_electricity_service_notifier.dart';
 import 'package:abakon/presentation/features/electricity/presentation/notifier/verify_electricity_notifier.dart';
 import 'package:abakon/presentation/features/electricity/presentation/widgets/electricity_meter_type_dropdown.dart';
@@ -198,10 +200,30 @@ class _ElectricityInputSectionState
                         'You are about to purchase an $_selectedElectricityProvider subscription of ${_amountController.text} for the phone number ${_meterNumberController.text} Do you wish to continue?',
                     onTap: () {
                       context.pop(context);
-                      //_buyCable();
+                      _buyElectricity();
                     },
                   );
                 });
+          },
+        );
+  }
+
+  void _buyElectricity() {
+    final data = BuyElectricityRequest(
+        provider: _selectedElectricityProviderId.toString(),
+        meternumber: _meterNumberController.text.trim(),
+        metertype: _selectedMeterType.toString(),
+        amount: _amountController.text.trim(),
+        phone: _phoneNumberController.text.trim());
+    ref.read(buyElectricityNotifer.notifier).buyElectricity(
+          data: data,
+          onError: (error) {
+            context.showError(message: error);
+          },
+          onSuccess: (message) {
+            _isVerifyElectricityEnabled.value = false;
+
+            context.showSuccess(message: message);
           },
         );
   }
