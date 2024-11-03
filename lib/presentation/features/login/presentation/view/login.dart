@@ -72,13 +72,13 @@ class _LoginState extends ConsumerState<Login> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpacing(25),
-                GestureDetector(
-                  onTap: () => context.pop(),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.primary591E0C,
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () => context.pop(),
+                //   child: const Icon(
+                //     Icons.arrow_back_ios,
+                //     color: AppColors.primary591E0C,
+                //   ),
+                // ),
                 Text(
                   Strings.welcome(firstName ?? ''),
                   style: context.textTheme.s20w900.copyWith(
@@ -174,7 +174,7 @@ class _LoginState extends ConsumerState<Login> {
   void _login() {
     final data = LoginRequest(
       password: _passwordController.text.trim(),
-      phone: _phoneNumberController.text.toLowerCase().trim(),
+      phone: _phoneNumberController.text.trim(),
     );
     ref.read(loginNotifer.notifier).login(
           data: data,

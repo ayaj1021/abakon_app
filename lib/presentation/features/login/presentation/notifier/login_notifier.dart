@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
@@ -30,8 +28,6 @@ class LoginNotifer extends AutoDisposeNotifier<LoginNotiferState> {
       if (!value.status) throw value.msg.toException;
 
       await SecureStorage().saveUserToken(value.data!.accessToken.toString());
-
-      log("This is token ${value.data?.accessToken.toString()}");
 
       state = state.copyWith(loginState: LoadState.idle);
       onSuccess(value.msg.toString());

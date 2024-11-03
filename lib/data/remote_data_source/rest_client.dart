@@ -23,6 +23,7 @@ import 'package:abakon/presentation/features/electricity/data/model/get_all_elec
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_response.dart';
 import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
+import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_response.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
@@ -96,7 +97,7 @@ abstract class RestClient {
   );
 
   @POST('/auth/recover')
-  Future<dynamic> resendOTP(
+  Future<ResendOtpResponse> resendOTP(
     @Body() ResendOtpRequest request,
   );
 

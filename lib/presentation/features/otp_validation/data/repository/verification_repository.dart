@@ -3,6 +3,7 @@ import 'package:abakon/core/config/base_response/base_response.dart';
 import 'package:abakon/core/config/exception/app_exception.dart';
 import 'package:abakon/data/remote_data_source/rest_client.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_request.dart';
+import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_response.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_otp_request.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/verify_token_response.dart';
 import 'package:dio/dio.dart';
@@ -26,12 +27,12 @@ class OTPVerificationRepository {
 
 
 
-  Future<BaseResponse<dynamic>> resendOtp(
+  Future<BaseResponse<ResendOtpResponse>> resendOtp(
     ResendOtpRequest req,
   ) async {
     try {
       final response = await _restClient.resendOTP(req);
-      return response;
+      return BaseResponse(status: response.status!);
     } on DioException catch (e) {
       return AppException.handleError(e);
     }

@@ -1,7 +1,11 @@
+import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/dashboard/home/presentation/notifier/get_all_user_details_notifier.dart';
+import 'package:abakon/presentation/features/notification/presentation/view/notification_view.dart';
+import 'package:abakon/presentation/features/support/presentation/view/support_page.dart';
+import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -51,7 +55,17 @@ class _HomeHeaderSectionState extends ConsumerState<HomeHeaderSection> {
                       )
                     ],
                   ),
-                  const Icon(Icons.notifications_outlined),
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () => context.pushNamed(SupportPage.routeName),
+                          child: const Icon(Icons.support_agent_outlined)),
+                      const HorizontalSpacing(10),
+                      GestureDetector(
+                           onTap: () => context.pushNamed(NotificationView.routeName),
+                        child: const Icon(Icons.notifications_outlined)),
+                    ],
+                  ),
                 ],
               ),
           });

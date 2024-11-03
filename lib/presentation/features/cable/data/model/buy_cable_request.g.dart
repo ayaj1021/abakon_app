@@ -8,9 +8,9 @@ part of 'buy_cable_request.dart';
 
 Map<String, dynamic> _$BuyCableRequestToJson(BuyCableRequest instance) =>
     <String, dynamic>{
-      'iucnumber': instance.iucNumber,
-      'cablename': instance.cableName,
-      'cableplan': instance.cablePlan,
+      'iucNumber': instance.iucNumber,
+      'cableName': instance.cableName,
+      'cablePlan': instance.cablePlan,
       'subtype': instance.subtype,
       'phone': instance.phone,
     };

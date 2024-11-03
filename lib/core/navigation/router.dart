@@ -7,6 +7,7 @@ import 'package:abakon/presentation/features/electricity/presentation/view/elect
 import 'package:abakon/presentation/features/exam_pin/presentation/view/exam_pin.dart';
 import 'package:abakon/presentation/features/login/presentation/view/login.dart';
 import 'package:abakon/presentation/features/my_information/presentation/view/my_information_page.dart';
+import 'package:abakon/presentation/features/notification/presentation/view/notification_view.dart';
 import 'package:abakon/presentation/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:abakon/presentation/features/other_services/presentation/view/other_services_screen.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/view/register_one.dart';
@@ -34,6 +35,7 @@ class AppRouter {
     ExamPinScreen.routeName: (context) => const ExamPinScreen(),
     BankScreen.routeName: (context) => const BankScreen(),
     TransactionView.routeName: (context) => const TransactionView(),
+    NotificationView.routeName: (context) => const NotificationView(),
     // TransactionDetailsView.routeName: (context) =>
     //     const TransactionDetailsView(),
   };

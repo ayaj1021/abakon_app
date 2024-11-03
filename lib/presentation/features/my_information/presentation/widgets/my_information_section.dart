@@ -39,30 +39,37 @@ class _MyInformationSectionState extends ConsumerState<MyInformationSection> {
           color: AppColors.primaryColor,
         )),
       LoadState.error => const Text('Error'),
-      _ => Column(
-          children: [
-            MyInformationWidget(
-              icon: 'assets/icons/person.svg',
-              informationHeader: 'Full name: ',
-              information: '${data?.sFname} ${data?.sFname}',
-            ),
-            MyInformationWidget(
-              icon: 'assets/icons/email.svg',
-              informationHeader: 'Email: ',
-              information: '${data?.sEmail}',
-            ),
-            MyInformationWidget(
-              icon: 'assets/icons/phone.svg',
-              informationHeader: 'Phone: ',
-              information: '${data?.sPhone}',
-            ),
-            MyInformationWidget(
-              icon: 'assets/icons/state_light_icon.svg',
-              informationHeader: 'State: ',
-              information: '${data?.sState}',
-            ),
-          ],
+      _ => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.primaryColor)
         ),
+        child: Column(
+            children: [
+              MyInformationWidget(
+                icon: 'assets/icons/person.svg',
+                informationHeader: 'Full name: ',
+                information: '${data?.sFname} ${data?.sFname}',
+              ),
+              MyInformationWidget(
+                icon: 'assets/icons/email.svg',
+                informationHeader: 'Email: ',
+                information: '${data?.sEmail}',
+              ),
+              MyInformationWidget(
+                icon: 'assets/icons/phone.svg',
+                informationHeader: 'Phone: ',
+                information: '${data?.sPhone}',
+              ),
+              MyInformationWidget(
+                icon: 'assets/icons/state_light_icon.svg',
+                informationHeader: 'State: ',
+                information: '${data?.sState}',
+              ),
+            ],
+          ),
+      ),
     });
   }
 }
