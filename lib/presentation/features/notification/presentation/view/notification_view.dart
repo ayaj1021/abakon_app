@@ -13,7 +13,7 @@ class NotificationView extends StatelessWidget {
       body: SafeArea(
           child: Padding(
         padding: EdgeInsets.all(20),
-        child: Column(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NotificationHeaderSection(),
             VerticalSpacing(24),

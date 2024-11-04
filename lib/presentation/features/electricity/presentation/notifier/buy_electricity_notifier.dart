@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
