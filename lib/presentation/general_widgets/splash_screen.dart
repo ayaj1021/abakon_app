@@ -25,21 +25,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 3), () async {
       final token = await secureStorage.getUserToken();
+      final accessToken = await secureStorage.getUserAccessToken();
 
       log('token is ${token.toString()}');
-      if (token != null ) {
+      log('accesstoken is ${accessToken.toString()}');
+      if (accessToken != null) {
         context.pushReplacementNamed(Dashboard.routeName);
       } else {
         context.pushReplacementNamed(OnboardingScreen.routeName);
       }
-      //context.pushReplacementNamed(Login.routeName);
-      // final userState = ref.read(userAuthRepositoryProvider);
-      // switch (userState.getCurrentState()) {
-      //   case CurrentState.initial:
-      //     Navigator.pushReplacementNamed(context, Onboarding.routeName);
-      //   default:
-      //     Navigator.pushReplacementNamed(context, Login.routeName);
-      // }
     });
   }
 

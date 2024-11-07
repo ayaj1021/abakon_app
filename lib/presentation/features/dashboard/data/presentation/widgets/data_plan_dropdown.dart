@@ -76,7 +76,7 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
           widget.selectedPlan = newValue!;
           widget.selectedDataId = widget.dataPlans
               .firstWhere((discount) => discount.name == newValue)
-              .planid;
+              .pId.toString();
         });
         widget.onPlanSelected(newValue!);
         widget.onDataIdSelected(widget.selectedDataId.toString());

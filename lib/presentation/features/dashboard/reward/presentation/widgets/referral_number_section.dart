@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReferralNumberSection extends StatelessWidget {
-  const ReferralNumberSection({super.key, required this.referralNumber});
+  const ReferralNumberSection(
+      {super.key, required this.referralNumber, required this.referralLink});
   final String referralNumber;
+  final String referralLink;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,6 @@ class ReferralNumberSection extends StatelessWidget {
           ),
           Column(
             children: [
-             
               const VerticalSpacing(8),
               Container(
                 padding: const EdgeInsets.all(8),
@@ -52,8 +53,7 @@ class ReferralNumberSection extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: 202.w,
-                          child: const Text(
-                              'https://abakon.ng/mobile/register/?referral=08148057082'),
+                          child: Text(referralLink),
                         ),
                         const VerticalSpacing(8),
                       ],

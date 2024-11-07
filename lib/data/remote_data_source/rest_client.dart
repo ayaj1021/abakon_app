@@ -19,6 +19,8 @@ import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data
 import 'package:abakon/presentation/features/bank_deposits/data/model/generate_account_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_request.dart';
+import 'package:abakon/presentation/features/dashboard/profile/data/model/logout_response.dart';
+import 'package:abakon/presentation/features/dashboard/reward/data/model/referral_link_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
@@ -125,6 +127,18 @@ abstract class RestClient {
     // @Queries() Map<String, dynamic> queries,
   );
 
+  @POST('/user/logout')
+  Future<LogoutResponse> logout(
+      // @Body() VerifyOtpRequest request,
+      // @Queries() Map<String, dynamic> queries,
+      );
+
+  // @DELETE('/user/delete')
+  // Future<LogoutResponse> delete(
+  //     // @Body() VerifyOtpRequest request,
+  //     // @Queries() Map<String, dynamic> queries,
+  //     );
+
   @GET('/user')
   Future<GetAllUserDetailsResponse> getAllUserDetails(
       // @Queries() Map<String, dynamic> queries,
@@ -161,6 +175,11 @@ abstract class RestClient {
 
   @GET('/settings?setting=cable_plans')
   Future<GetAllCableData> getAllCableData(
+      // @Queries() Map<String, dynamic> queries,
+      );
+
+  @GET('/user/refer')
+  Future<ReferralResponse> getReferralLink(
       // @Queries() Map<String, dynamic> queries,
       );
 

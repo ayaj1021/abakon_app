@@ -27,7 +27,8 @@ class LoginNotifer extends AutoDisposeNotifier<LoginNotiferState> {
       );
       if (!value.status) throw value.msg.toException;
 
-      await SecureStorage().saveUserToken(value.data!.accessToken.toString());
+      await SecureStorage().saveUserAccessToken(value.data!.accessToken.toString());
+      await SecureStorage().saveUserToken(value.data!.token.toString());
 
       state = state.copyWith(loginState: LoadState.idle);
       onSuccess(value.msg.toString());

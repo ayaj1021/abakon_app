@@ -25,22 +25,38 @@ class HeaderInterCeptor extends Interceptor {
     '/auth/reset-password',
     '/auth/verify-signup-otp',
   ];
+
+  final _optionalRoutes = [
+    '/user/change-pin',
+    '/user/change-password',
+    '/auth/recover',
+    '/user/logout',
+    '/user/refer',
+  ];
   @override
   FutureOr<dynamic> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
     try {
+      final accessToken = await secureStorage.getUserAccessToken();
       final token = await secureStorage.getUserToken();
-      log("This is user accesstoken $token");
+      log("This is user accesstoken $accessToken");
+      log("This is user token $token");
 
+      debugLog('[ACCESS TOKEN]$accessToken');
       debugLog('[TOKEN]$token');
-      if (token.toString().isNotEmpty) {
+
+      if (_optionalRoutes.contains(options.path) &&
+          token.toString().isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $token';
-        // options.headers['authorization'] = '$token';
-        // options.headers['Cookie'] = 'accessToken=${token.token}';
+      } else {
+        options.headers['Authorization'] = 'Bearer $accessToken';
       }
-      //log("This is user token $token");
+
+      // if (accessToken.toString().isNotEmpty) {
+      //   options.headers['Authorization'] = 'Bearer $accessToken';
+      // }
     } catch (e) {
       debugLog(e);
     }

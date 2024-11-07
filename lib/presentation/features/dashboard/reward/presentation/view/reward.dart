@@ -1,6 +1,7 @@
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/dashboard/home/presentation/notifier/get_all_user_details_notifier.dart';
+import 'package:abakon/presentation/features/dashboard/reward/presentation/notifier/get_referral_link_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/reward/presentation/widgets/referral_number_section.dart';
 import 'package:abakon/presentation/features/dashboard/reward/presentation/widgets/reward_title_section.dart';
 import 'package:abakon/presentation/features/dashboard/reward/presentation/widgets/your_earning_section.dart';
@@ -22,6 +23,10 @@ class _RewardState extends ConsumerState<Reward> {
       await ref
           .read(getUserDetailsNotifierProvider.notifier)
           .getAllUserDetails();
+
+      await ref
+          .read(getReferralLinkServiceNotifierProvider.notifier)
+          .getReferralLinkService();
     });
 
     super.initState();
@@ -34,6 +39,12 @@ class _RewardState extends ConsumerState<Reward> {
 
     final data = ref.watch(getUserDetailsNotifierProvider
         .select((v) => v.getAllDetails.data?.allDetails));
+
+    // final referralLinkLoadState = ref.watch(
+    //     getReferralLinkServiceNotifierProvider.select((v) => v.loadState));
+
+    final referralLink = ref.watch(getReferralLinkServiceNotifierProvider
+        .select((v) => v.getReferralLinkService.data?.data));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -55,6 +66,7 @@ class _RewardState extends ConsumerState<Reward> {
                     const VerticalSpacing(16),
                     ReferralNumberSection(
                       referralNumber: "${data?.sReferal ?? 0}",
+                      referralLink: "$referralLink",
                     ),
                     const VerticalSpacing(32),
                     // const ReferralBreakdownSection(),

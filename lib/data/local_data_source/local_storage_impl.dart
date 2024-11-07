@@ -95,6 +95,16 @@ class SecureStorage {
     return value;
   }
 
+  Future<void> saveUserAccessToken(String token) async {
+   await _storage.write(key: 'access_token', value: token);
+  }
+
+  Future<String?> getUserAccessToken() async {
+    String? value = await _storage.read(key: 'access_token');
+    return value;
+  }
+
+
   Future<void> saveUserToken(String token) async {
    await _storage.write(key: 'token', value: token);
   }
