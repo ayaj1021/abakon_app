@@ -14,7 +14,7 @@ class Strings {
   static String cableTvSub = 'Cable TV Subscription';
   static String areYouSure = 'Are you sure';
   static String otherServices = 'Other Services';
-  static String lifeEssentials = 'Life essentials, simplified';
+  static String lifeEssentials = 'Reduced cost of bills';
   static String successfulTransaction = 'Successful Transaction';
   static String thisIsToConfirmTransactionSuccessful = 'This is to confirm that your transaction was successful.';
 

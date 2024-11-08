@@ -28,7 +28,7 @@ class _WalletBalanceSectionState extends ConsumerState<WalletBalanceSection> {
     super.initState();
   }
 
-  bool isVisible = false;
+  bool isVisible = true;
 
   @override
   Widget build(BuildContext context) {
