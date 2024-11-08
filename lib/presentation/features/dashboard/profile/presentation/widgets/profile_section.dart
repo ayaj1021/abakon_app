@@ -3,7 +3,6 @@ import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
-import 'package:abakon/presentation/features/change_transaction_pin/presentation/view/change_transaction_pin_view.dart';
 import 'package:abakon/presentation/features/dashboard/profile/presentation/notifier/delete_user_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/profile/presentation/notifier/log_out_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/profile/presentation/widgets/profile_widget.dart';
@@ -65,13 +64,13 @@ class _ProfileSectionState extends ConsumerState<ProfileSection> {
                   },
                   icon: Icons.lock_outline,
                 ),
-                ProfileWidget(
-                  title: 'Change Transaction Pin',
-                  onTap: () {
-                    context.pushNamed(ChangeTransactionPinView.routeName);
-                  },
-                  icon: Icons.pin,
-                ),
+                // ProfileWidget(
+                //   title: 'Change Transaction Pin',
+                //   onTap: () {
+                //     context.pushNamed(ChangeTransactionPinView.routeName);
+                //   },
+                //   icon: Icons.pin,
+                // ),
                 ProfileWidget(
                   title: 'Support',
                   onTap: () {
