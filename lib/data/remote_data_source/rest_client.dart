@@ -18,8 +18,9 @@ import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_response.dart';
 import 'package:abakon/presentation/features/bank_deposits/data/model/generate_account_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
-import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_request.dart';
+import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_response.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/model/logout_response.dart';
+import 'package:abakon/presentation/features/dashboard/profile/presentation/notifier/log_out_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/reward/data/model/referral_link_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_response.dart';
@@ -101,25 +102,15 @@ abstract class RestClient {
   );
   //electricity
 
-  @POST('/user/delete')
-  Future<LoginResponse> deleteUser(
-    @Body() DeleteUserRequest deleteUserRequest,
-  );
+  @DELETE('/user/delete')
+  Future<DeleteUserResponse> deleteUser(
+      // @Body() DeleteUserRequest deleteUserRequest,
+      );
 
   @POST('/auth/recover')
   Future<ResendOtpResponse> resendOTP(
     @Body() ResendOtpRequest request,
   );
-
-//   @POST('/auth/verify-reset-otp')
-//   Future<BaseResponse<VerifyResetPasswordOtpResponse>> verifyResetPasswordOtp(
-//     @Body() ResetPasswordOtpRequest request,
-//   );
-
-//   @POST('/auth/reset-password')
-//   Future<BaseResponse<ResetPasswordResponse>> resetPassword(
-//     @Body() ResetPasswordRequest request,
-//   );
 
   @POST('/auth/verify')
   Future<VerifyTokenResponse> verifySignUpOtp(
@@ -197,41 +188,6 @@ abstract class RestClient {
   // Future<GetAllUserDetailsResponse> getTransaction(
   //     // @Queries() Map<String, dynamic> queries,
   //     );
-
-//   @POST('/auth/update-password')
-//   Future<BaseResponse<ChangePasswordResponse>> changePassword(
-//     @Body() ChangePasswordRequest request,
-//   );
-
-//   @GET('/bills/packages/{providerId}')
-//   Future<BaseResponse<List<ProviderPackage>>> getPackages(
-//     @Path() String providerId,
-//   );
-
-//   @POST('/auth/forgot-password')
-//   Future<BaseResponse<dynamic>> forgotPassword(
-//     @Body() ForgotPasswordRequest body,
-//   );
-
-//   @GET('/transactions/{id}')
-//   Future<BaseResponse<SingleTransactionResponse>> getTransactionDetails({
-//     @Path() required String id,
-//   });
-
-//   @POST('/auth/logout')
-//   Future<BaseResponse<dynamic>> logout();
-
-//   @GET('/currencies')
-//   Future<BaseResponse<List<ExchangeCurrency>>> getCurrencies();
-
-//   @GET('/wallet')
-//   Future<BaseResponse<Wallet>> getWallet();
-
-//   @POST('/verification/level-1')
-//   Future<BaseResponse<dynamic>> levelOneVerification(
-//     @Body() LevelOneVerfificationModel body,
-//   );
-// }
 }
 
 ProviderFamily<Dio, BaseEnv> _dio = Provider.family<Dio, BaseEnv>(
@@ -251,9 +207,12 @@ ProviderFamily<Dio, BaseEnv> _dio = Provider.family<Dio, BaseEnv>(
       HeaderInterCeptor(
         dio: dio,
         secureStorage: ref.read(localStorageProvider),
-        // onTokenExpired: () {
-        //ref.read(logoutProvider.notifier).state = ActivityStatus.loggedOut;
-        // },
+        onTokenExpired: () {
+          ref
+              .read(logOutNotifer.notifier)
+              .logOut(onError: (m) {}, onSuccess: (m) {});
+          //ref.read(logoutProvider.notifier).state = ActivityStatus.loggedOut;
+        },
       ),
     );
     return dio;

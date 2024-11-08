@@ -1,4 +1,5 @@
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/exam_pin/presentation/notifier/get_all_exam_data_notifier.dart';
 import 'package:abakon/presentation/features/exam_pin/presentation/widgets/exam_pin_provider_dropdown_widget.dart';
 import 'package:abakon/presentation/features/exam_pin/presentation/widgets/exam_pin_text_field.dart';
@@ -68,57 +69,66 @@ class _ExamPinInputSectionState extends ConsumerState<ExamPinInputSection> {
   Widget build(BuildContext context) {
     final examPlans = ref.watch(getAllExamDataNotifierProvider
         .select((v) => v.getAllExamData.data?.data?.toSet().toList()));
-
-    return Column(
-      children: [
-        ExamPinProviderDropDown(
-          examPlans: examPlans ?? [],
-          selectedEid: int.tryParse(_selectedEid.toString()),
-          selectedProvider: _selectedProvider,
-          onNetworkSelected: _onProviderSelected,
-          onEidSelected: _onEidSelected,
-          selectedEPrice: num.tryParse(_selectedEPrice.toString()),
-          onEPriceSelected: _onEPriceSelected,
-        ),
-        const VerticalSpacing(16),
-        ExamPinTextField(
-          labelText: 'Quantity',
-          controller: _quantityController,
-          onChanged: (p0) {
-            setState(() {
-              totalPrice =
-                  _selectedEPrice! * int.parse(_quantityController.text);
-            });
-          },
-        ),
-        const VerticalSpacing(16),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          decoration: BoxDecoration(
-              color: AppColors.greyFill,
-              borderRadius: BorderRadius.circular(12)),
-          child: Text(
-            "N ${totalPrice ?? _selectedEPrice}",
-          ),
-        ),
-        const VerticalSpacing(223),
-        AbakonSendButton(
-          onTap: () {
-            showModalBottomSheet<void>(
-                isScrollControlled: true,
-                context: context,
-                builder: (context) {
-                  return PurchaseBottomSheetWidget(
-                    purchaseInfo:
-                        'You are about to purchase an $_selectedProvider pin purchase of  of $totalPrice. Do you wish to continue?',
-                    onTap: () {},
-                  );
+    final loadState =
+        ref.watch(getAllExamDataNotifierProvider.select((v) => v.loadState));
+    return SizedBox(
+        child: switch (loadState) {
+      LoadState.loading => const Center(
+            child: CircularProgressIndicator(
+          color: AppColors.primaryColor,
+        )),
+      LoadState.error => const Center(child: Text('Error')),
+      _ => Column(
+          children: [
+            ExamPinProviderDropDown(
+              examPlans: examPlans ?? [],
+              selectedEid: int.tryParse(_selectedEid.toString()),
+              selectedProvider: _selectedProvider,
+              onNetworkSelected: _onProviderSelected,
+              onEidSelected: _onEidSelected,
+              selectedEPrice: num.tryParse(_selectedEPrice.toString()),
+              onEPriceSelected: _onEPriceSelected,
+            ),
+            const VerticalSpacing(16),
+            ExamPinTextField(
+              labelText: 'Quantity',
+              controller: _quantityController,
+              onChanged: (p0) {
+                setState(() {
+                  totalPrice =
+                      _selectedEPrice! * int.parse(_quantityController.text);
                 });
-          },
-          title: 'Continue',
+              },
+            ),
+            const VerticalSpacing(16),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              decoration: BoxDecoration(
+                  color: AppColors.greyFill,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Text(
+                "N ${totalPrice ?? _selectedEPrice ?? 0}",
+              ),
+            ),
+            const VerticalSpacing(223),
+            AbakonSendButton(
+              onTap: () {
+                showModalBottomSheet<void>(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return PurchaseBottomSheetWidget(
+                        purchaseInfo:
+                            'You are about to purchase an $_selectedProvider pin purchase of  of $totalPrice. Do you wish to continue?',
+                        onTap: () {},
+                      );
+                    });
+              },
+              title: 'Continue',
+            ),
+          ],
         ),
-      ],
-    );
+    });
   }
 }

@@ -9,21 +9,24 @@ class HeaderInterCeptor extends Interceptor {
   HeaderInterCeptor({
     required this.dio,
     required this.secureStorage,
-    // required this.onTokenExpired,
+    required this.onTokenExpired,
   });
   final Dio dio;
   final SecureStorage secureStorage;
-//  final void Function() onTokenExpired;
+  final void Function() onTokenExpired;
 
   final _authRoutes = [
     '/login',
     '/register',
     '/auth/create-pin',
     '/resendtoken',
-    '/auth/verify-reset-otp',
+    '/user/logout',
     '/auth/forgot-password',
     '/auth/reset-password',
     '/auth/verify-signup-otp',
+    '/user/change-pin',
+    '/user/change-password',
+    '/user/delete',
   ];
 
   final _optionalRoutes = [
@@ -32,6 +35,7 @@ class HeaderInterCeptor extends Interceptor {
     '/auth/recover',
     '/user/logout',
     '/user/refer',
+    '/user/delete',
   ];
   @override
   FutureOr<dynamic> onRequest(
@@ -94,7 +98,7 @@ class HeaderInterCeptor extends Interceptor {
     if (err.response?.statusCode == 401 ||
         err.response?.statusCode == 403 &&
             !_authRoutes.contains(err.requestOptions.path)) {
-      // onTokenExpired();
+      onTokenExpired();
     }
     handler.next(err);
     return err;

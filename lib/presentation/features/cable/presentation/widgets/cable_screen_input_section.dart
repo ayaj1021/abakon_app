@@ -91,7 +91,8 @@ class _CableScreenInputSectionState
   Widget build(BuildContext context) {
     final cablePlans = ref.watch(getAllCableDataNotifierProvider
         .select((v) => v.getAllCableData.data?.data?.toSet().toList()));
-
+    final loadState =
+        ref.watch(getAllCableDataNotifierProvider.select((v) => v.loadState));
     return Consumer(builder: (context, re, c) {
       final isVerifyLoading = re.watch(
         verifyCableNotifer.select((v) => v.verifyCableState.isLoading),
@@ -102,74 +103,82 @@ class _CableScreenInputSectionState
 
       return Stack(
         children: [
-          Column(
-            children: [
-              CableProviderDropDown(
-                cablePlans: cablePlans ?? [],
-                labelText: 'Select provider',
-                selectedCableProvider: _selectedCableProvider,
-                onCableProviderSelected: (selectedCableProvider) =>
-                    _onCableProviderSelected(
-                        selectedCableProvider, cablePlans ?? []),
-                selectedCableId: int.tryParse(_selectedCableId.toString()),
-                // _selectedCableId,
-                onCableIdSelected: _onCableIdSelected,
-              ),
-              const VerticalSpacing(16),
-              CablePlansDown(
-                labelText: 'Plan',
-                filteredPlans: filteredPlans,
-                onCablePlanSelected: _onCablePlanSelected,
-                selectedCablePlan: _selectedCablePlan,
-                selectedCableProvider: _selectedCableProvider,
-                selectedPlanId: int.tryParse(
-                  _selectedPlanId.toString(),
-                ),
-                onPlanIdSelected: _onPlanIdSelected,
-              ),
-              const VerticalSpacing(16),
-              TextField(
-                decoration: InputDecoration(
-                  labelStyle: context.textTheme.s10w500.copyWith(
-                    color: AppColors.primary595857,
+          SizedBox(
+              child: switch (loadState) {
+            LoadState.loading => const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              )),
+            LoadState.error => const Center(child: Text('Error')),
+            _ => Column(
+                children: [
+                  CableProviderDropDown(
+                    cablePlans: cablePlans ?? [],
+                    labelText: 'Select provider',
+                    selectedCableProvider: _selectedCableProvider,
+                    onCableProviderSelected: (selectedCableProvider) =>
+                        _onCableProviderSelected(
+                            selectedCableProvider, cablePlans ?? []),
+                    selectedCableId: int.tryParse(_selectedCableId.toString()),
+                    // _selectedCableId,
+                    onCableIdSelected: _onCableIdSelected,
                   ),
-                  labelText: 'Amount to pay',
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              const VerticalSpacing(16),
-              TextField(
-                keyboardType: TextInputType.number,
-                maxLength: 11,
-                decoration: InputDecoration(
-                  counterText: '',
-                  labelStyle: context.textTheme.s10w500.copyWith(
-                    color: AppColors.primary595857,
+                  const VerticalSpacing(16),
+                  CablePlansDown(
+                    labelText: 'Plan',
+                    filteredPlans: filteredPlans,
+                    onCablePlanSelected: _onCablePlanSelected,
+                    selectedCablePlan: _selectedCablePlan,
+                    selectedCableProvider: _selectedCableProvider,
+                    selectedPlanId: int.tryParse(
+                      _selectedPlanId.toString(),
+                    ),
+                    onPlanIdSelected: _onPlanIdSelected,
                   ),
-                  labelText: 'Customer phone number',
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              const VerticalSpacing(16),
-              TextField(
-                controller: _iucNumberController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'IUC number',
-                  labelStyle: context.textTheme.s10w500.copyWith(
-                    color: AppColors.primary595857,
+                  const VerticalSpacing(16),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelStyle: context.textTheme.s10w500.copyWith(
+                        color: AppColors.primary595857,
+                      ),
+                      labelText: 'Amount to pay',
+                      border: const OutlineInputBorder(),
+                    ),
                   ),
-                  border: const OutlineInputBorder(),
-                ),
+                  const VerticalSpacing(16),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    maxLength: 11,
+                    decoration: InputDecoration(
+                      counterText: '',
+                      labelStyle: context.textTheme.s10w500.copyWith(
+                        color: AppColors.primary595857,
+                      ),
+                      labelText: 'Customer phone number',
+                      border: const OutlineInputBorder(),
+                    ),
+                  ),
+                  const VerticalSpacing(16),
+                  TextField(
+                    controller: _iucNumberController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'IUC number',
+                      labelStyle: context.textTheme.s10w500.copyWith(
+                        color: AppColors.primary595857,
+                      ),
+                      border: const OutlineInputBorder(),
+                    ),
+                  ),
+                  const VerticalSpacing(223),
+                  AbakonSendButton(
+                      onTap: () {
+                        _verifyCable();
+                      },
+                      title: 'Continue'),
+                ],
               ),
-              const VerticalSpacing(223),
-              AbakonSendButton(
-                  onTap: () {
-                    _verifyCable();
-                  },
-                  title: 'Continue'),
-            ],
-          ),
+          }),
           isVerifyLoading
               ? Container(
                   alignment: Alignment.center,

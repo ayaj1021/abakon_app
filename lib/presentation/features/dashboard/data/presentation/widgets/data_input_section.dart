@@ -90,6 +90,8 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
     final dataPlans = ref.watch(getAllDataServicesNotifierProvider
         .select((v) => v.getAllDataServices.data?.data?.toSet().toList()));
 
+    final loadState = ref
+        .watch(getAllDataServicesNotifierProvider.select((v) => v.loadState));
     return Consumer(
       builder: (context, re, c) {
         final isLoading = re.watch(
@@ -97,65 +99,73 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
         );
         return Stack(
           children: [
-            Column(
-              children: [
-                DataNetWorkDropDown(
-                  dataPlans: dataPlans ?? [],
-                  selectedNetwork: _selectedNetwork,
-                  onNetworkSelected: _onNetworkSelected,
-                  onNidSelected: _onNidSelected,
-                  selectedNid: int.tryParse(_selectedNid.toString()),
-                ),
-                const VerticalSpacing(16),
-                DataTypeDropDown(
-                  dataPlans: dataPlans ?? [],
-                  selectedType: _selectedType,
-                  ontypeSelected: _onTypeSelected,
-                ),
-                const VerticalSpacing(16),
-                DataPlanDropDown(
-                  dataPlans: dataPlans ?? [],
-                  onPlanSelected: _onPlanSelected,
-                  selectedPlan: _selectedPlan,
-                  selectedNetwork: _selectedNetwork,
-                  selectedType: _selectedType,
-                  onDataIdSelected: _onDataIdSelected,
-                  selectedDataId: _selectedDataId,
-                  //int.tryParse(_selectedDataId.toString()),
-                ),
-                const VerticalSpacing(16),
-                DataTextField(
-                  labelText: 'Phone Number',
-                  controller: _phoneNumberController,
-                ),
-                const VerticalSpacing(300),
-                ValueListenableBuilder(
-                    valueListenable: _isBuyDataEnabled,
-                    builder: (context, r, c) {
-                      return Consumer(builder: (context, re, c) {
-                        return AbakonSendButton(
-                            isEnabled: r,
-                            onTap: () {
-                              showModalBottomSheet<void>(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (context) {
-                                  return PurchaseBottomSheetWidget(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      _buyData();
+            SizedBox(
+                child: switch (loadState) {
+              LoadState.loading => const Center(
+                    child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                )),
+              LoadState.error => const Center(child: Text('Error')),
+              _ => Column(
+                  children: [
+                    DataNetWorkDropDown(
+                      dataPlans: dataPlans ?? [],
+                      selectedNetwork: _selectedNetwork,
+                      onNetworkSelected: _onNetworkSelected,
+                      onNidSelected: _onNidSelected,
+                      selectedNid: int.tryParse(_selectedNid.toString()),
+                    ),
+                    const VerticalSpacing(16),
+                    DataTypeDropDown(
+                      dataPlans: dataPlans ?? [],
+                      selectedType: _selectedType,
+                      ontypeSelected: _onTypeSelected,
+                    ),
+                    const VerticalSpacing(16),
+                    DataPlanDropDown(
+                      dataPlans: dataPlans ?? [],
+                      onPlanSelected: _onPlanSelected,
+                      selectedPlan: _selectedPlan,
+                      selectedNetwork: _selectedNetwork,
+                      selectedType: _selectedType,
+                      onDataIdSelected: _onDataIdSelected,
+                      selectedDataId: _selectedDataId,
+                      //int.tryParse(_selectedDataId.toString()),
+                    ),
+                    const VerticalSpacing(16),
+                    DataTextField(
+                      labelText: 'Phone Number',
+                      controller: _phoneNumberController,
+                    ),
+                    const VerticalSpacing(300),
+                    ValueListenableBuilder(
+                        valueListenable: _isBuyDataEnabled,
+                        builder: (context, r, c) {
+                          return Consumer(builder: (context, re, c) {
+                            return AbakonSendButton(
+                                isEnabled: r,
+                                onTap: () {
+                                  showModalBottomSheet<void>(
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return PurchaseBottomSheetWidget(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          _buyData();
+                                        },
+                                        purchaseInfo:
+                                            'You are about to purchase an $_selectedNetwork airtime of $_selectedPlan for the phone number "${_phoneNumberController.text}"Do you wish to continue?',
+                                      );
                                     },
-                                    purchaseInfo:
-                                        'You are about to purchase an $_selectedNetwork airtime of $_selectedPlan for the phone number "${_phoneNumberController.text}"Do you wish to continue?',
                                   );
                                 },
-                              );
-                            },
-                            title: 'Buy Data Bundle');
-                      });
-                    })
-              ],
-            ),
+                                title: 'Buy Data Bundle');
+                          });
+                        })
+                  ],
+                ),
+            }),
             isLoading
                 ? Container(
                     alignment: Alignment.center,

@@ -11,10 +11,12 @@ class ChangeTransactionPinRepository {
   final RestClient _restClient;
 
   Future<BaseResponse<ChangeTransactionPinResponse>> changeTransactionPin(
-      ChangeTransactionPinRequest changePasswordRequest) async {
+      ChangeTransactionPinRequest changeTransactionPinRequest) async {
     try {
-      final response = await _restClient.changeTransactionPin(changePasswordRequest);
-      return BaseResponse<ChangeTransactionPinResponse>(status: true, data: response);
+      final response =
+          await _restClient.changeTransactionPin(changeTransactionPinRequest);
+      return BaseResponse<ChangeTransactionPinResponse>(
+          status: true, data: response);
       // return response;
     } on DioException catch (e) {
       return AppException.handleError(e);
@@ -22,7 +24,8 @@ class ChangeTransactionPinRepository {
   }
 }
 
-final changeTransactionPinRepositoryProvider = Provider<ChangeTransactionPinRepository>(
+final changeTransactionPinRepositoryProvider =
+    Provider<ChangeTransactionPinRepository>(
   (ref) => ChangeTransactionPinRepository(
     ref.read(restClientProvider),
   ),

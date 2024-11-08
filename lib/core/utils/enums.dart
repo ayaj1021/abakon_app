@@ -12,6 +12,8 @@ enum MessageType { error, success }
 
 enum OtpType { email, phone }
 
+enum HomeSessionState { logout, initial }
+
 
 enum BiometricDataType { password, pin }
 

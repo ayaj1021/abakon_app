@@ -103,8 +103,8 @@ class _ChangeTransactionPinViewState
   void _changeTransactionPin() {
     final data = ChangeTransactionPinRequest(
       oldPin: _oldPinController.text.trim(),
-      newPin: _newPinController.text.toLowerCase().trim(),
-      confirmNewPin: _confirmNewPinController.text.toLowerCase().trim(),
+      newPin: _newPinController.text.trim(),
+      confirmNewPin: _confirmNewPinController.text.trim(),
     );
     ref.read(changeTransactionPinNotifer.notifier).changeTransactionPin(
           data: data,
@@ -114,8 +114,7 @@ class _ChangeTransactionPinViewState
           onSuccess: (message) {
             _isChangePinEnabled.value = false;
             context.showSuccess(message: message);
-            // log('Login successfull');
-            //context.replaceAll(Login.routeName);
+            
           },
         );
   }

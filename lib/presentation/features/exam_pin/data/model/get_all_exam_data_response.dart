@@ -4,13 +4,10 @@ part 'get_all_exam_data_response.g.dart';
 
 @JsonSerializable()
 class GetAllExamData {
-  final String? status;
+  final bool? status;
   final List<ExamData>? data;
 
-  GetAllExamData({
-    this.status,
-    this.data,
-  });
+  GetAllExamData({this.status, this.data});
 
   factory GetAllExamData.fromJson(Map<String, dynamic> json) =>
       _$GetAllExamDataFromJson(json);

@@ -1,6 +1,8 @@
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/config/network_utils/async_response.dart';
+
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/bank_deposits/data/repository/generate_account_repository.dart';
 import 'package:abakon/presentation/features/bank_deposits/presentation/notifier/generate_account_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +27,8 @@ class GenerateAccountNotifier
       final value = await _generateAccountRepository.generateAccount();
 
       if (!value.status) throw value.msg.toException;
+
+      await SecureStorage().saveBankAccountDetails(value.data!.data!);
 
       state = state.copyWith(
           loadState: LoadState.idle,

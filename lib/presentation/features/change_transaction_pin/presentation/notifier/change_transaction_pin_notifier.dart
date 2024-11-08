@@ -29,7 +29,7 @@ class ChangeTransactionPinNotifer
       if (!value.status) throw value.msg.toException;
 
       state = state.copyWith(changeTransactionPinState: LoadState.idle);
-      onSuccess(value.msg.toString());
+      onSuccess(value.data!.msg.toString());
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(changeTransactionPinState: LoadState.idle);

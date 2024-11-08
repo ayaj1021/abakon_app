@@ -87,6 +87,16 @@ class SecureStorage {
     return value;
   }
 
+
+   Future<void> saveUserReferralLink(String userEmail) async {
+    _storage.write(key: 'referral_link', value: userEmail);
+  }
+
+  Future<String?> getUserReferralLink() async {
+    String? value = await _storage.read(key: 'referral_link');
+    return value;
+  }
+
   // Future<void> saveUserDetails(
   //     AccountOwnerProfileData accountOwnerProfileData) async {
   //   String jsonString = jsonEncode(accountOwnerProfileData.toJson());

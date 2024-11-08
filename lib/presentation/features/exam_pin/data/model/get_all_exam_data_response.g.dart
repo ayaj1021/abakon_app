@@ -8,7 +8,7 @@ part of 'get_all_exam_data_response.dart';
 
 GetAllExamData _$GetAllExamDataFromJson(Map<String, dynamic> json) =>
     GetAllExamData(
-      status: json['status'] as String?,
+      status: json['status'] as bool?,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => ExamData.fromJson(e as Map<String, dynamic>))
           .toList(),

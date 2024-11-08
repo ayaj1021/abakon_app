@@ -113,7 +113,7 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
           },
           onSuccess: (message) {
             _isChangePasswordEnabled.value = false;
-            context.showSuccess(message: 'Login Successful');
+            context.showSuccess(message: message);
             // log('Login successfull');
             context.replaceAll(Login.routeName);
           },

@@ -1,3 +1,4 @@
+import 'package:abakon/core/database/data_base.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/dashboard/home/presentation/notifier/get_all_user_details_notifier.dart';
@@ -17,9 +18,13 @@ class Reward extends ConsumerStatefulWidget {
 }
 
 class _RewardState extends ConsumerState<Reward> {
+  SecureStorage secureStorage = SecureStorage();
+  String _referallLink = '';
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final link = await secureStorage.getUserReferralLink();
+      getReferralLink(link.toString());
       await ref
           .read(getUserDetailsNotifierProvider.notifier)
           .getAllUserDetails();
@@ -30,6 +35,12 @@ class _RewardState extends ConsumerState<Reward> {
     });
 
     super.initState();
+  }
+
+  getReferralLink(String link) {
+    setState(() {
+      _referallLink = link;
+    });
   }
 
   @override
@@ -43,8 +54,8 @@ class _RewardState extends ConsumerState<Reward> {
     // final referralLinkLoadState = ref.watch(
     //     getReferralLinkServiceNotifierProvider.select((v) => v.loadState));
 
-    final referralLink = ref.watch(getReferralLinkServiceNotifierProvider
-        .select((v) => v.getReferralLinkService.data?.data));
+    // final referralLink = ref.watch(getReferralLinkServiceNotifierProvider
+    //     .select((v) => v.getReferralLinkService.data?.data));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -66,7 +77,7 @@ class _RewardState extends ConsumerState<Reward> {
                     const VerticalSpacing(16),
                     ReferralNumberSection(
                       referralNumber: "${data?.sReferal ?? 0}",
-                      referralLink: "$referralLink",
+                      referralLink: _referallLink.toString(),
                     ),
                     const VerticalSpacing(32),
                     // const ReferralBreakdownSection(),
