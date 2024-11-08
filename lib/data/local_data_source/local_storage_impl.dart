@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:abakon/presentation/features/bank_deposits/data/model/generate_account_response.dart';
+import 'package:abakon/presentation/features/transactions/data/model/get_all_transactions_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -75,6 +76,10 @@ class SecureStorage {
     return value;
   }
 
+  Future<void> clearToken() async {
+    await _storage.delete(key: 'token');
+  }
+
   Future<void> saveResetPasswordToken(String token) async {
     await _storage.write(key: 'token', value: token);
   }
@@ -124,6 +129,23 @@ class SecureStorage {
     return null;
   }
 
+  Future<void> saveTransactions(List<AllTransactionsData> transactionDataList) async {
+    final jsonData = jsonEncode(transactionDataList.map((item) => item.toJson()).toList());
+    await _storage.write(key: 'transaction_data_list', value: jsonData);
+  }
+
+  // Retrieve list of TransactionData
+  Future<List<AllTransactionsData>?> getTransactions() async {
+    final jsonData = await _storage.read(key: 'transaction_data_list');
+    if (jsonData != null) {
+      List<dynamic> dataList = jsonDecode(jsonData);
+      return dataList.map((item) => AllTransactionsData.fromJson(item)).toList();
+    }
+    return null;
+  }
+
+
+
   // Future<void> saveUserDetails(
   //     AccountOwnerProfileData accountOwnerProfileData) async {
   //   String jsonString = jsonEncode(accountOwnerProfileData.toJson());
@@ -138,6 +160,17 @@ class SecureStorage {
   //   }
   //   return null;
   // }
+
+  Future<void> logout({
+    bool partialLogout = false,
+  }) async {
+    if (partialLogout) {
+      await clearToken();
+      return;
+    }
+    //  await _localStorage.clear();
+    // await saveCurrentState(CurrentState.onboarded);
+  }
 }
 
 final localStorageProvider = Provider<SecureStorage>(

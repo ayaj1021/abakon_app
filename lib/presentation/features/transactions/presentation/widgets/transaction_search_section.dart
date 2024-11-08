@@ -9,15 +9,17 @@ class TransactionSearchSection extends StatelessWidget {
     super.key,
     required this.labelText,
     required this.controller,
+    this.onChanged,
   });
   final String labelText;
   final TextEditingController controller;
+  final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-     
+
       //padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         border: Border.all(
@@ -30,25 +32,24 @@ class TransactionSearchSection extends StatelessWidget {
         children: [
           SizedBox(
             width: 240.w,
-
-            //width: MediaQuery.of(context).size.width,
             child: TextField(
               controller: controller,
+              onChanged: onChanged,
               decoration: InputDecoration(
-                  fillColor: Colors.transparent,
-                  hintText: 'Search transactions',
-                  labelStyle: context.textTheme.s10w500.copyWith(
-                    color: AppColors.primary595857,
-                  ),
-                  helperStyle: context.textTheme.s10w500.copyWith(
-                    color: AppColors.primary595857,
-                  ),
-                  //labelText: labelText,
-                  border: InputBorder.none),
+                focusedBorder: InputBorder.none,
+                fillColor: Colors.transparent,
+                hintText: 'Search transactions',
+                labelStyle: context.textTheme.s10w500.copyWith(
+                  color: AppColors.primary595857,
+                ),
+                helperStyle: context.textTheme.s10w500.copyWith(
+                  color: AppColors.primary595857,
+                ),
+              ),
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal:  12, vertical: 16.5),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16.5),
             decoration: const BoxDecoration(
               color: AppColors.primaryColor,
               borderRadius: BorderRadius.only(

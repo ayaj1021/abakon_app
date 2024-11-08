@@ -1,8 +1,10 @@
+import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -92,10 +94,24 @@ class BankDepositWidget extends StatelessWidget {
           SizedBox(
             height: 40.h,
             width: 40.w,
-            child: SvgPicture.asset('assets/icons/copy_icon.svg'),
+            child: GestureDetector(
+                onTap: () => copyToClipboard(
+                    value: accountNumber,
+                    message: 'Copied successfully',
+                    context: context),
+                child: SvgPicture.asset('assets/icons/copy_icon.svg')),
           )
         ],
       ),
+    );
+  }
+
+  void copyToClipboard(
+      {required String value,
+      required String message,
+      required BuildContext context}) {
+    Clipboard.setData(ClipboardData(text: value)).then(
+      (value) => context.showSuccess(message: message),
     );
   }
 }

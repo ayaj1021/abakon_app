@@ -22,9 +22,8 @@ class _RewardState extends ConsumerState<Reward> {
   String _referallLink = '';
   @override
   void initState() {
+    getReferralLink();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final link = await secureStorage.getUserReferralLink();
-      getReferralLink(link.toString());
       await ref
           .read(getUserDetailsNotifierProvider.notifier)
           .getAllUserDetails();
@@ -37,9 +36,10 @@ class _RewardState extends ConsumerState<Reward> {
     super.initState();
   }
 
-  getReferralLink(String link) {
+  getReferralLink() async {
+    final link = await secureStorage.getUserReferralLink();
     setState(() {
-      _referallLink = link;
+      _referallLink = link.toString();
     });
   }
 

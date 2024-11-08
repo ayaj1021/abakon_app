@@ -22,6 +22,7 @@ class _BankScreenState extends ConsumerState<BankScreen> {
 
   @override
   void initState() {
+    getUserBankAccountDetails();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref
           .read(generateAccountNotifierProvider.notifier)
@@ -39,8 +40,8 @@ class _BankScreenState extends ConsumerState<BankScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final banksList = ref.watch(generateAccountNotifierProvider
-        .select((state) => state.generateAccountState.data?.data?.banks));
+    // final banksList = ref.watch(generateAccountNotifierProvider
+    //     .select((state) => state.generateAccountState.data?.data?.banks));
 
     final serverMessage = ref.watch(generateAccountNotifierProvider
         .select((state) => state.generateAccountState.data?.message));
@@ -62,8 +63,6 @@ class _BankScreenState extends ConsumerState<BankScreen> {
                     color: AppColors.primaryColor,
                   )),
                 LoadState.error =>
-                  //context.showError(message: serverMessage.toString());
-
                   Center(child: Text(serverMessage.toString())),
                 _ => BankAccountsSection(
                     banks: bankList,

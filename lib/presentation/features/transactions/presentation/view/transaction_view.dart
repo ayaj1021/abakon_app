@@ -1,3 +1,5 @@
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
+import 'package:abakon/presentation/features/transactions/data/model/get_all_transactions_response.dart';
 import 'package:abakon/presentation/features/transactions/presentation/notifier/get_all_transactions_notifier.dart';
 import 'package:abakon/presentation/features/transactions/presentation/widgets/transaction_list_section.dart';
 import 'package:abakon/presentation/features/transactions/presentation/widgets/transaction_search_section.dart';
@@ -16,16 +18,63 @@ class TransactionView extends ConsumerStatefulWidget {
 
 class _TransactionViewState extends ConsumerState<TransactionView> {
   final _searchController = TextEditingController();
+  List<AllTransactionsData> allTransactionList = [];
+  //AllTransactionsData? allTransactionList;
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
+    getAllTransactions();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref
           .read(getAllTransactionsNotifierProvider.notifier)
           .getAllTransactions();
     });
-
+    _searchController.addListener(_filterTransactions);
     super.initState();
+  }
+
+  List<AllTransactionsData>? filteredTransactions = [];
+
+  void _filterTransactions() {
+    final query = _searchController.text.toLowerCase();
+
+    setState(() {
+      filteredTransactions = allTransactionList.where((transaction) {
+        bool matchesSearch =
+            (transaction.amount?.toLowerCase().contains(query) ?? false) ||
+                (transaction.servicename?.toLowerCase().contains(query) ??
+                    false);
+
+        return matchesSearch;
+      }).toList();
+    });
+  }
+
+  getAllTransactions() async {
+    allTransactionList = await SecureStorage().getTransactions() ?? [];
+
+    setState(() {
+      filteredTransactions = allTransactionList;
+    });
+  }
+
+  void filterAllTransactions({required String selectedStatus}) {
+    final List<AllTransactionsData> allDataTransactions =
+        allTransactionList.where((transaction) {
+      bool allTransactions =
+          (transaction.servicename!.toLowerCase().contains(selectedStatus));
+
+      return allTransactions;
+    }).toList();
+
+    setState(() {
+      filteredTransactions = allDataTransactions;
+    });
   }
 
   @override
@@ -33,8 +82,8 @@ class _TransactionViewState extends ConsumerState<TransactionView> {
     final loadState = ref
         .watch(getAllTransactionsNotifierProvider.select((v) => v.loadState));
 
-    final transactionHistory = ref.watch(getAllTransactionsNotifierProvider
-        .select((v) => v.getAllTransactions.data?.data));
+    // final transactionHistory = ref.watch(getAllTransactionsNotifierProvider
+    //     .select((v) => v.getAllTransactions.data?.data));
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -48,10 +97,14 @@ class _TransactionViewState extends ConsumerState<TransactionView> {
               TransactionSearchSection(
                 labelText: 'Search',
                 controller: _searchController,
+                onChanged: (p) {
+                  filterAllTransactions(selectedStatus: p.toString());
+                },
               ),
               const VerticalSpacing(24),
               TransactionListSection(
-                transactionHistory: transactionHistory ?? [],
+                //   transactionHistory: transactionHistory ?? [],
+                transactionHistory: filteredTransactions ?? [],
                 loadState: loadState,
               )
             ],

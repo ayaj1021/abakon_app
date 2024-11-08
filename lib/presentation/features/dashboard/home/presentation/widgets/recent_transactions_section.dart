@@ -4,10 +4,12 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/features/transactions/data/model/get_all_transactions_response.dart';
+import 'package:abakon/presentation/features/transactions/presentation/view/transaction_details_view.dart';
 import 'package:abakon/presentation/features/transactions/presentation/view/transaction_view.dart';
 import 'package:abakon/presentation/features/transactions/presentation/widgets/transaction_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class RecentTransactionsSection extends StatelessWidget {
@@ -68,21 +70,52 @@ class RecentTransactionsSection extends StatelessWidget {
                     color: AppColors.primaryColor,
                   )),
                 LoadState.error => const Text('Error'),
-                _ => Column(
-                    children: List.generate(
-                        transactionHistory.isNotEmpty
-                            ? transactionHistory.length
-                            : 0, (index) {
-                      final data = transactionHistory[index];
-                      String dateTime = '${data.date}';
+                _ => transactionHistory.isEmpty
+                    ? Center(
+                        child: Column(
+                        children: [
+                          SizedBox(
+                              height: 120.h,
+                              width: 120.w,
+                              child: Image.asset(
+                                'assets/images/emptylist.png',
+                                fit: BoxFit.cover,
+                              )),
+                          Text(
+                            'No transactions found',
+                            style: context.textTheme.s12w400.copyWith(
+                              color: AppColors.primary010101,
+                            ),
+                          ),
+                        ],
+                      ))
+                    : Column(
+                        children: List.generate(
+                            transactionHistory.isNotEmpty
+                                ? transactionHistory.length
+                                : 0, (index) {
+                          final data = transactionHistory[index];
+                          String dateTime = '${data.date}';
 
-                      DateTime parsedDate = DateTime.parse(dateTime);
+                          DateTime parsedDate = DateTime.parse(dateTime);
 
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(parsedDate);
-                      return transactionHistory.isEmpty
-                          ? const Text('No transactions found')
-                          : SingleChildScrollView(
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(parsedDate);
+                          return SingleChildScrollView(
+                            child: GestureDetector(
+                         onTap: () => Navigator.push(
+                            context,
+                            (MaterialPageRoute(
+                              builder: (_) => TransactionDetailsView(
+                                transactionNo: '${data.transref}',
+                                service: '${data.servicename}',
+                                transactionDescription: '${data.servicedesc}',
+                                amount: '${data.amount}',
+                                status: data.status!.toInt(),
+                                date: formattedDate,
+                              ),
+                            )),
+                          ),
                               child: TransactionWidget(
                                 serviceName: "${data.servicename}",
                                 amount: '${data.amount}',
@@ -90,9 +123,10 @@ class RecentTransactionsSection extends StatelessWidget {
                                 date: formattedDate,
                                 status: data.status!.toInt(),
                               ),
-                            );
-                    }),
-                  ),
+                            ),
+                          );
+                        }),
+                      ),
               })
         ],
       ),

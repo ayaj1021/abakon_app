@@ -1,6 +1,7 @@
 import 'package:abakon/core/config/env/base_env.dart';
 import 'package:abakon/core/config/env/prod_env.dart';
 import 'package:abakon/core/config/interceptors/header_interceptor.dart';
+import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/cable/data/model/buy_cable_request.dart';
 import 'package:abakon/presentation/features/cable/data/model/buy_cable_response.dart';
@@ -20,7 +21,7 @@ import 'package:abakon/presentation/features/bank_deposits/data/model/generate_a
 import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/model/delete_user_response.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/model/logout_response.dart';
-import 'package:abakon/presentation/features/dashboard/profile/presentation/notifier/log_out_notifier.dart';
+import 'package:abakon/presentation/features/dashboard/profile/presentation/notifier/logout_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/reward/data/model/referral_link_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_response.dart';
@@ -207,11 +208,9 @@ ProviderFamily<Dio, BaseEnv> _dio = Provider.family<Dio, BaseEnv>(
       HeaderInterCeptor(
         dio: dio,
         secureStorage: ref.read(localStorageProvider),
-        onTokenExpired: () {
-          ref
-              .read(logOutNotifer.notifier)
-              .logOut(onError: (m) {}, onSuccess: (m) {});
-          //ref.read(logoutProvider.notifier).state = ActivityStatus.loggedOut;
+        onTokenExpired: () async {
+          await ref.read(localStorageProvider).logout(partialLogout: true);
+          ref.read(logoutProvider.notifier).state = ActivityStatus.loggedOut;
         },
       ),
     );

@@ -7,6 +7,7 @@ import 'package:abakon/presentation/features/transactions/presentation/view/tran
 import 'package:abakon/presentation/features/transactions/presentation/widgets/transaction_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class TransactionListSection extends StatelessWidget {
@@ -31,66 +32,90 @@ class TransactionListSection extends StatelessWidget {
                 color: AppColors.primary010101,
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              decoration: BoxDecoration(
-                color: AppColors.primaryE6E2E0,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Next 10',
-                style: context.textTheme.s10w600.copyWith(
-                  color: AppColors.primary010101,
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            //   decoration: BoxDecoration(
+            //     color: AppColors.primaryE6E2E0,
+            //     borderRadius: BorderRadius.circular(8),
+            //   ),
+            //   child: Text(
+            //     'Next 10',
+            //     style: context.textTheme.s10w600.copyWith(
+            //       color: AppColors.primary010101,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         const VerticalSpacing(12),
         SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: switch (loadState) {
-              LoadState.loading => const Center(
-                    child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                )),
-              LoadState.error => const Text('Error'),
-              _ => ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: transactionHistory.length,
-                  itemBuilder: (_, index) {
-                    final data = transactionHistory[index];
-                    String dateTime = '${data.date}';
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child:
 
-                    DateTime parsedDate = DateTime.parse(dateTime);
+              // switch (loadState) {
+              //   LoadState.loading => const Center(
+              //         child: CircularProgressIndicator(
+              //       color: AppColors.primaryColor,
+              //     )),
+              //   LoadState.error => const Text('Error'),
+              //   _ =>
 
-                    String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(parsedDate);
-                    return GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        (MaterialPageRoute(
-                          builder: (_) => TransactionDetailsView(
-                            transactionNo: '${data.transref}',
-                            service: '${data.servicename}',
-                            transactionDescription: '${data.servicedesc}',
-                            amount: '${data.amount}',
-                            status: data.status!.toInt(),
-                            date: formattedDate,
+              transactionHistory.isEmpty
+                  ? Center(
+                      child: Column(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            height: 120.h,
+                            width: 120.w,
+                            child: Image.asset(
+                              'assets/images/emptylist.png',
+                              fit: BoxFit.cover,
+                            )),
+                        Text(
+                          'No transactions found',
+                          style: context.textTheme.s12w400.copyWith(
+                            color: AppColors.primary010101,
                           ),
-                        )),
-                      ),
-                      child: TransactionWidget(
-                        serviceName: "${data.servicename}",
-                        amount: '${data.amount}',
-                        serviceDescription: '${data.servicedesc}',
-                        date: formattedDate,
-                        status: data.status!.toInt(),
-                      ),
-                    );
-                  }),
-            })
+                        ),
+                      ],
+                    ))
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: transactionHistory.length,
+                      itemBuilder: (_, index) {
+                        final data = transactionHistory[index];
+                        String dateTime = '${data.date}';
+
+                        DateTime parsedDate = DateTime.parse(dateTime);
+
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(parsedDate);
+                        return GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            (MaterialPageRoute(
+                              builder: (_) => TransactionDetailsView(
+                                transactionNo: '${data.transref}',
+                                service: '${data.servicename}',
+                                transactionDescription: '${data.servicedesc}',
+                                amount: '${data.amount}',
+                                status: data.status!.toInt(),
+                                date: formattedDate,
+                              ),
+                            )),
+                          ),
+                          child: TransactionWidget(
+                            serviceName: "${data.servicename}",
+                            amount: '${data.amount}',
+                            serviceDescription: '${data.servicedesc}',
+                            date: formattedDate,
+                            status: data.status!.toInt(),
+                          ),
+                        );
+                      }),
+        )
       ],
     );
   }
