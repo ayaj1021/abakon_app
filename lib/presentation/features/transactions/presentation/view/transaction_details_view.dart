@@ -1,10 +1,7 @@
 import 'package:abakon/core/extensions/build_context_extension.dart';
-import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/transactions/presentation/widgets/transaction_details_widget.dart';
-import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TransactionDetailsView extends StatelessWidget {
   const TransactionDetailsView(
@@ -48,30 +45,32 @@ class TransactionDetailsView extends StatelessWidget {
                 date: date,
               ),
               const VerticalSpacing(48),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 150.w,
-                    child: AbakonSendButton(
-                      onTap: () {},
-                      title: 'Share',
-                      textColor: AppColors.primaryColor,
-                      borderColor: AppColors.primaryColor,
-                    hasBorder: true,
-                     backgroundColor: AppColors.white,
-                    ),
-                  ),
-                   SizedBox(
-                    width: 150.w,
-                    child: AbakonSendButton(
-                      onTap: () {},
-                      title: 'Download',
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     SizedBox(
+              //       width: 150.w,
+              //       child: AbakonSendButton(
+              //         onTap: () {},
+              //         title: 'Share',
+              //         textColor: AppColors.primaryColor,
+              //         borderColor: AppColors.primaryColor,
+              //       hasBorder: true,
+              //        backgroundColor: AppColors.white,
+              //       ),
+              //     ),
+              //      SizedBox(
+              //       width: 150.w,
+              //       child: AbakonSendButton(
+              //         onTap: () {},
+              //         title: 'Download',
                     
-                    ),
-                  )
-                ],
-              )
+              //       ),
+              //     )
+              //   ],
+              // )
+           
+           
             ],
           ),
         ),

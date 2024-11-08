@@ -46,7 +46,7 @@ class _HomeState extends ConsumerState<Home> {
     final transactions = await SecureStorage().getTransactions();
 
     setState(() {
-      allTransactionList = transactions!;
+      allTransactionList = transactions?? [];
     });
   }
 

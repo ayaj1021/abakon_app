@@ -183,7 +183,7 @@ class _LoginState extends ConsumerState<Login> {
           },
           onSuccess: (message) {
             _isLoginEnabled.value = false;
-            context.showSuccess(message: 'Login Successful');
+            context.showSuccess(message: message);
             // log('Login successfull');
             context.replaceAll(Dashboard.routeName);
           },

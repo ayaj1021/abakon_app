@@ -31,11 +31,6 @@ class _ChangeTransactionPinViewState
     _newPinController = TextEditingController()..addListener(_listener);
     _confirmNewPinController = TextEditingController()..addListener(_listener);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // await ref
-      //     .read(getUserDetailsNotifierProvider.notifier)
-      //     .getAllUserDetails();
-    });
     super.initState();
   }
 
@@ -114,7 +109,6 @@ class _ChangeTransactionPinViewState
           onSuccess: (message) {
             _isChangePinEnabled.value = false;
             context.showSuccess(message: message);
-            
           },
         );
   }

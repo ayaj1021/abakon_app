@@ -102,9 +102,9 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
   void _changePassword() {
     final data = ChangePasswordRequest(
       oldPassword: _currentPasswordController.text.trim(),
-      newPassword: _newPasswordController.text.toLowerCase().trim(),
+      newPassword: _newPasswordController.text.trim(),
       confirmNewPassword:
-          _confirmNewPasswordController.text.toLowerCase().trim(),
+          _confirmNewPasswordController.text.trim(),
     );
     ref.read(changePasswordNotifer.notifier).changePassword(
           data: data,

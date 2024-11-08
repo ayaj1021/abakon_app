@@ -179,7 +179,7 @@ class Strings {
   static const String changePassword = 'Change Password';
   static const String changeTransactionPin = 'Change Transaction Pin';
   static const String changeTransactionPinNote =
-      'Note: The Default Transaction Pin Is \'1234\'. Your Transaction Pin should be a four digit number.';
+      'Note: The Default Transaction Pin Is \'12345\'. Your Transaction Pin should be a five digit number.';
 
   static const String lastName = 'Last name';
 

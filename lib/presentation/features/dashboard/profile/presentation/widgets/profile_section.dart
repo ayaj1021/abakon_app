@@ -54,7 +54,7 @@ class _ProfileSectionState extends ConsumerState<ProfileSection> {
                   icon: Icons.person,
                 ),
                 ProfileWidget(
-                  title: 'My Tranactions',
+                  title: 'My Transactions',
                   onTap: () => context.pushNamed(TransactionView.routeName),
                   icon: Icons.swap_horiz_sharp,
                 ),

@@ -11,14 +11,11 @@ class ChangeTransactionPinRequest implements EquatableMixin {
     required this.confirmNewPin,
   });
 
-  @JsonKey(name: 'old_pin')
   final String oldPin;
-   @JsonKey(name: 'new_pin')
+
   final String newPin;
-   @JsonKey(name: 'confirm_new_pin')
+
   final String confirmNewPin;
-  
- 
 
   Map<String, dynamic> toJson() => _$ChangeTransactionPinRequestToJson(this);
 
