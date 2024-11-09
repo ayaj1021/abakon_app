@@ -10,7 +10,7 @@ class BuyDataRequest implements EquatableMixin {
     required this.phone,
     required this.portedNumber,
     required this.dataPlan,
-    required this.ref,
+  
   });
 
   final String network;
@@ -19,13 +19,13 @@ class BuyDataRequest implements EquatableMixin {
   final String portedNumber;
    @JsonKey(defaultValue: "data_plan")
   final String dataPlan;
-  final String ref;
+
 
   Map<String, dynamic> toJson() => _$BuyDataRequestToJson(this);
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  List<Object?> get props => [network, phone,  portedNumber, dataPlan, ref];
+  List<Object?> get props => [network, phone,  portedNumber, dataPlan];
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override

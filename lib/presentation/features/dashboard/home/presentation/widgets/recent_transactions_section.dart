@@ -90,10 +90,8 @@ class RecentTransactionsSection extends StatelessWidget {
                         ],
                       ))
                     : Column(
-                        children: List.generate(
-                            transactionHistory.isNotEmpty
-                                ? transactionHistory.length
-                                : 0, (index) {
+                        children:
+                            List.generate(transactionHistory.length, (index) {
                           final data = transactionHistory[index];
                           String dateTime = '${data.date}';
 
@@ -103,19 +101,20 @@ class RecentTransactionsSection extends StatelessWidget {
                               DateFormat('yyyy-MM-dd').format(parsedDate);
                           return SingleChildScrollView(
                             child: GestureDetector(
-                         onTap: () => Navigator.push(
-                            context,
-                            (MaterialPageRoute(
-                              builder: (_) => TransactionDetailsView(
-                                transactionNo: '${data.transref}',
-                                service: '${data.servicename}',
-                                transactionDescription: '${data.servicedesc}',
-                                amount: '${data.amount}',
-                                status: data.status!.toInt(),
-                                date: formattedDate,
+                              onTap: () => Navigator.push(
+                                context,
+                                (MaterialPageRoute(
+                                  builder: (_) => TransactionDetailsView(
+                                    transactionNo: '${data.transref}',
+                                    service: '${data.servicename}',
+                                    transactionDescription:
+                                        '${data.servicedesc}',
+                                    amount: '${data.amount}',
+                                    status: data.status!.toInt(),
+                                    date: formattedDate,
+                                  ),
+                                )),
                               ),
-                            )),
-                          ),
                               child: TransactionWidget(
                                 serviceName: "${data.servicename}",
                                 amount: '${data.amount}',

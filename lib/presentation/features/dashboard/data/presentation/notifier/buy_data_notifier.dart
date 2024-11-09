@@ -1,4 +1,3 @@
-
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
@@ -28,7 +27,7 @@ class BuyDataNotifer extends AutoDisposeNotifier<BuyDataNotiferState> {
       if (!value.status) throw value.msg.toException;
 
       state = state.copyWith(buyDataState: LoadState.idle);
-      onSuccess(value.msg.toString());
+      onSuccess(value.data!.msg.toString());
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(buyDataState: LoadState.idle);

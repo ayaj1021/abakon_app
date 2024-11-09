@@ -11,7 +11,7 @@ class BuyAirtimeRequest implements EquatableMixin {
     required this.amount,
     required this.portedNumber,
     required this.airtimeType,
-    required this.ref,
+  
   });
 
   final String network;
@@ -21,14 +21,14 @@ class BuyAirtimeRequest implements EquatableMixin {
   final String portedNumber;
   @JsonKey(defaultValue: "airtime_type")
   final String airtimeType;
-  final String ref;
+
 
   Map<String, dynamic> toJson() => _$BuyAirtimeRequestToJson(this);
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   List<Object?> get props =>
-      [network, phone, amount, portedNumber, airtimeType, ref];
+      [network, phone, amount, portedNumber, airtimeType];
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override

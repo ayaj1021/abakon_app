@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Reward extends ConsumerStatefulWidget {
   const Reward({super.key});
+ static const routeName = '/rewardScreen';
 
   @override
   ConsumerState<Reward> createState() => _RewardState();
@@ -19,7 +20,7 @@ class Reward extends ConsumerStatefulWidget {
 
 class _RewardState extends ConsumerState<Reward> {
   SecureStorage secureStorage = SecureStorage();
-  String _referallLink = '';
+//  String _referallLink = '';
   @override
   void initState() {
     getReferralLink();
@@ -37,9 +38,9 @@ class _RewardState extends ConsumerState<Reward> {
   }
 
   getReferralLink() async {
-    final link = await secureStorage.getUserReferralLink();
+   // final link = await secureStorage.getUserReferralLink();
     setState(() {
-      _referallLink = link.toString();
+    //  _referallLink = link.toString();
     });
   }
 
@@ -54,8 +55,8 @@ class _RewardState extends ConsumerState<Reward> {
     // final referralLinkLoadState = ref.watch(
     //     getReferralLinkServiceNotifierProvider.select((v) => v.loadState));
 
-    // final referralLink = ref.watch(getReferralLinkServiceNotifierProvider
-    //     .select((v) => v.getReferralLinkService.data?.data));
+    final referralLink = ref.watch(getReferralLinkServiceNotifierProvider
+        .select((v) => v.getReferralLinkService.data?.data));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -77,7 +78,7 @@ class _RewardState extends ConsumerState<Reward> {
                     const VerticalSpacing(16),
                     ReferralNumberSection(
                       referralNumber: "${data?.sReferal ?? 0}",
-                      referralLink: _referallLink.toString(),
+                      referralLink: referralLink ?? '',
                     ),
                     const VerticalSpacing(32),
                     // const ReferralBreakdownSection(),

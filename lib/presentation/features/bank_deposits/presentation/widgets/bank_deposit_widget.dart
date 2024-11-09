@@ -23,7 +23,8 @@ class BankDepositWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
@@ -39,7 +40,7 @@ class BankDepositWidget extends StatelessWidget {
                 width: 40.w,
                 child: Image.asset(image),
               ),
-              const HorizontalSpacing(15),
+              const HorizontalSpacing(10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -52,6 +53,7 @@ class BankDepositWidget extends StatelessWidget {
                   const VerticalSpacing(4),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "${Strings.accountName}:",
@@ -60,10 +62,16 @@ class BankDepositWidget extends StatelessWidget {
                         ),
                       ),
                       const HorizontalSpacing(10),
-                      Text(
-                        accountName,
-                        style: context.textTheme.s14w600.copyWith(
-                          color: AppColors.black,
+                      SizedBox(
+                        width: 60.w,
+                        child: Text(
+                          accountName,
+                          style: context.textTheme.s12w600.copyWith(
+                            color: AppColors.black,
+                          ),
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                          textAlign: TextAlign.justify,
                         ),
                       ),
                     ],
@@ -78,7 +86,7 @@ class BankDepositWidget extends StatelessWidget {
                           color: AppColors.black,
                         ),
                       ),
-                      const HorizontalSpacing(10),
+                      const HorizontalSpacing(5),
                       Text(
                         accountNumber,
                         style: context.textTheme.s14w600.copyWith(

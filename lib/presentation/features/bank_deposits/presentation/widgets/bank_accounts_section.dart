@@ -14,13 +14,14 @@ class BankAccountsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
         children: List.generate(banks.length, (index) {
+          final bank = banks[index];
       return banks.isEmpty
           ? const Text('No Account Generated')
-          : const BankDepositWidget(
+          :  BankDepositWidget(
               image: 'assets/images/fidelity_bank_image.png',
-              bankName: 'Fidelity Bank',
-              accountName: 'Abakon',
-              accountNumber: '1122334455',
+              bankName: '${bank.bankName}',
+              accountName: '${bank.accountName}',
+              accountNumber: '${bank.accountNumber}',
             );
     }));
   }

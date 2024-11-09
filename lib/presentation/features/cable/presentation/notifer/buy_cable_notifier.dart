@@ -27,7 +27,7 @@ class BuyCableNotifer extends AutoDisposeNotifier<BuyCableNotiferState> {
       if (!value.status) throw value.msg.toException;
 
       state = state.copyWith(buyCableState: LoadState.idle);
-      onSuccess(value.msg.toString());
+      onSuccess(value.data?.msg ?? 'Successful');
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(buyCableState: LoadState.idle);

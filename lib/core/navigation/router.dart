@@ -2,6 +2,7 @@ import 'package:abakon/presentation/features/bank_deposits/presentation/view/ban
 import 'package:abakon/presentation/features/cable/presentation/view/cable_screen.dart';
 import 'package:abakon/presentation/features/change_password/presentation/view/change_password_view.dart';
 import 'package:abakon/presentation/features/change_transaction_pin/presentation/view/change_transaction_pin_view.dart';
+import 'package:abakon/presentation/features/dashboard/reward/presentation/view/reward.dart';
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/electricity/presentation/view/electricity_view.dart';
 import 'package:abakon/presentation/features/exam_pin/presentation/view/exam_pin.dart';
@@ -36,6 +37,7 @@ class AppRouter {
     BankScreen.routeName: (context) => const BankScreen(),
     TransactionView.routeName: (context) => const TransactionView(),
     NotificationView.routeName: (context) => const NotificationView(),
+    Reward.routeName: (context) => const Reward(),
     // TransactionDetailsView.routeName: (context) =>
     //     const TransactionDetailsView(),
   };

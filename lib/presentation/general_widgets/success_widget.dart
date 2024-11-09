@@ -1,6 +1,8 @@
+import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/strings.dart';
+import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +54,9 @@ class SuccessWidget extends StatelessWidget {
           ),
           const VerticalSpacing(24),
           AbakonSendButton(
-            onTap: () {},
+            onTap: () {
+              context.pushReplacementNamed(Dashboard.routeName);
+            },
             title: 'Go to Homepage',
           ),
         ],

@@ -1,9 +1,11 @@
+import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/general_widgets/app_small_button_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReferralNumberSection extends StatelessWidget {
@@ -58,10 +60,14 @@ class ReferralNumberSection extends StatelessWidget {
                         const VerticalSpacing(8),
                       ],
                     ),
-                    const Column(
+                    Column(
                       children: [
-                        VerticalSpacing(28),
+                        const VerticalSpacing(28),
                         AppSmallButtonWidget(
+                          onTap: () => copyToClipboard(
+                              context: context,
+                              message: 'Copied successfully',
+                              value: ''),
                           title: 'Copy link',
                           buttonColor: AppColors.primaryColor,
                           textColor: AppColors.white,
@@ -75,6 +81,15 @@ class ReferralNumberSection extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  void copyToClipboard(
+      {required String value,
+      required String message,
+      required BuildContext context}) {
+    Clipboard.setData(ClipboardData(text: value)).then(
+      (value) => context.showSuccess(message: message),
     );
   }
 }

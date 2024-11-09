@@ -87,7 +87,7 @@ class Strings {
   static String amount(String amount) => amount;
   static String nairaValue(String amount) => amount;
   static String accountHolderName(String accountName) => accountName;
-  static String bankName(String bankName) => bankName;
+ 
   static String balance(String balance) => 'Balance: $balance NGN';
   static String rmbBalance(String balance) => 'Balance: $balance RMB';
 
@@ -120,6 +120,7 @@ class Strings {
   static const String accountNumberText = 'Account Number';
   static const String accountName = 'Account Name';
   static const String bankDeposit = 'Bank Deposit';
+  static const String bankName = 'Bank Name';
   static const String fundsTransferredToThisAccounts =
       'Funds transferred to this bank accounts are instantly credited to your Abakon wallet!';
 

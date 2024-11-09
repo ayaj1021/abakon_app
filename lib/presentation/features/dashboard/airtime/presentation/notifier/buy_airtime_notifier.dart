@@ -1,4 +1,3 @@
-
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
@@ -28,7 +27,7 @@ class BuyAirtimeNotifer extends AutoDisposeNotifier<BuyAirtimeNotiferState> {
       if (!value.status) throw value.msg.toException;
 
       state = state.copyWith(buyAirtimeState: LoadState.idle);
-      onSuccess(value.msg.toString());
+      onSuccess(value.data?.msg ?? 'Successful');
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(buyAirtimeState: LoadState.idle);

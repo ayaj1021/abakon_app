@@ -14,6 +14,7 @@ import 'package:abakon/presentation/features/electricity/presentation/widgets/el
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
+import 'package:abakon/presentation/general_widgets/success_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -223,7 +224,16 @@ class _ElectricityInputSectionState
           onSuccess: (message) {
             _isVerifyElectricityEnabled.value = false;
 
-            context.showSuccess(message: message);
+           context.showSuccess(message: message);
+
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const AlertDialog(
+                    contentPadding: EdgeInsets.zero,
+                    content: SuccessWidget(),
+                  );
+                });
           },
         );
   }

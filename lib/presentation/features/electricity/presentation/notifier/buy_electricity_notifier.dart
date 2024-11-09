@@ -1,4 +1,3 @@
-
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_request.dart';
@@ -34,8 +33,7 @@ class BuyElectricityNotifer
       state = state.copyWith(
         buyElectricityState: LoadState.idle,
       );
-      onSuccess(value.msg.toString());
-      
+      onSuccess(value.data?.msg ?? 'Successful');
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(buyElectricityState: LoadState.idle);

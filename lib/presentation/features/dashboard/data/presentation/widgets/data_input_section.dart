@@ -12,6 +12,7 @@ import 'package:abakon/presentation/features/services/data/model/get_all_service
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
+import 'package:abakon/presentation/general_widgets/success_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -201,7 +202,6 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
       network: _selectedNid.toString(),
       portedNumber: 'true',
       dataPlan: _selectedDataId.toString(),
-      ref: 'string',
     );
     ref.read(buyDataNotifer.notifier).buyData(
           data: data,
@@ -210,9 +210,15 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
           },
           onSuccess: (message) {
             _isBuyDataEnabled.value = false;
-            context.showSuccess(message: 'Login Successful');
-            // log('Login successfull');
-            // context.pu(Dashboard.routeName);
+            context.showSuccess(message: message);
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const AlertDialog(
+                    contentPadding: EdgeInsets.zero,
+                    content: SuccessWidget(),
+                  );
+                });
           },
         );
   }

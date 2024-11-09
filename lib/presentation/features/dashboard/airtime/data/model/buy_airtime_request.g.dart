@@ -11,7 +11,6 @@ Map<String, dynamic> _$BuyAirtimeRequestToJson(BuyAirtimeRequest instance) =>
       'network': instance.network,
       'phone': instance.phone,
       'amount': instance.amount,
-      'portedNumber': instance.portedNumber,
-      'airtimeType': instance.airtimeType,
-      'ref': instance.ref,
+      'ported_number': instance.portedNumber,
+      'airtime_type': instance.airtimeType,
     };

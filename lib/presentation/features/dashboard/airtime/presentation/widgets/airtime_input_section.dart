@@ -11,6 +11,7 @@ import 'package:abakon/presentation/features/dashboard/airtime/presentation/widg
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
+import 'package:abakon/presentation/general_widgets/success_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -178,7 +179,7 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
       portedNumber: 'false',
       amount: _amountController.text.trim(),
       airtimeType: _selectedType.toString(),
-      ref: 'string',
+    
     );
     ref.read(buyAirtimeNotifer.notifier).buyAirtime(
           data: data,
@@ -187,7 +188,15 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
           },
           onSuccess: (message) {
             _isBuyAirtimeEnabled.value = false;
-            context.showSuccess(message: 'Login Successful');
+            context.showSuccess(message: message);
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const AlertDialog(
+                    contentPadding: EdgeInsets.zero,
+                    content: SuccessWidget(),
+                  );
+                });
           },
         );
   }
@@ -246,5 +255,5 @@ String getNetworkProvider(String phoneNumber) {
     }
   }
   return '';
- // return 'Unknown Network';
+  // return 'Unknown Network';
 }

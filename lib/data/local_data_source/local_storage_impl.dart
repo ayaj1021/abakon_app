@@ -134,6 +134,9 @@ class SecureStorage {
     await _storage.write(key: 'transaction_data_list', value: jsonData);
   }
 
+
+  
+
   // Retrieve list of TransactionData
   Future<List<AllTransactionsData>?> getTransactions() async {
     final jsonData = await _storage.read(key: 'transaction_data_list');
@@ -144,6 +147,10 @@ class SecureStorage {
     return null;
   }
 
+
+  Future<void> deleteTransactionDataList() async {
+    await _storage.delete(key: 'transaction_data_list');
+  }
 
 
   // Future<void> saveUserDetails(

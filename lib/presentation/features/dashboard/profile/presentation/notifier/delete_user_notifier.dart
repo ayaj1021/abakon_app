@@ -1,5 +1,6 @@
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/dashboard/profile/data/repository/delete_user_repository.dart';
 import 'package:abakon/presentation/features/dashboard/profile/presentation/notifier/delete_user_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,13 +24,15 @@ class DeleteUserNotifer extends AutoDisposeNotifier<DeleteNotiferState> {
       if (!value.status) throw value.msg.toException;
 
       state = state.copyWith(deleteUser: LoadState.idle);
+
+      await SecureStorage().deleteTransactionDataList();
+
       onSuccess(value.data!.msg.toString());
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(deleteUser: LoadState.idle);
     }
   }
-
 
   // Future<void> logout() async {
   //   _userRepository.saveCurrentState(CurrentState.onboarded);
