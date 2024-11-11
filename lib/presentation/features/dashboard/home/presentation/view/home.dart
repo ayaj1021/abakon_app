@@ -33,6 +33,7 @@ class _HomeState extends ConsumerState<Home> {
     getAllTransactions();
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _refresh();
       Future.wait([
         ref.read(getUserDetailsNotifierProvider.notifier).getAllUserDetails(),
       ]);
@@ -50,6 +51,16 @@ class _HomeState extends ConsumerState<Home> {
     });
   }
 
+  Future<void> _refresh() {
+    return Future.wait([
+      ref.read(getUserDetailsNotifierProvider.notifier).getAllUserDetails(),
+      ref.read(getUserDetailsNotifierProvider.notifier).getAllUserDetails(),
+      ref
+          .read(getAllTransactionsNotifierProvider.notifier)
+          .getAllTransactions(),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(logOutNotifer, (previous, next) {
@@ -63,29 +74,28 @@ class _HomeState extends ConsumerState<Home> {
       }
     });
     return Scaffold(
-      body: SafeArea(
-          child: RefreshIndicator(
-        key: refreshIndicatorKey,
-        onRefresh: () async {
-          await Future.wait([
-            ref
-                .read(getUserDetailsNotifierProvider.notifier)
-                .getAllUserDetails(),
-          ]);
-        },
-        child: Consumer(builder: (context, ref, child) {
-          final loadState = ref.watch(
-              getAllTransactionsNotifierProvider.select((v) => v.loadState));
+      body: SafeArea(child: Consumer(builder: (context, ref, child) {
+        final loadState = ref.watch(
+            getAllTransactionsNotifierProvider.select((v) => v.loadState));
 
-          // final transactionHistory = ref.watch(
-          //     getAllTransactionsNotifierProvider
-          //         .select((v) => v.getAllTransactions.data?.data));
-          return SingleChildScrollView(
+        final firstName = ref.watch(getUserDetailsNotifierProvider
+            .select((v) => v.getAllDetails.data?.allDetails?.sFname));
+
+        // final transactionHistory = ref.watch(
+        //     getAllTransactionsNotifierProvider
+        //         .select((v) => v.getAllTransactions.data?.data));
+        return RefreshIndicator(
+          key: refreshIndicatorKey,
+          onRefresh: _refresh,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 40),
               child: Column(
                 children: [
-                  const HomeHeaderSection(),
+                  HomeHeaderSection(
+                    firstName: "$firstName",
+                  ),
                   const VerticalSpacing(20),
                   const WalletBalanceSection(),
                   const VerticalSpacing(16),
@@ -100,9 +110,9 @@ class _HomeState extends ConsumerState<Home> {
                 ],
               ),
             ),
-          );
-        }),
-      )),
+          ),
+        );
+      })),
     );
   }
 }

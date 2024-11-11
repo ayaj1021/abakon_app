@@ -10,7 +10,8 @@ class ProfileHeaderSection extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'Welcome John 👋',
+          'Profile',
+          //'Welcome John 👋',
           style: context.textTheme.s20w700.copyWith(
             color: AppColors.black,
           ),

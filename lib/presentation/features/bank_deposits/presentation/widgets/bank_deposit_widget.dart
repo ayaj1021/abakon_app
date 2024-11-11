@@ -35,12 +35,7 @@ class BankDepositWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
-                height: 40.h,
-                width: 40.w,
-                child: Image.asset(image),
-              ),
-              const HorizontalSpacing(10),
+             
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,7 +58,7 @@ class BankDepositWidget extends StatelessWidget {
                       ),
                       const HorizontalSpacing(10),
                       SizedBox(
-                        width: 60.w,
+                        width: 140.w,
                         child: Text(
                           accountName,
                           style: context.textTheme.s12w600.copyWith(

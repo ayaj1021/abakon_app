@@ -22,6 +22,7 @@ class LoginInputSection extends StatelessWidget {
           validateFunction: Validators.phone(),
           controller: phoneNumberController,
           hintText: Strings.phoneNumber,
+          keyboardType: TextInputType.number,
           maxLength: 11,
           prefixIcon: const Icon(
             Icons.phone,

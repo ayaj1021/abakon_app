@@ -5,6 +5,7 @@ import 'package:abakon/presentation/features/bank_deposits/data/model/generate_a
 import 'package:abakon/presentation/features/bank_deposits/presentation/notifier/generate_account_notifier.dart';
 import 'package:abakon/presentation/features/bank_deposits/presentation/widgets/bank_accounts_section.dart';
 import 'package:abakon/presentation/features/bank_deposits/presentation/widgets/banks_header.dart';
+import 'package:abakon/presentation/features/dashboard/home/presentation/notifier/get_all_user_details_notifier.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,6 +46,8 @@ class _BankScreenState extends ConsumerState<BankScreen> {
 
     final serverMessage = ref.watch(generateAccountNotifierProvider
         .select((state) => state.generateAccountState.data?.message));
+    final allDetails = ref.watch(getUserDetailsNotifierProvider
+        .select((v) => v.getAllDetails.data?.allDetails));
     final loadState =
         ref.watch(generateAccountNotifierProvider.select((v) => v.loadState));
     return Scaffold(
@@ -67,6 +70,7 @@ class _BankScreenState extends ConsumerState<BankScreen> {
                 _ => BankAccountsSection(
                     banks: bankList,
                     loadState: loadState,
+                    allDetails: allDetails!,
                   ),
               }),
             ],
