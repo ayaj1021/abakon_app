@@ -30,6 +30,11 @@ class LogOutNotifer extends AutoDisposeNotifier<LogoutNotiferState> {
     }
   }
 
+  Future<void> expireLogOut() async {
+   // _userRepository.saveCurrentState(CurrentState.onboarded);
+    state = state.copyWith(homeSessionState: HomeSessionState.logout);
+  }
+
 
   // Future<void> logout() async {
   //   _userRepository.saveCurrentState(CurrentState.onboarded);

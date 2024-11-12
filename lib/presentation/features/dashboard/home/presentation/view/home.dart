@@ -81,9 +81,6 @@ class _HomeState extends ConsumerState<Home> {
         final firstName = ref.watch(getUserDetailsNotifierProvider
             .select((v) => v.getAllDetails.data?.allDetails?.sFname));
 
-        // final transactionHistory = ref.watch(
-        //     getAllTransactionsNotifierProvider
-        //         .select((v) => v.getAllTransactions.data?.data));
         return RefreshIndicator(
           key: refreshIndicatorKey,
           onRefresh: _refresh,

@@ -64,20 +64,6 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
       ..addListener(_validateInput);
   }
 
-  // _validateInput() {
-  //   //ref.read(registerNotifier.notifier).allInputValid(
-  //   if (Validators.password()(_passwordController.text) == null &&
-  //       Validators.password()(_confirmPasswordController.text) == null &&
-  //       _passwordController.text == _confirmPasswordController.text &&
-  //       Validators.notEmpty()(_stateController.text) == null &&
-  //       Validators.phone()(_transactionPinController.text) == null) {
-  //     //);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   void _validateInput() {
     ref.read(registerNotifier.notifier).allInputValid(
           emailValid: Validators.email()(widget.email) == null,
@@ -95,7 +81,6 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
   }
 
   void _signUp() {
-    //print('xclusive@gmail.com'.redactedEmail);
     ref.read(registerNotifier.notifier).signUp(
           data: SignUpRequest(
             email: widget.email.trim(),
