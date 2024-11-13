@@ -42,7 +42,7 @@ class GetAllCableDataState {
       isLoading: isLoading ?? this.isLoading,
       error: message,
       loadState: loadState ?? this.loadState,
-      getAllCableData: getAllExamData ?? this.getAllCableData,
+      getAllCableData: getAllExamData ?? getAllCableData,
     );
   }
 }

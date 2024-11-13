@@ -114,6 +114,7 @@ class BankDepositWidget extends StatelessWidget {
       required String message,
       required BuildContext context}) {
     Clipboard.setData(ClipboardData(text: value)).then(
+      // ignore: use_build_context_synchronously
       (value) => context.showSuccess(message: message),
     );
   }

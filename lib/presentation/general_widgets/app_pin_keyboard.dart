@@ -23,7 +23,7 @@ class PayOffPinKeyboard extends StatefulWidget {
 }
 
 class _PayOffPinKeyboardState extends State<PayOffPinKeyboard> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   String pin = '';
 
   @override

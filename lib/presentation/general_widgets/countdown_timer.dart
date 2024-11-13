@@ -4,7 +4,7 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class _CountDownTimer extends AnimatedWidget {
-  const _CountDownTimer({required this.animation, super.key})
+  const _CountDownTimer({required this.animation})
       : super(listenable: animation);
   final Animation<int> animation;
 

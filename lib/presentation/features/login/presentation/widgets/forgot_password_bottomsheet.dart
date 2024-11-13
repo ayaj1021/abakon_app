@@ -12,7 +12,7 @@ Future<dynamic> forgotPasswordBottomSheet({
   required BuildContext context,
   required TextEditingController emailAddressController,
 }) {
-  _validateInput() {
+  validateInput() {
     if (Validators.email()(emailAddressController.text) == null) {
       return true;
     } else {
@@ -75,7 +75,7 @@ Future<dynamic> forgotPasswordBottomSheet({
             ),
             const VerticalSpacing(90),
             AbakonSendButton(
-              isEnabled: _validateInput(),
+              isEnabled: validateInput(),
               onTap: () => Navigator.pop(context),
               title: Strings.continueRegister,
             ),

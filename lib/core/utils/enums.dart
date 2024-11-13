@@ -17,9 +17,9 @@ enum HomeSessionState { logout, initial }
 
 enum BiometricDataType { password, pin }
 
-enum Gender { MALE, FEMALE }
+// enum Gender { MALE, FEMALE }
 
-enum Currency { NGN, USD }
+// enum Currency { NGN, USD }
 
 @JsonEnum()
 enum ReferenceType {
