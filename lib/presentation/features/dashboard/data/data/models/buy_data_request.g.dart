@@ -10,6 +10,6 @@ Map<String, dynamic> _$BuyDataRequestToJson(BuyDataRequest instance) =>
     <String, dynamic>{
       'network': instance.network,
       'phone': instance.phone,
-      'ported_number': instance.portedNumber,
-      'data_plan': instance.dataPlan,
+      'portedNumber': instance.portedNumber,
+      'dataPlan': instance.dataPlan,
     };

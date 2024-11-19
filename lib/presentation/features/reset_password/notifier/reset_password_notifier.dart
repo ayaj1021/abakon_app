@@ -1,10 +1,9 @@
 import 'package:abakon/core/config/exception/message_exception.dart';
 import 'package:abakon/core/utils/enums.dart';
-import 'package:abakon/presentation/features/login/data/models/reset_password_request.dart';
-import 'package:abakon/presentation/features/login/data/repository/reset_password_repository.dart';
-import 'package:abakon/presentation/features/login/presentation/notifier/reset_password_state.dart';
+import 'package:abakon/presentation/features/reset_password/data/model/reset_password_request.dart';
+import 'package:abakon/presentation/features/reset_password/data/repository/reset_password_repository.dart';
+import 'package:abakon/presentation/features/reset_password/notifier/reset_password_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 class ResetPasswordNotifier extends AutoDisposeNotifier<ResetPasswordState> {
   ResetPasswordNotifier();
@@ -20,7 +19,7 @@ class ResetPasswordNotifier extends AutoDisposeNotifier<ResetPasswordState> {
   Future<void> resetPassword({
     required ResetPasswordRequest data,
     required void Function(String error) onError,
-    required void Function() onSuccess,
+    required void Function(String message) onSuccess,
   }) async {
     state = state.copyWith(resetPasswordState: LoadState.loading);
     try {
@@ -33,7 +32,7 @@ class ResetPasswordNotifier extends AutoDisposeNotifier<ResetPasswordState> {
         resetPasswordState: LoadState.idle,
         resetPasswordResponse: value.data,
       );
-      onSuccess();
+      onSuccess(value.msg.toString());
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(resetPasswordState: LoadState.idle);

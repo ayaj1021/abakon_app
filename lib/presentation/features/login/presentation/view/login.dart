@@ -8,7 +8,7 @@ import 'package:abakon/presentation/features/dashboard/home/presentation/notifie
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
 import 'package:abakon/presentation/features/login/presentation/notifier/login_notifier.dart';
-import 'package:abakon/presentation/features/login/presentation/widgets/forgot_password_bottomsheet.dart';
+import 'package:abakon/presentation/features/login/presentation/view/forgot_password.dart';
 import 'package:abakon/presentation/features/login/presentation/widgets/login_input_section.dart';
 import 'package:abakon/presentation/features/sign_up/presentation/view/register_one.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
@@ -30,7 +30,7 @@ class _LoginState extends ConsumerState<Login> {
   final ValueNotifier<bool> _isLoginEnabled = ValueNotifier(false);
   late TextEditingController _phoneNumberController;
   late TextEditingController _passwordController;
-  final _emailAddressController = TextEditingController();
+
 
   @override
   void initState() {
@@ -91,17 +91,19 @@ class _LoginState extends ConsumerState<Login> {
                   style: context.textTheme.s12w400
                       .copyWith(color: AppColors.primary010101),
                 ),
-                const VerticalSpacing(70),
+                const VerticalSpacing(30),
                 LoginInputSection(
                   passwordController: _passwordController,
                   phoneNumberController: _phoneNumberController,
                 ),
                 GestureDetector(
-                  onTap: () => forgotPasswordBottomSheet(
-                    context: context,
-                    emailAddressController: _emailAddressController,
-                  ),
-                  //context.pushNamed<void>(ForgotPassword.routeName),
+                  onTap: () => 
+                  
+                  // forgotPasswordBottomSheet(
+                  //   context: context,
+                  //   emailAddressController: _emailAddressController,
+                  // ),
+                  context.pushNamed(ForgotPasswordView.routeName),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -126,8 +128,6 @@ class _LoginState extends ConsumerState<Login> {
                           isLoading: isLoading,
                           isEnabled: r && !isLoading,
                           onTap: () => _login(),
-                          //context.pushNamed(Dashboard.routeName),
-
                           title: Strings.login,
                         );
                       },

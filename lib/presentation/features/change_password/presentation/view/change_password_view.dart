@@ -32,18 +32,14 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
     _confirmNewPasswordController = TextEditingController()
       ..addListener(_listener);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // await ref
-      //     .read(getUserDetailsNotifierProvider.notifier)
-      //     .getAllUserDetails();
-    });
     super.initState();
   }
 
   void _listener() {
-    _isChangePasswordEnabled.value = _currentPasswordController.text.isNotEmpty &&
-        _newPasswordController.text.isNotEmpty &&
-        _confirmNewPasswordController.text.isNotEmpty;
+    _isChangePasswordEnabled.value =
+        _currentPasswordController.text.isNotEmpty &&
+            _newPasswordController.text.isNotEmpty &&
+            _confirmNewPasswordController.text.isNotEmpty;
   }
 
   @override
@@ -85,7 +81,7 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
                             .select((v) => v.changePasswordState.isLoading),
                       );
                       return AbakonSendButton(
-                           isLoading: isLoading,
+                        isLoading: isLoading,
                         isEnabled: r && !isLoading,
                         onTap: () => _changePassword(),
                         title: 'Update Password',
@@ -103,8 +99,7 @@ class _ChangePasswordViewState extends ConsumerState<ChangePasswordView> {
     final data = ChangePasswordRequest(
       oldPassword: _currentPasswordController.text.trim(),
       newPassword: _newPasswordController.text.trim(),
-      confirmNewPassword:
-          _confirmNewPasswordController.text.trim(),
+      confirmNewPassword: _confirmNewPasswordController.text.trim(),
     );
     ref.read(changePasswordNotifer.notifier).changePassword(
           data: data,

@@ -6,6 +6,7 @@ import 'package:abakon/presentation/features/dashboard/reward/presentation/view/
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
 import 'package:abakon/presentation/features/electricity/presentation/view/electricity_view.dart';
 import 'package:abakon/presentation/features/exam_pin/presentation/view/exam_pin.dart';
+import 'package:abakon/presentation/features/login/presentation/view/forgot_password.dart';
 import 'package:abakon/presentation/features/login/presentation/view/login.dart';
 import 'package:abakon/presentation/features/my_information/presentation/view/my_information_page.dart';
 import 'package:abakon/presentation/features/notification/presentation/view/notification_view.dart';
@@ -23,8 +24,10 @@ class AppRouter {
     RegisterOne.routeName: (context) => const RegisterOne(),
     Login.routeName: (context) => const Login(),
     OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+    ForgotPasswordView.routeName: (context) => const ForgotPasswordView(),
     // OTPVerification.routeName: (context) => const OTPVerification(),
     Dashboard.routeName: (context) => const Dashboard(),
+    
     SupportPage.routeName: (context) => const SupportPage(),
     MyInformationPage.routeName: (context) => const MyInformationPage(),
     ChangePasswordView.routeName: (context) => const ChangePasswordView(),

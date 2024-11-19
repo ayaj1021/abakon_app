@@ -69,7 +69,7 @@ class RegisterTwoInputFieldSection extends StatelessWidget {
           controller: pinController,
           hintText: Strings.setTransactionPin,
           keyboardType: TextInputType.number,
-          maxLength: 11,
+          maxLength: 4,
           prefixIcon: SvgPicture.asset(
             'assets/icons/pin_icon.svg',
             fit: BoxFit.scaleDown,
@@ -80,7 +80,7 @@ class RegisterTwoInputFieldSection extends StatelessWidget {
           child: Column(
             children: [
               PinInfoWidget(
-                info: 'Must be 5 digits',
+                info: 'Must be 4 digits',
               ),
               PinInfoWidget(
                 info: 'Must not be your phone number',

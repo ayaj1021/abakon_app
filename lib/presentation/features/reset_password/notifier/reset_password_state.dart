@@ -1,6 +1,5 @@
 import 'package:abakon/core/utils/enums.dart';
-import 'package:abakon/presentation/features/login/data/models/reset_password_response.dart';
-
+import 'package:abakon/presentation/features/reset_password/data/model/reset_password_response.dart';
 
 class ResetPasswordState {
   ResetPasswordState({
@@ -25,9 +24,9 @@ class ResetPasswordState {
   }) {
     return ResetPasswordState(
       inputValid: inputValid ?? this.inputValid,
-      resetPasswordState:
-          resetPasswordState ?? this.resetPasswordState,
-     resetPasswordResponse:     resetPasswordResponse ?? this.resetPasswordResponse,
+      resetPasswordState: resetPasswordState ?? this.resetPasswordState,
+      resetPasswordResponse:
+          resetPasswordResponse ?? this.resetPasswordResponse,
     );
   }
 }

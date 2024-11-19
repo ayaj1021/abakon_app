@@ -9,5 +9,13 @@ part of 'reset_password_response.dart';
 ResetPasswordResponse _$ResetPasswordResponseFromJson(
         Map<String, dynamic> json) =>
     ResetPasswordResponse(
-      message: json['message'] as String,
+      status: json['status'] as bool?,
+      msg: json['msg'] as String?,
     );
+
+Map<String, dynamic> _$ResetPasswordResponseToJson(
+        ResetPasswordResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'msg': instance.msg,
+    };

@@ -76,7 +76,6 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
           phoneNumberValid: Validators.phone()(widget.phoneNumber) == null,
           transactionPinValid:
               Validators.pin()(_transactionPinController.text) == null,
-          stateValid: Validators.name()(_stateController.text) == null,
         );
   }
 
@@ -107,20 +106,6 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
                 builder: (context) {
                   return OTPVerification(
                     email: widget.email,
-                    // otpVerificationArgs: OtpVerificationArgs<LoginResponse>(
-                    //   username: widget.email.toLowerCase(),
-                    //   otpType: OtpType.email,
-                    //   onCompleted: (LoginResponse data) {},
-                    // onCompleted: (data) async {
-                    //   final f = ref.read(registerNotifier.notifier);
-                    //   await f.saveToken(data.tokens!);
-                    //   await f.saveUser(data);
-                    //   if (mounted) {
-                    //     await context
-                    //         .popAndPushNamed(TransactionPin.routeName);
-                    //   }
-                    // },
-                    // ),
                   );
                 });
           },

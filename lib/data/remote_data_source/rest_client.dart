@@ -28,8 +28,11 @@ import 'package:abakon/presentation/features/electricity/data/model/get_all_elec
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_response.dart';
 import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
+import 'package:abakon/presentation/features/login/data/models/forgot_password_request.dart';
+import 'package:abakon/presentation/features/login/data/models/forgot_password_response.dart';
 import 'package:abakon/presentation/features/notification/data/model/notification_response.dart';
 import 'package:abakon/presentation/features/otp_validation/data/models/resend_otp_response.dart';
+import 'package:abakon/presentation/features/reset_password/data/model/reset_password_request.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/features/dashboard/home/data/model/get_user_details_response.dart';
 import 'package:abakon/presentation/features/login/data/models/login_request.dart';
@@ -44,6 +47,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:retrofit/retrofit.dart';
+
+import '../../presentation/features/reset_password/data/model/reset_password_response.dart';
 
 part 'rest_client.g.dart';
 
@@ -110,6 +115,17 @@ abstract class RestClient {
   @POST('/auth/recover')
   Future<ResendOtpResponse> resendOTP(
     @Body() ResendOtpRequest request,
+  );
+
+  @POST('/auth/recover')
+  Future<ForgotPasswordResponse> forgotPassword(
+    @Body() ForgotPasswordRequest request,
+  );
+
+
+    @POST('/auth/update-password')
+  Future<ResetPasswordResponse> resetPassword(
+    @Body() ResetPasswordRequest request,
   );
 
   @POST('/auth/verify')

@@ -10,6 +10,6 @@ Map<String, dynamic> _$ResetPasswordRequestToJson(
         ResetPasswordRequest instance) =>
     <String, dynamic>{
       'password': instance.password,
-      'confirm_password': instance.confirmPassword,
-      'reset_token': instance.resetToken,
+      'email': instance.email,
+      'otp': instance.otp,
     };

@@ -48,8 +48,8 @@ class Validators {
       if (value?.isEmpty ?? false) {
         return 'This field can not be empty.';
       }
-       if (value?.length != 5) {
-        return 'Pin must be minimum of 5 numbers.';
+       if (value?.length != 4) {
+        return 'Pin must be minimum of 4 numbers.';
       }
        return null;
      // return (!phoneNoReg.hasMatch(value!)) ? 'Invalid phone.' : null;

@@ -7,21 +7,21 @@ part 'reset_password_request.g.dart';
 class ResetPasswordRequest implements EquatableMixin {
   const ResetPasswordRequest({
     required this.password,
-    required this.confirmPassword,
-    required this.resetToken,
+    required this.email,
+    required this.otp,
   });
 
   final String password;
-  @JsonKey(name: 'confirm_password')
-  final String confirmPassword;
-  @JsonKey(name: 'reset_token')
-  final String resetToken;
+
+  final String email;
+
+  final String otp;
 
   Map<String, dynamic> toJson() => _$ResetPasswordRequestToJson(this);
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  List<Object?> get props => [password, confirmPassword, resetToken];
+  List<Object?> get props => [password, email, otp];
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override

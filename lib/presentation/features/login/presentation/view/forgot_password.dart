@@ -1,10 +1,12 @@
-
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
+import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/features/login/data/models/forgot_password_request.dart';
 import 'package:abakon/presentation/features/login/presentation/notifier/forgot_password_notifier.dart';
+import 'package:abakon/presentation/features/otp_validation/presentation/view/validate_forgot_password_otp.dart';
+import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/digit_send_email_field.dart';
 import 'package:abakon/presentation/general_widgets/ds_app_bar.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
@@ -12,16 +14,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-class ForgotPassword extends ConsumerStatefulWidget {
-  const ForgotPassword({super.key});
+class ForgotPasswordView extends ConsumerStatefulWidget {
+  const ForgotPasswordView({super.key});
   static const routeName = '/forgotpassword';
 
   @override
-  ConsumerState<ForgotPassword> createState() => _ForgotPasswordState();
+  ConsumerState<ForgotPasswordView> createState() => _ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
+class _ForgotPasswordState extends ConsumerState<ForgotPasswordView> {
   final ValueNotifier<bool> _isLoginEnabled = ValueNotifier(false);
   late TextEditingController _emailAddressController;
 
@@ -71,50 +72,24 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                 hintText: Strings.emailAddress,
               ),
               const VerticalSpacing(150),
-              // ValueListenableBuilder(
-              //   valueListenable: _isLoginEnabled,
-              //   builder: (context, r, c) {
-              //     return Consumer(
-              //       builder: (context, re, c) {
-              //        // final isLoading = re.watch(
-              //           // forgotPasswordNotifer
-              //           //     .select((v) => v.forgotPasswordState.isLoading),
-              //         );
-              //         return DigitSendButton(
-              //           isLoading: isLoading,
-              //           isEnabled: r && !isLoading,
-              //           onTap: _forgotPassword,
-              //           title: Strings.resetPassword,
-              //         );
-              //       },
-              //     );
-              //   },
-              // ),
-              const VerticalSpacing(160),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    Strings.signUp,
-                    style: context.textTheme.s14w400.copyWith(
-                      color: AppColors.secondaryColor,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Container(
-                      color: Colors.black,
-                      height: 20,
-                      width: 2,
-                    ),
-                  ),
-                  const VerticalSpacing(23),
-                  Text(
-                    Strings.privacy,
-                    style: context.textTheme.s14w400,
-                    selectionColor: AppColors.primary7C7794,
-                  ),
-                ],
+              ValueListenableBuilder(
+                valueListenable: _isLoginEnabled,
+                builder: (context, r, c) {
+                  return Consumer(
+                    builder: (context, re, c) {
+                      final isLoading = re.watch(
+                        forgotPasswordNotifer
+                            .select((v) => v.forgotPasswordState.isLoading),
+                      );
+                      return AbakonSendButton(
+                        isLoading: isLoading,
+                        isEnabled: r && !isLoading,
+                        onTap: _forgotPassword,
+                        title: Strings.resetPassword,
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
@@ -125,26 +100,26 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
 
   void _forgotPassword() {
     final data = ForgotPasswordRequest(
-      email: _emailAddressController.text.toLowerCase().trim(),
+      email: _emailAddressController.text.trim(),
     );
     ref.read(forgotPasswordNotifer.notifier).forgotPassword(
           data: data,
           onError: (error) {
             context.showError(message: error);
           },
-          onSuccess: () {
+          onSuccess: (message) {
             context.hideOverLay();
-            _isLoginEnabled.value = false;
-          //   showModalBottomSheet<void>(
-          //     isScrollControlled: true,
-          //     context: context,
-          //     builder: (context) {
-          //       // return EnterOtp(
-          //       //   email: _emailAddressController.text,
-          //       // );
-          //     },
-          //   );
-          // },
-   } );
+            context.showSuccess(message: message);
+
+            showModalBottomSheet<void>(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return ForgotPasswordOTPVerification(
+                    email: _emailAddressController.text,
+                  );
+                });
+          },
+        );
   }
 }

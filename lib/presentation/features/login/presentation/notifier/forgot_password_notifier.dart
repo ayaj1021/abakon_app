@@ -5,13 +5,12 @@ import 'package:abakon/presentation/features/login/data/repository/forgot_passwo
 import 'package:abakon/presentation/features/login/presentation/notifier/forgot_password_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class ForgotPasswordNotifier extends AutoDisposeNotifier<ForgotPasswordState> {
   ForgotPasswordNotifier();
 
   late final ForgotPasswordRepository _forgotPasswordRepository;
   // UserAuthRepository _userAuthRepository;
- // late final LocalStorage _localStorage;
+  // late final LocalStorage _localStorage;
   @override
   ForgotPasswordState build() {
     _forgotPasswordRepository = ref.read(forgotPasswordRepositoryProvider);
@@ -21,26 +20,22 @@ class ForgotPasswordNotifier extends AutoDisposeNotifier<ForgotPasswordState> {
   Future<void> forgotPassword({
     required ForgotPasswordRequest data,
     required void Function(String error) onError,
-    required void Function() onSuccess,
+    required void Function(String message) onSuccess,
   }) async {
     state = state.copyWith(forgotPasswordState: LoadState.loading);
     try {
       final value = await _forgotPasswordRepository.forgotPassword(
         data,
       );
-      if (value.status == 'fail') throw value.msg.toException;
+      if (!value.status) throw value.msg.toException;
 
       state = state.copyWith(forgotPasswordState: LoadState.idle);
-      onSuccess();
+      onSuccess(value.msg.toString());
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(forgotPasswordState: LoadState.idle);
-    } 
+    }
   }
-
-  // Future<void> saveEmail(String userEmail) async {
-  //   await _localStorage.put(HiveKeys.userEmail, userEmail);
-  // }
 }
 
 final forgotPasswordNotifer =
