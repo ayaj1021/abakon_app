@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "228633136307",
+    "project_id": "onesignal-test-app-56a9b",
+    "storage_bucket": "onesignal-test-app-56a9b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228633136307:android:11ca4c9bd9d17c021db4c6",
+        "android_client_info": {
+          "package_name": "com.app.abakon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeloskGeOQMdB_YFXXwXhgz66STpnrxiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
