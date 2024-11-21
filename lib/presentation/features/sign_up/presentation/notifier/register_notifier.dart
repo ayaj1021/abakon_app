@@ -27,6 +27,7 @@ class RegisterNotifier extends AutoDisposeNotifier<RegisterNotifierState> {
     required bool emailValid,
     required bool passwordValid,
     required bool transactionPinValid,
+    required bool stateValid,
 
     //   String? firstName,
     // String? lastName,
@@ -37,12 +38,14 @@ class RegisterNotifier extends AutoDisposeNotifier<RegisterNotifierState> {
     // String? state,
   }) {
     state = state.copyWith(
-        inputValid: emailValid &&
-            passwordValid &&
-            firstNameValid &&
-            lastNameValid &&
-            phoneNumberValid &&
-            transactionPinValid);
+      inputValid: emailValid &&
+          passwordValid &&
+          firstNameValid &&
+          lastNameValid &&
+          phoneNumberValid &&
+          transactionPinValid &&
+          stateValid,
+    );
   }
 
   Future<void> signUp({

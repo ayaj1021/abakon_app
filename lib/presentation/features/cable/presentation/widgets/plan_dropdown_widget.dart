@@ -74,7 +74,7 @@ class _CablePlansDownState extends State<CablePlansDown> {
           widget.selectedPlanId = widget.filteredPlans
               .firstWhere((discount) => discount.name == newValue)
               .cpId;
-              log(widget.selectedPlanId.toString());
+          log(widget.selectedPlanId.toString());
         });
         widget.onPlanIdSelected(widget.selectedPlanId.toString());
         widget.onCablePlanSelected(newValue!);

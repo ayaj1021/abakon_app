@@ -76,6 +76,7 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
           phoneNumberValid: Validators.phone()(widget.phoneNumber) == null,
           transactionPinValid:
               Validators.pin()(_transactionPinController.text) == null,
+          stateValid: _selectedState != null,
         );
   }
 
@@ -88,7 +89,7 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
             lastname: widget.lastName.trim(),
             phone: widget.phoneNumber.trim(),
             transpin: _transactionPinController.text.trim(),
-            state: _stateController.text.trim(),
+            state: _selectedState,
           ),
           onError: (error) {
             context.showError(message: error);
@@ -110,6 +111,14 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
                 });
           },
         );
+  }
+
+  String? _selectedState;
+
+  void _onCablePlanSelected(String selectedStatePicked) {
+    setState(() {
+      _selectedState = selectedStatePicked;
+    });
   }
 
   @override
@@ -151,6 +160,8 @@ class _RegisterState extends ConsumerState<RegisterTwo> {
                     passwordController: _passwordController,
                     confirmPasswordController: _confirmPasswordController,
                     pinController: _transactionPinController,
+                    onStateSelected: _onCablePlanSelected,
+                    selectedState: _selectedState,
                   ),
                   const VerticalSpacing(80),
                   Consumer(

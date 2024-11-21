@@ -12,7 +12,7 @@ class SignUpRequest extends Equatable {
     required this.phone,
     required this.password,
     required this.transpin,
-     this.state,
+    required this.state,
   });
 
   factory SignUpRequest.fromJson(Map<String, dynamic> json) =>
