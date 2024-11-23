@@ -50,7 +50,7 @@ class _MyInformationSectionState extends ConsumerState<MyInformationSection> {
               MyInformationWidget(
                 icon: 'assets/icons/person.svg',
                 informationHeader: 'Full name: ',
-                information: '${data?.sFname} ${data?.sFname}',
+                information: '${data?.sFname} ${data?.sLname}',
               ),
               MyInformationWidget(
                 icon: 'assets/icons/email.svg',

@@ -8,6 +8,6 @@ part of 'verify_cable_request.dart';
 
 Map<String, dynamic> _$VerifyCableRequestToJson(VerifyCableRequest instance) =>
     <String, dynamic>{
-      'smartCardNumber': instance.smartCardNumber,
+      'smart_card_number': instance.smartCardNumber,
       'cablename': instance.cablename,
     };
