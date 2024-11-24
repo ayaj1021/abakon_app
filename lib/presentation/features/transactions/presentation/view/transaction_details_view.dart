@@ -24,7 +24,7 @@ class TransactionDetailsView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric( horizontal: 20, vertical: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -32,10 +32,10 @@ class TransactionDetailsView extends StatelessWidget {
                 onTap: () => context.pop(),
                 child: const Icon(
                   Icons.arrow_back_ios,
-                  size: 14,
+                  size: 18,
                 ),
               ),
-              const VerticalSpacing(32),
+              const VerticalSpacing(20),
               TransactionDetailsWidget(
                 transactionNo: transactionNo,
                 service: service,

@@ -19,7 +19,7 @@ class TransactionView extends ConsumerStatefulWidget {
 class _TransactionViewState extends ConsumerState<TransactionView> {
   final _searchController = TextEditingController();
   List<AllTransactionsData> allTransactionList = [];
-  //AllTransactionsData? allTransactionList;
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -103,7 +103,6 @@ class _TransactionViewState extends ConsumerState<TransactionView> {
               ),
               const VerticalSpacing(24),
               TransactionListSection(
-                //   transactionHistory: transactionHistory ?? [],
                 transactionHistory: filteredTransactions ?? [],
                 loadState: loadState,
               )

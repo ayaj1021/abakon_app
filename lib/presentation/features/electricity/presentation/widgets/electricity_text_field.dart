@@ -5,17 +5,22 @@ import 'package:flutter/material.dart';
 class ElectricityTextField extends StatelessWidget {
   const ElectricityTextField({
     super.key,
-    required this.labelText, required this.controller,
+    required this.labelText,
+    required this.controller, this.maxLength,
   });
 
   final String labelText;
   final TextEditingController controller;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      maxLength: maxLength,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
+        counterText: '',
         labelStyle: context.textTheme.s10w500.copyWith(
           color: AppColors.primary595857,
         ),

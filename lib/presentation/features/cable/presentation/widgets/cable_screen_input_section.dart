@@ -1,8 +1,8 @@
-import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/cable/data/model/buy_cable_request.dart';
 import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
 import 'package:abakon/presentation/features/cable/data/model/verify_cable_request.dart';
@@ -12,6 +12,7 @@ import 'package:abakon/presentation/features/cable/presentation/notifer/verify_c
 import 'package:abakon/presentation/features/cable/presentation/widgets/cable_provider_dropdown_widget.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/plan_dropdown_widget.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/confirm_transactions_widget.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:abakon/presentation/general_widgets/success_widget.dart';
@@ -28,11 +29,14 @@ class CableScreenInputSection extends ConsumerStatefulWidget {
 
 class _CableScreenInputSectionState
     extends ConsumerState<CableScreenInputSection> {
+  final ValueNotifier<bool> _isVerifyCableEnabled = ValueNotifier(false);
   late TextEditingController _phoneNumberController;
   late TextEditingController _amountController;
   late TextEditingController _iucNumberController;
+  final _pinController = TextEditingController();
   @override
   void initState() {
+    getUserPin();
     _phoneNumberController = TextEditingController()..addListener(_listener);
     _amountController = TextEditingController()..addListener(_listener);
     _iucNumberController = TextEditingController()..addListener(_listener);
@@ -45,9 +49,27 @@ class _CableScreenInputSectionState
     super.initState();
   }
 
-  final ValueNotifier<bool> _isVerifyCableEnabled = ValueNotifier(false);
+  @override
+  void dispose() {
+    _pinController.dispose();
+    _phoneNumberController.dispose();
+    _amountController.dispose();
+    _pinController.dispose();
+
+    super.dispose();
+  }
+
+  String _userPin = '';
+
+  getUserPin() async {
+    final pin = await SecureStorage().getUserPin();
+    setState(() {
+      _userPin = pin.toString();
+    });
+  }
+
   void _listener() {
-    _phoneNumberController.text.isNotEmpty &&
+    _isVerifyCableEnabled.value = _phoneNumberController.text.isNotEmpty &&
         _amountController.text.isNotEmpty &&
         _iucNumberController.text.isNotEmpty;
   }
@@ -138,6 +160,7 @@ class _CableScreenInputSectionState
                   ),
                   const VerticalSpacing(16),
                   TextField(
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelStyle: context.textTheme.s10w500.copyWith(
                         color: AppColors.primary595857,
@@ -172,11 +195,17 @@ class _CableScreenInputSectionState
                     ),
                   ),
                   const VerticalSpacing(223),
+                  // ValueListenableBuilder(
+                  //     valueListenable: _isVerifyCableEnabled,
+                  //     builder: (context, r, c) {
+                  //  return
                   AbakonSendButton(
+                      // isEnabled: r,
                       onTap: () {
                         _verifyCable();
                       },
                       title: 'Continue'),
+                  // }),
                 ],
               ),
           }),
@@ -231,8 +260,29 @@ class _CableScreenInputSectionState
                     purchaseInfo:
                         'You are about to purchase an $_selectedCableProvider subscription of ${_amountController.text} for the phone number ${_iucNumberController.text} Do you wish to continue?',
                     onTap: () {
-                      context.pop(context);
-                      _buyCable();
+                      showModalBottomSheet<void>(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return ConfirmTransactionsWidget(
+                              onTap: () {
+                                if (_pinController.text != _userPin) {
+                                  context.showError(
+                                      message: 'Pin is incorrect');
+                                  return;
+                                } else {
+                                  Navigator.pop(context);
+                                  _buyCable();
+                                }
+                              },
+                              pinController: _pinController,
+                              isEnabled:
+                                  _pinController.text.isNotEmpty ? true : false,
+                            );
+                          });
+
+                      // context.pop(context);
+                      // _buyCable();
                     },
                   );
                 });

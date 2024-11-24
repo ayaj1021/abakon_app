@@ -98,6 +98,15 @@ class SecureStorage {
     return value;
   }
 
+  Future<void> saveUserPin(String userPin) async {
+    await _storage.write(key: 'user_pin', value: userPin);
+  }
+
+  Future<String?> getUserPin() async {
+    String? value = await _storage.read(key: 'user_pin');
+    return value;
+  }
+
   Future<void> saveUserAccountName(String userEmail) async {
     await _storage.write(key: 'user_account_name', value: userEmail);
   }
@@ -129,29 +138,28 @@ class SecureStorage {
     return null;
   }
 
-  Future<void> saveTransactions(List<AllTransactionsData> transactionDataList) async {
-    final jsonData = jsonEncode(transactionDataList.map((item) => item.toJson()).toList());
+  Future<void> saveTransactions(
+      List<AllTransactionsData> transactionDataList) async {
+    final jsonData =
+        jsonEncode(transactionDataList.map((item) => item.toJson()).toList());
     await _storage.write(key: 'transaction_data_list', value: jsonData);
   }
-
-
-  
 
   // Retrieve list of TransactionData
   Future<List<AllTransactionsData>?> getTransactions() async {
     final jsonData = await _storage.read(key: 'transaction_data_list');
     if (jsonData != null) {
       List<dynamic> dataList = jsonDecode(jsonData);
-      return dataList.map((item) => AllTransactionsData.fromJson(item)).toList();
+      return dataList
+          .map((item) => AllTransactionsData.fromJson(item))
+          .toList();
     }
     return null;
   }
 
-
   Future<void> deleteTransactionDataList() async {
     await _storage.delete(key: 'transaction_data_list');
   }
-
 
   // Future<void> saveUserDetails(
   //     AccountOwnerProfileData accountOwnerProfileData) async {

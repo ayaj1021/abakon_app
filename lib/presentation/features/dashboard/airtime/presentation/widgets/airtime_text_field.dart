@@ -21,6 +21,7 @@ class AirtimeTextField extends StatelessWidget {
       onChanged: onChanged,
       maxLength: maxLength,
       controller: controller,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         counterText: '',
         labelStyle: context.textTheme.s10w500.copyWith(

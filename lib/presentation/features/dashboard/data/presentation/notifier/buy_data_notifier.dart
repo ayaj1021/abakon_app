@@ -27,7 +27,7 @@ class BuyDataNotifer extends AutoDisposeNotifier<BuyDataNotiferState> {
       if (!value.status) throw value.msg.toException;
 
       state = state.copyWith(buyDataState: LoadState.idle);
-      onSuccess(value.data!.msg.toString());
+      onSuccess(value.data?.msg ?? 'Successful');
     } catch (e) {
       onError(e.toString());
       state = state.copyWith(buyDataState: LoadState.idle);

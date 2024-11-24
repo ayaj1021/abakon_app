@@ -195,12 +195,12 @@ class _RestClient implements RestClient {
 
   @override
   Future<BuyAirtimeResponse> buyAirtime(
-      BuyAirtimeRequest buyDataRequest) async {
+      BuyAirtimeRequest buyAirtimeRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(buyDataRequest.toJson());
+    _data.addAll(buyAirtimeRequest.toJson());
     final _options = _setStreamType<BuyAirtimeResponse>(Options(
       method: 'POST',
       headers: _headers,
@@ -209,6 +209,40 @@ class _RestClient implements RestClient {
         .compose(
           _dio.options,
           '/airtime',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BuyAirtimeResponse _value;
+    try {
+      _value = BuyAirtimeResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BuyAirtimeResponse> buyExam(BuyExamRequest buyExamRequest) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(buyExamRequest.toJson());
+    final _options = _setStreamType<BuyAirtimeResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/exam',
           queryParameters: queryParameters,
           data: _data,
         )

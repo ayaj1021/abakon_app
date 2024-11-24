@@ -91,7 +91,7 @@ class RecentTransactionsSection extends StatelessWidget {
                       ))
                     : Column(
                         children:
-                            List.generate(transactionHistory.length, (index) {
+                            List.generate(4, (index) {
                           final data = transactionHistory[index];
                           String dateTime = '${data.date}';
 
@@ -100,7 +100,7 @@ class RecentTransactionsSection extends StatelessWidget {
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(parsedDate);
                           return SingleChildScrollView(
-                            child: GestureDetector(
+                            child: InkWell(
                               onTap: () => Navigator.push(
                                 context,
                                 (MaterialPageRoute(

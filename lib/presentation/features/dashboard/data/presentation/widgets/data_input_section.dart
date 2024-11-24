@@ -1,6 +1,7 @@
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/notifier/buy_data_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/notifier/get_all_data_services_notifier.dart';
@@ -10,6 +11,7 @@ import 'package:abakon/presentation/features/dashboard/data/presentation/widgets
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_type_dropdown_widget.dart';
 import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/confirm_transactions_widget.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:abakon/presentation/general_widgets/success_widget.dart';
@@ -26,6 +28,7 @@ class DataInputSection extends ConsumerStatefulWidget {
 class _DataInputSectionState extends ConsumerState<DataInputSection> {
   final ValueNotifier<bool> _isBuyDataEnabled = ValueNotifier(false);
   late TextEditingController _phoneNumberController;
+  final _pinController = TextEditingController();
   String? _selectedNetwork;
   String? _selectedType;
   String? _selectedPlan;
@@ -34,6 +37,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
   String? _selectedDataId;
   @override
   void initState() {
+    getUserPin();
     _phoneNumberController = TextEditingController()..addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref
@@ -44,11 +48,27 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _pinController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
+  }
+
   void _listener() {
     _isBuyDataEnabled.value = _selectedNetwork != null &&
         _selectedType != null &&
         _selectedPlan != null &&
         _phoneNumberController.text.isNotEmpty;
+  }
+
+  String _userPin = '';
+
+  getUserPin() async {
+    final pin = await SecureStorage().getUserPin();
+    setState(() {
+      _userPin = pin.toString();
+    });
   }
 
   List<DataPlan> filteredPlans = [];
@@ -142,27 +162,49 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                     ValueListenableBuilder(
                         valueListenable: _isBuyDataEnabled,
                         builder: (context, r, c) {
-                          return Consumer(builder: (context, re, c) {
-                            return AbakonSendButton(
-                                isEnabled: r,
-                                onTap: () {
-                                  showModalBottomSheet<void>(
-                                    isScrollControlled: true,
-                                    context: context,
-                                    builder: (context) {
-                                      return PurchaseBottomSheetWidget(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                          _buyData();
-                                        },
-                                        purchaseInfo:
-                                            'You are about to purchase an $_selectedNetwork airtime of $_selectedPlan for the phone number "${_phoneNumberController.text}"Do you wish to continue?',
-                                      );
-                                    },
-                                  );
-                                },
-                                title: 'Buy Data Bundle');
-                          });
+                          return AbakonSendButton(
+                              isEnabled: r,
+                              onTap: () {
+                                showModalBottomSheet<void>(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return PurchaseBottomSheetWidget(
+                                      onTap: () {
+                                        Navigator.pop(context);
+
+                                        showModalBottomSheet<void>(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (context) {
+                                              return ConfirmTransactionsWidget(
+                                                onTap: () {
+                                                  if (_pinController.text !=
+                                                      _userPin) {
+                                                    context.showError(
+                                                        message:
+                                                            'Pin is incorrect');
+                                                    return;
+                                                  } else {
+                                                    Navigator.pop(context);
+                                                    _buyData();
+                                                  }
+                                                },
+                                                pinController: _pinController,
+                                                isEnabled: _pinController
+                                                        .text.isNotEmpty
+                                                    ? true
+                                                    : false,
+                                              );
+                                            });
+                                      },
+                                      purchaseInfo:
+                                          'You are about to purchase an $_selectedNetwork airtime of $_selectedPlan for the phone number "${_phoneNumberController.text}"Do you wish to continue?',
+                                    );
+                                  },
+                                );
+                              },
+                              title: 'Buy Data Bundle');
                         })
                   ],
                 ),

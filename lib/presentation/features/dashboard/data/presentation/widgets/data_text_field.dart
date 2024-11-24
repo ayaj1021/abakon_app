@@ -15,6 +15,7 @@ class DataTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       maxLength: 11,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelStyle: context.textTheme.s10w500.copyWith(
           color: AppColors.primary595857,

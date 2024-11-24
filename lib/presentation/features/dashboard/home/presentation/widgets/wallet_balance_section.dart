@@ -87,16 +87,23 @@ class _WalletBalanceSectionState extends ConsumerState<WalletBalanceSection> {
                       child: switch (loadState) {
                     LoadState.loading => const Center(child: Text('')),
                     LoadState.error => const Text('Error'),
-                    _ => Text(
-                        'N${isVisible ? accountBalance : '****'}',
-                        style: context.textTheme.s14w600.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
+                    _ => isVisible
+                        ? Text(
+                            'N ${accountBalance ?? ''}',
+                            style: context.textTheme.s14w600.copyWith(
+                              color: AppColors.white,
+                            ),
+                          )
+                        : Text(
+                            'N ****',
+                            style: context.textTheme.s14w600.copyWith(
+                              color: AppColors.white,
+                            ),
+                          ),
                   }),
                 ],
               ),
-               Column(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   const VerticalSpacing(61),

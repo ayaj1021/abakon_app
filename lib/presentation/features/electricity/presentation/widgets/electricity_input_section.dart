@@ -2,6 +2,7 @@ import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/electricity/data/model/buy_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_request.dart';
@@ -12,6 +13,7 @@ import 'package:abakon/presentation/features/electricity/presentation/widgets/el
 import 'package:abakon/presentation/features/electricity/presentation/widgets/electricity_provider_dropdown_widget.dart';
 import 'package:abakon/presentation/features/electricity/presentation/widgets/electricity_text_field.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/confirm_transactions_widget.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:abakon/presentation/general_widgets/success_widget.dart';
@@ -32,6 +34,7 @@ class _ElectricityInputSectionState
   late TextEditingController _meterNumberController;
   late TextEditingController _amountController;
   late TextEditingController _phoneNumberController;
+  final _pinController = TextEditingController();
 
   String? _selectedElectricityProvider;
   String? _selectedElectricityProviderId;
@@ -39,6 +42,7 @@ class _ElectricityInputSectionState
 
   @override
   void initState() {
+    getUserPin();
     _meterNumberController = TextEditingController()..addListener(_listener);
     _amountController = TextEditingController()..addListener(_listener);
     _phoneNumberController = TextEditingController()..addListener(_listener);
@@ -51,10 +55,28 @@ class _ElectricityInputSectionState
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _meterNumberController.dispose();
+    _amountController.dispose();
+    _pinController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
+  }
+
   void _listener() {
     _phoneNumberController.text.isNotEmpty &&
         _meterNumberController.text.isNotEmpty;
     _amountController.text.isNotEmpty;
+  }
+
+  String _userPin = '';
+
+  getUserPin() async {
+    final pin = await SecureStorage().getUserPin();
+    setState(() {
+      _userPin = pin.toString();
+    });
   }
 
   void _onElectricityProviderSelected(
@@ -125,6 +147,7 @@ class _ElectricityInputSectionState
                   ),
                   const VerticalSpacing(16),
                   ElectricityTextField(
+                    maxLength: 11,
                     labelText: 'Phone Number',
                     controller: _phoneNumberController,
                   ),
@@ -141,18 +164,6 @@ class _ElectricityInputSectionState
                             //  isEnabled: r,
                             onTap: () {
                               _verifyElectricity();
-                              // showModalBottomSheet<void>(
-                              //     // showDragHandle: true,
-
-                              //     isScrollControlled: true,
-                              //     context: context,
-                              //     builder: (context) {
-                              //       return PurchaseBottomSheetWidget(
-                              //         purchaseInfo:
-                              //             'You are about to purchase an "MTN" airtime of "100" for the phone number "08039334477"Do you wish to continue?',
-                              //         onTap: () {},
-                              //       );
-                              //     });
                             },
                             title: 'Continue');
                       })
@@ -201,7 +212,28 @@ class _ElectricityInputSectionState
                         'You are about to purchase an $_selectedElectricityProvider subscription of ${_amountController.text} for the phone number ${_meterNumberController.text} Do you wish to continue?',
                     onTap: () {
                       context.pop(context);
-                      _buyElectricity();
+
+                      showModalBottomSheet<void>(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return ConfirmTransactionsWidget(
+                              onTap: () {
+                                if (_pinController.text != _userPin) {
+                                  context.showError(
+                                      message: 'Pin is incorrect');
+                                  return;
+                                } else {
+                                  Navigator.pop(context);
+                                  _buyElectricity();
+                                }
+                              },
+                              pinController: _pinController,
+                              isEnabled:
+                                  _pinController.text.isNotEmpty ? true : false,
+                            );
+                          });
+                      //  _buyElectricity();
                     },
                   );
                 });
@@ -224,7 +256,7 @@ class _ElectricityInputSectionState
           onSuccess: (message) {
             _isVerifyElectricityEnabled.value = false;
 
-           context.showSuccess(message: message);
+            context.showSuccess(message: message);
 
             showDialog(
                 context: context,

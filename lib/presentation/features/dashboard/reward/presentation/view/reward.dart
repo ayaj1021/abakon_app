@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Reward extends ConsumerStatefulWidget {
   const Reward({super.key});
- static const routeName = '/rewardScreen';
+  static const routeName = '/rewardScreen';
 
   @override
   ConsumerState<Reward> createState() => _RewardState();
@@ -38,9 +38,9 @@ class _RewardState extends ConsumerState<Reward> {
   }
 
   getReferralLink() async {
-   // final link = await secureStorage.getUserReferralLink();
+    // final link = await secureStorage.getUserReferralLink();
     setState(() {
-    //  _referallLink = link.toString();
+      //  _referallLink = link.toString();
     });
   }
 
@@ -81,7 +81,6 @@ class _RewardState extends ConsumerState<Reward> {
                       referralLink: referralLink ?? '',
                     ),
                     const VerticalSpacing(32),
-                    // const ReferralBreakdownSection(),
                   ],
                 ),
             }),

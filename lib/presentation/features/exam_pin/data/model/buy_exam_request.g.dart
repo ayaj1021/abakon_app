@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'verify_cable_request.dart';
+part of 'buy_exam_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$VerifyCableRequestToJson(VerifyCableRequest instance) =>
+Map<String, dynamic> _$BuyExamRequestToJson(BuyExamRequest instance) =>
     <String, dynamic>{
-      'smartCardNumber': instance.smartCardNumber,
-      'cablename': instance.cablename,
+      'provider': instance.provider,
+      'quantity': instance.quantity,
+      'portedNumber': instance.portedNumber,
     };

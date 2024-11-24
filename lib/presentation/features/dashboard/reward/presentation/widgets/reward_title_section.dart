@@ -1,6 +1,8 @@
+import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/strings.dart';
+import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
 class RewardTitleSection extends StatelessWidget {
@@ -8,11 +10,24 @@ class RewardTitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      Strings.commission,
-      style: context.textTheme.s20w700.copyWith(
-        color: AppColors.black,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () => context.pop(),
+          child: const Icon(
+            Icons.arrow_back_ios,
+            size: 18,
+          ),
+        ),
+        const VerticalSpacing(10),
+        Text(
+          Strings.commission,
+          style: context.textTheme.s20w700.copyWith(
+            color: AppColors.black,
+          ),
+        ),
+      ],
     );
   }
 }

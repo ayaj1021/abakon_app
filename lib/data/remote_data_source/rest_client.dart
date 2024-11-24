@@ -27,6 +27,7 @@ import 'package:abakon/presentation/features/electricity/data/model/buy_electric
 import 'package:abakon/presentation/features/electricity/data/model/get_all_electricity_service_response.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_request.dart';
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_response.dart';
+import 'package:abakon/presentation/features/exam_pin/data/model/buy_exam_request.dart';
 import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
 import 'package:abakon/presentation/features/login/data/models/forgot_password_request.dart';
 import 'package:abakon/presentation/features/login/data/models/forgot_password_response.dart';
@@ -83,7 +84,12 @@ abstract class RestClient {
 
   @POST('/airtime')
   Future<BuyAirtimeResponse> buyAirtime(
-    @Body() BuyAirtimeRequest buyDataRequest,
+    @Body() BuyAirtimeRequest buyAirtimeRequest,
+  );
+
+  @POST('/exam')
+  Future<BuyAirtimeResponse> buyExam(
+    @Body() BuyExamRequest buyExamRequest,
   );
 
   @POST('/cabletv/verify')
@@ -122,8 +128,7 @@ abstract class RestClient {
     @Body() ForgotPasswordRequest request,
   );
 
-
-    @POST('/auth/update-password')
+  @POST('/auth/update-password')
   Future<ResetPasswordResponse> resetPassword(
     @Body() ResetPasswordRequest request,
   );

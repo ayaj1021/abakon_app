@@ -2,6 +2,7 @@ import 'package:abakon/core/extensions/overlay_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
+import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/data/model/buy_airtime_request.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/notifier/buy_airtime_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/notifier/get_all_airtime_service_notifier.dart';
@@ -9,6 +10,7 @@ import 'package:abakon/presentation/features/dashboard/airtime/presentation/widg
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/widgets/airtime_network_dropdown_widget.dart';
 import 'package:abakon/presentation/features/dashboard/airtime/presentation/widgets/airtime_type_dropdown_widget.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
+import 'package:abakon/presentation/general_widgets/confirm_transactions_widget.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:abakon/presentation/general_widgets/success_widget.dart';
@@ -27,10 +29,12 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
   final ValueNotifier<bool> _isBuyAirtimeEnabled = ValueNotifier(false);
   late TextEditingController _phoneNumberController;
   late TextEditingController _amountController;
+  final _pinController = TextEditingController();
   @override
   void initState() {
     _phoneNumberController = TextEditingController()..addListener(_listener);
     _amountController = TextEditingController()..addListener(_listener);
+    getUserPin();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref
           .read(getAllAirtimeServicesNotifierProvider.notifier)
@@ -40,11 +44,27 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _pinController.dispose();
+    _phoneNumberController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
   String _networkProvider = '';
+  String _userPin = '';
 
   void _updateNetworkProvider() {
     setState(() {
       _networkProvider = getNetworkProvider(_phoneNumberController.text);
+    });
+  }
+
+  getUserPin() async {
+    final pin = await SecureStorage().getUserPin();
+    setState(() {
+      _userPin = pin.toString();
     });
   }
 
@@ -53,7 +73,9 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
   String? _selectedNid;
 
   void _listener() {
-    _phoneNumberController.text.isNotEmpty && _amountController.text.isNotEmpty;
+    _isBuyAirtimeEnabled.value = _selectedNetwork != null &&
+        _phoneNumberController.text.isNotEmpty &&
+        _amountController.text.isNotEmpty;
   }
 
   void _onNetworkSelected(String selectedNetwork) {
@@ -130,28 +152,52 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
                     labelText: 'Amount to pay',
                     controller: _amountController,
                   ),
-                  const VerticalSpacing(16),
                   const VerticalSpacing(197),
-                  // const DisableNumberValidatorCheckbox(),
-                  const VerticalSpacing(12),
-                  AbakonSendButton(
-                      onTap: () {
-                        showModalBottomSheet<void>(
-                            // showDragHandle: true,
+                  ValueListenableBuilder(
+                      valueListenable: _isBuyAirtimeEnabled,
+                      builder: (context, r, c) {
+                        return AbakonSendButton(
+                            isEnabled: r,
+                            onTap: () {
+                              showModalBottomSheet<void>(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return PurchaseBottomSheetWidget(
+                                        purchaseInfo:
+                                            'You are about to purchase an $_selectedNetwork airtime of ${_amountController.text} for the phone number ${_phoneNumberController.text} Do you wish to continue?',
+                                        onTap: () {
+                                          Navigator.pop(context);
 
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return PurchaseBottomSheetWidget(
-                                  purchaseInfo:
-                                      'You are about to purchase an $_selectedNetwork airtime of ${_amountController.text} for the phone number ${_phoneNumberController.text} Do you wish to continue?',
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    _buyAirtime();
+                                          showModalBottomSheet<void>(
+                                              isScrollControlled: true,
+                                              context: context,
+                                              builder: (context) {
+                                                return ConfirmTransactionsWidget(
+                                                  onTap: () {
+                                                    if (_pinController.text !=
+                                                        _userPin) {
+                                                      context.showError(
+                                                          message:
+                                                              'Pin is incorrect');
+                                                      return;
+                                                    } else {
+                                                      Navigator.pop(context);
+                                                      _buyAirtime();
+                                                    }
+                                                  },
+                                                  pinController: _pinController,
+                                                  isEnabled: _pinController
+                                                          .text.isNotEmpty
+                                                      ? true
+                                                      : false,
+                                                );
+                                              });
+                                        });
                                   });
-                            });
-                      },
-                      title: 'Buy Airtime')
+                            },
+                            title: 'Buy Airtime');
+                      })
                 ],
               ),
           }),
@@ -179,7 +225,6 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
       portedNumber: 'false',
       amount: _amountController.text.trim(),
       airtimeType: _selectedType.toString(),
-    
     );
     ref.read(buyAirtimeNotifer.notifier).buyAirtime(
           data: data,

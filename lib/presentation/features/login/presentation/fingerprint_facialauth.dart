@@ -1,13 +1,11 @@
 import 'dart:io';
 
-
 import 'package:abakon/core/config/security/biometrics.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-
 
 class FingerprintFacialauth extends StatelessWidget {
   const FingerprintFacialauth({
@@ -31,7 +29,7 @@ class FingerprintFacialauth extends StatelessWidget {
         // };
         // // if (!biometrics.enabledBiometrics) {
         // //   return const SizedBox();
-        // // } //TODO: uncomment this.
+
         // if (a.userPin.isEmpty && dataType == BiometricDataType.pin) {
         //   return const SizedBox();
         // }
