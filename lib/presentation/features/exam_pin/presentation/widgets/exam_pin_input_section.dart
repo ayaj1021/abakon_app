@@ -39,6 +39,13 @@ class _ExamPinInputSectionState extends ConsumerState<ExamPinInputSection> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _pinController.dispose();
+    _quantityController.dispose();
+    super.dispose();
+  }
+
   void _listener() {
     _isBuyExamEnabled.value =
         _selectedProvider != null && _quantityController.text.isNotEmpty;
@@ -162,6 +169,7 @@ class _ExamPinInputSectionState extends ConsumerState<ExamPinInputSection> {
                                                   return;
                                                 } else {
                                                   Navigator.pop(context);
+                                                  _pinController.clear();
                                                   _buyExam();
                                                 }
                                               },
@@ -201,7 +209,7 @@ class _ExamPinInputSectionState extends ConsumerState<ExamPinInputSection> {
 
   void _buyExam() {
     final data = BuyExamRequest(
-      provider: _selectedProvider.toString(),
+      provider: _selectedEid.toString(),
       portedNumber: 'false',
       quantity: _quantityController.text.trim(),
     );

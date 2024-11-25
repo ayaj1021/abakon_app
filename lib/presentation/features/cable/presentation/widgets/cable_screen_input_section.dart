@@ -272,6 +272,7 @@ class _CableScreenInputSectionState
                                   return;
                                 } else {
                                   Navigator.pop(context);
+                                  _pinController.clear();
                                   _buyCable();
                                 }
                               },
@@ -280,9 +281,6 @@ class _CableScreenInputSectionState
                                   _pinController.text.isNotEmpty ? true : false,
                             );
                           });
-
-                      // context.pop(context);
-                      // _buyCable();
                     },
                   );
                 });

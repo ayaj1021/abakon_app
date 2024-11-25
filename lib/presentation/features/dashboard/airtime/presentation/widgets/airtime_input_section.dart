@@ -183,6 +183,7 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
                                                       return;
                                                     } else {
                                                       Navigator.pop(context);
+                                                      _pinController.clear();
                                                       _buyAirtime();
                                                     }
                                                   },

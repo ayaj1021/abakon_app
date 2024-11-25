@@ -225,6 +225,7 @@ class _ElectricityInputSectionState
                                   return;
                                 } else {
                                   Navigator.pop(context);
+                                  _pinController.clear();
                                   _buyElectricity();
                                 }
                               },

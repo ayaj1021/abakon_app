@@ -187,6 +187,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                                                     return;
                                                   } else {
                                                     Navigator.pop(context);
+                                                    _pinController.clear();
                                                     _buyData();
                                                   }
                                                 },
