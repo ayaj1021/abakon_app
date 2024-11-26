@@ -1,6 +1,5 @@
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
-import 'package:abakon/core/utils/validators.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/digit_send_form_field.dart';
 import 'package:abakon/presentation/general_widgets/ds_bottom_sheet.dart';
@@ -70,12 +69,12 @@ class ConfirmTransactionsWidget extends StatelessWidget {
                   )),
               const VerticalSpacing(24),
               AbakonFormfield(
-                validateFunction: Validators.pin(),
+               // validateFunction: Validators.pin(),
                 controller: pinController,
                 hintText: 'Enter transaction pin',
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
-                maxLength: 4,
+                maxLength: 5,
                 prefixIcon: SvgPicture.asset(
                   'assets/icons/pin_icon.svg',
                   fit: BoxFit.scaleDown,

@@ -10,6 +10,7 @@ import 'package:abakon/presentation/features/cable/presentation/notifer/buy_cabl
 import 'package:abakon/presentation/features/cable/presentation/notifer/get_all_cable_data_notifier.dart';
 import 'package:abakon/presentation/features/cable/presentation/notifer/verify_cable_notifier.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/cable_provider_dropdown_widget.dart';
+import 'package:abakon/presentation/features/cable/presentation/widgets/cable_text_field.dart';
 import 'package:abakon/presentation/features/cable/presentation/widgets/plan_dropdown_widget.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/confirm_transactions_widget.dart';
@@ -33,6 +34,7 @@ class _CableScreenInputSectionState
   late TextEditingController _phoneNumberController;
   late TextEditingController _amountController;
   late TextEditingController _iucNumberController;
+
   final _pinController = TextEditingController();
   @override
   void initState() {
@@ -54,7 +56,6 @@ class _CableScreenInputSectionState
     _pinController.dispose();
     _phoneNumberController.dispose();
     _amountController.dispose();
-    _pinController.dispose();
 
     super.dispose();
   }
@@ -78,6 +79,7 @@ class _CableScreenInputSectionState
   String? _selectedCablePlan;
   String? _selectedCableId;
   String? _selectedPlanId;
+  String? _selectedPlanPrice;
 
   List<CableData> filteredPlans = [];
 
@@ -89,8 +91,10 @@ class _CableScreenInputSectionState
           .where((plan) => plan.provider == _selectedCableProvider)
           .toList();
       _selectedCablePlan = null;
+      _selectedPlanPrice = null;
     });
   }
+
 
   void _onCablePlanSelected(String selectedCablePlan) {
     setState(() {
@@ -101,6 +105,12 @@ class _CableScreenInputSectionState
   void _onPlanIdSelected(String selectedPlanId) {
     setState(() {
       _selectedPlanId = selectedPlanId;
+    });
+  }
+
+  void _onPlanPriceSelected(String selectedPlanPrice) {
+    setState(() {
+      _selectedPlanPrice = selectedPlanPrice;
     });
   }
 
@@ -156,44 +166,36 @@ class _CableScreenInputSectionState
                     selectedPlanId: int.tryParse(
                       _selectedPlanId.toString(),
                     ),
+                    selectedPlanPrice: _selectedPlanPrice,
                     onPlanIdSelected: _onPlanIdSelected,
+                    onPlanPriceSelected: _onPlanPriceSelected,
                   ),
                   const VerticalSpacing(16),
                   TextField(
                     keyboardType: TextInputType.number,
+                    enabled: false,
+                    controller: _amountController,
                     decoration: InputDecoration(
                       labelStyle: context.textTheme.s10w500.copyWith(
                         color: AppColors.primary595857,
                       ),
-                      labelText: 'Amount to pay',
+                      labelText: _selectedPlanPrice ?? 'Amount to pay',
                       border: const OutlineInputBorder(),
                     ),
                   ),
                   const VerticalSpacing(16),
-                  TextField(
-                    keyboardType: TextInputType.number,
+                  CableTextField(
+                    labelText: 'Customer phone number',
                     maxLength: 11,
-                    decoration: InputDecoration(
-                      counterText: '',
-                      labelStyle: context.textTheme.s10w500.copyWith(
-                        color: AppColors.primary595857,
-                      ),
-                      labelText: 'Customer phone number',
-                      border: const OutlineInputBorder(),
-                    ),
+                    controller: _phoneNumberController,
                   ),
                   const VerticalSpacing(16),
-                  TextField(
+                  CableTextField(
+                    labelText: 'IUC number',
+                    maxLength: 25,
                     controller: _iucNumberController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'IUC number',
-                      labelStyle: context.textTheme.s10w500.copyWith(
-                        color: AppColors.primary595857,
-                      ),
-                      border: const OutlineInputBorder(),
-                    ),
                   ),
+
                   const VerticalSpacing(223),
                   // ValueListenableBuilder(
                   //     valueListenable: _isVerifyCableEnabled,

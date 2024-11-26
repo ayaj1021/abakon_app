@@ -1,4 +1,3 @@
-import 'package:abakon/core/utils/validators.dart';
 import 'package:abakon/presentation/general_widgets/digit_send_form_field.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
     return Column(
       children: [
         AbakonFormfield(
-          validateFunction: Validators.pin(),
+          //validateFunction: Validators.pin(),
           controller: oldPinController,
           hintText: 'Old transaction pin',
           keyboardType: TextInputType.number,
@@ -27,7 +26,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
         ),
         const VerticalSpacing(10),
         AbakonFormfield(
-          validateFunction: Validators.pin(),
+         // validateFunction: Validators.pin(),
           controller: newPinController,
           hintText: 'New transaction pin',
           keyboardType: TextInputType.number,
@@ -39,7 +38,7 @@ class ChangeTransactionPinSection extends StatelessWidget {
         ),
         const VerticalSpacing(10),
         AbakonFormfield(
-          validateFunction: Validators.pin(),
+        //  validateFunction: Validators.pin(),
           controller: confirmNewPinController,
           hintText: 'Confirm new transaction pin',
           keyboardType: TextInputType.number,

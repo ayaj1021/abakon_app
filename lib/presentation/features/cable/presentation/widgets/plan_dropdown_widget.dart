@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/presentation/features/cable/data/model/get_all_cable_data_response.dart';
@@ -15,15 +13,19 @@ class CablePlansDown extends StatefulWidget {
     required this.onPlanIdSelected,
     required this.selectedCablePlan,
     required this.selectedPlanId,
+    required this.selectedPlanPrice,
     required this.selectedCableProvider,
+    required this.onPlanPriceSelected,
   });
   final String labelText;
   final List<CableData> filteredPlans;
   String? selectedCablePlan;
   int? selectedPlanId;
+  String? selectedPlanPrice;
   String? selectedCableProvider;
   final Function(String) onCablePlanSelected;
   final Function(String) onPlanIdSelected;
+  final Function(String) onPlanPriceSelected;
 
   @override
   State<CablePlansDown> createState() => _CablePlansDownState();
@@ -74,9 +76,12 @@ class _CablePlansDownState extends State<CablePlansDown> {
           widget.selectedPlanId = widget.filteredPlans
               .firstWhere((discount) => discount.name == newValue)
               .cpId;
-          log(widget.selectedPlanId.toString());
+          widget.selectedPlanPrice = widget.filteredPlans
+              .firstWhere((discount) => discount.name == newValue)
+              .price.toString();
         });
         widget.onPlanIdSelected(widget.selectedPlanId.toString());
+        widget.onPlanPriceSelected(widget.selectedPlanPrice.toString());
         widget.onCablePlanSelected(newValue!);
       },
     );

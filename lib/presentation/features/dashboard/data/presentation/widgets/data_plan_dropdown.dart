@@ -11,17 +11,20 @@ class DataPlanDropDown extends StatefulWidget {
       required this.onPlanSelected,
       required this.onDataIdSelected,
       required this.selectedPlan,
+      required this.selectedPlanPrice,
       required this.selectedDataId,
       this.selectedNetwork,
-      this.selectedType});
+      this.selectedType, required this.onPlanPriceSelected});
   final List<Plan> dataPlans;
 
   String? selectedPlan;
+  String? selectedPlanPrice;
   final String? selectedNetwork;
   final String? selectedType;
   String? selectedDataId;
 
   final Function(String) onPlanSelected;
+  final Function(String) onPlanPriceSelected;
   final Function(String) onDataIdSelected;
 
   @override
@@ -76,10 +79,16 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
           widget.selectedPlan = newValue!;
           widget.selectedDataId = widget.dataPlans
               .firstWhere((discount) => discount.name == newValue)
-              .pId.toString();
+              .pId
+              .toString();
+          widget.selectedPlanPrice = widget.dataPlans
+              .firstWhere((discount) => discount.name == newValue)
+              .price
+              .toString();
         });
         widget.onPlanSelected(newValue!);
         widget.onDataIdSelected(widget.selectedDataId.toString());
+        widget.onPlanPriceSelected(widget.selectedPlanPrice.toString());
       },
     );
   }

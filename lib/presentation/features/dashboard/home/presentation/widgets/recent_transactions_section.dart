@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
@@ -89,32 +91,33 @@ class RecentTransactionsSection extends StatelessWidget {
                           ),
                         ],
                       ))
-                    : Column(
-                        children:
-                            List.generate(4, (index) {
-                          final data = transactionHistory[index];
-                          String dateTime = '${data.date}';
-
-                          DateTime parsedDate = DateTime.parse(dateTime);
-
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(parsedDate);
-                          return SingleChildScrollView(
-                            child: InkWell(
+                    : Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                          itemCount: min(transactionHistory.length, 4),
+                         // transactionHistory.length < 4 ? transactionHistory.length : 4,
+                          itemBuilder: (context, index) {
+                            final data = transactionHistory[index];
+                            String dateTime = '${data.date}';
+                      
+                            DateTime parsedDate = DateTime.parse(dateTime);
+                      
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(parsedDate);
+                            return InkWell(
                               onTap: () => Navigator.push(
-                                context,
-                                (MaterialPageRoute(
-                                  builder: (_) => TransactionDetailsView(
-                                    transactionNo: '${data.transref}',
-                                    service: '${data.servicename}',
-                                    transactionDescription:
-                                        '${data.servicedesc}',
-                                    amount: '${data.amount}',
-                                    status: data.status!.toInt(),
-                                    date: formattedDate,
-                                  ),
-                                )),
-                              ),
+                        context,
+                        (MaterialPageRoute(
+                          builder: (_) => TransactionDetailsView(
+                            transactionNo: '${data.transref}',
+                            service: '${data.servicename}',
+                            transactionDescription: '${data.servicedesc}',
+                            amount: '${data.amount}',
+                            status: data.status!.toInt(),
+                            date: formattedDate,
+                          ),
+                        )),
+                      ),
                               child: TransactionWidget(
                                 serviceName: "${data.servicename}",
                                 amount: '${data.amount}',
@@ -122,10 +125,10 @@ class RecentTransactionsSection extends StatelessWidget {
                                 date: formattedDate,
                                 status: data.status!.toInt(),
                               ),
-                            ),
-                          );
-                        }),
-                      ),
+                            );
+                          },
+                        ),
+                    ),
               })
         ],
       ),

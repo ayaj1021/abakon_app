@@ -16,8 +16,9 @@ Future<void> main() async {
   );
 
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  OneSignal.initialize("ae8d7353-6707-42ee-8637-0185ba1d46b7");
-  OneSignal.Notifications.requestPermission(true);
+  OneSignal.initialize("6f4849a8-6488-4e71-a7fa-66e663f984c2");
+ // OneSignal.initialize("ae8d7353-6707-42ee-8637-0185ba1d46b7");
+ // OneSignal.Notifications.requestPermission(false);
 //6f4849a8-6488-4e71-a7fa-66e663f984c2
   runApp(const ProviderScope(child: MyApp()));
 }

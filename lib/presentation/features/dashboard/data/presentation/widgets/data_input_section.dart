@@ -32,6 +32,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
   String? _selectedNetwork;
   String? _selectedType;
   String? _selectedPlan;
+  String? _selectedPlanPrice;
 
   String? _selectedNid;
   String? _selectedDataId;
@@ -77,6 +78,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
       _selectedNetwork = selectedNetwork; // This updates the selected network
       _selectedType = null; // Reset type and name when network changes
       _selectedPlan = null;
+      _selectedPlanPrice = null;
     });
   }
 
@@ -103,6 +105,12 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
   void _onPlanSelected(String selectedNetwork) {
     setState(() {
       _selectedPlan = selectedNetwork;
+    });
+  }
+
+  void _onPlanPriceSelected(String selectedPlanPrice) {
+    setState(() {
+      _selectedPlanPrice = selectedPlanPrice;
     });
   }
 
@@ -151,7 +159,15 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                       selectedType: _selectedType,
                       onDataIdSelected: _onDataIdSelected,
                       selectedDataId: _selectedDataId,
+                      selectedPlanPrice: _selectedPlanPrice,
+                      onPlanPriceSelected: _onPlanPriceSelected,
                       //int.tryParse(_selectedDataId.toString()),
+                    ),
+                    const VerticalSpacing(16),
+                    DataTextField(
+                      enable: false,
+                      labelText:  'N ${ _selectedPlanPrice ?? 'Amount to pay' }' ,
+                      controller: _phoneNumberController,
                     ),
                     const VerticalSpacing(16),
                     DataTextField(

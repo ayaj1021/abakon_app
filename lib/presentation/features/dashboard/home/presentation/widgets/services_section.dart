@@ -25,6 +25,18 @@ class ServicesSection extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // ServicesWidget(
+            //   image: 'assets/icons/airtime_outline_icon.svg',
+            //   serviceTitle: 'Airtime',
+            //   onTap: () => Navigator.push(
+            //       context, MaterialPageRoute(builder: (_) => const Airtime())),
+            // ),
+            // ServicesWidget(
+            //   image: 'assets/icons/data_outline_icon.svg',
+            //   serviceTitle: 'Data',
+            //   onTap: () => Navigator.push(
+            //       context, MaterialPageRoute(builder: (_) => const Data())),
+            // ),
             ServicesWidget(
               image: 'assets/icons/cable.svg',
               serviceTitle: 'Cable tv',

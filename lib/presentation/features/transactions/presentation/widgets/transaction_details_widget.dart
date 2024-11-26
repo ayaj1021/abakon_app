@@ -73,7 +73,7 @@ class TransactionDetailsWidget extends StatelessWidget {
               const VerticalSpacing(16),
               TransactionDetailsRowWidget(
                 title: 'Amount',
-                subtitle: amount,
+                subtitle: "N $amount",
               ),
               const VerticalSpacing(16),
               TransactionDetailsRowWidget(
@@ -83,7 +83,7 @@ class TransactionDetailsWidget extends StatelessWidget {
               const VerticalSpacing(16),
               TransactionDetailsRowWidget(
                 title: 'Date',
-                subtitle: amount,
+                subtitle: date,
               ),
             ],
           ),
@@ -114,10 +114,13 @@ class TransactionDetailsRowWidget extends StatelessWidget {
             color: AppColors.primary010101,
           ),
         ),
-        Text(
-          subtitle,
-          style: context.textTheme.s12w700.copyWith(
-            color: AppColors.primary010101,
+        SizedBox(
+          width: 80.w,
+          child: Text(
+            subtitle,
+            style: context.textTheme.s12w700.copyWith(
+              color: AppColors.primary010101,
+            ),
           ),
         ),
       ],

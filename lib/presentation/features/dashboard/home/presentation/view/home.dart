@@ -38,10 +38,13 @@ class _HomeState extends ConsumerState<Home> {
       _refresh();
       Future.wait([
         ref.read(getUserDetailsNotifierProvider.notifier).getAllUserDetails(),
+        ref
+            .read(getAllTransactionsNotifierProvider.notifier)
+            .getAllTransactions(),
       ]);
-      await ref
-          .read(getAllTransactionsNotifierProvider.notifier)
-          .getAllTransactions();
+      // await ref
+      //     .read(getAllTransactionsNotifierProvider.notifier)
+      //     .getAllTransactions();
     });
   }
 
@@ -82,6 +85,8 @@ class _HomeState extends ConsumerState<Home> {
 
         final firstName = ref.watch(getUserDetailsNotifierProvider
             .select((v) => v.getAllDetails.data?.allDetails?.sFname));
+        final transactionList = ref.watch(getAllTransactionsNotifierProvider
+            .select((v) => v.getAllTransactions.data?.data));
 
         return RefreshIndicator(
           key: refreshIndicatorKey,
@@ -109,7 +114,7 @@ class _HomeState extends ConsumerState<Home> {
                         const ServicesSection(),
                         const VerticalSpacing(32),
                         RecentTransactionsSection(
-                          transactionHistory: allTransactionList,
+                          transactionHistory: transactionList ?? [],
                           loadState: loadState,
                         ),
                       ],
