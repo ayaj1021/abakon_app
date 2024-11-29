@@ -6,7 +6,7 @@ class ElectricityTextField extends StatelessWidget {
   const ElectricityTextField({
     super.key,
     required this.labelText,
-    required this.controller, this.maxLength,
+  required this.controller, this.maxLength,
   });
 
   final String labelText;

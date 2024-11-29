@@ -29,6 +29,8 @@ import 'package:abakon/presentation/features/electricity/data/model/verify_elect
 import 'package:abakon/presentation/features/electricity/data/model/verify_electricity_response.dart';
 import 'package:abakon/presentation/features/exam_pin/data/model/buy_exam_request.dart';
 import 'package:abakon/presentation/features/exam_pin/data/model/get_all_exam_data_response.dart';
+import 'package:abakon/presentation/features/firebase_token/data/model/send_token_request.dart';
+import 'package:abakon/presentation/features/firebase_token/data/model/send_token_response.dart';
 import 'package:abakon/presentation/features/login/data/models/forgot_password_request.dart';
 import 'package:abakon/presentation/features/login/data/models/forgot_password_response.dart';
 import 'package:abakon/presentation/features/notification/data/model/notification_response.dart';
@@ -85,6 +87,11 @@ abstract class RestClient {
   @POST('/airtime')
   Future<BuyAirtimeResponse> buyAirtime(
     @Body() BuyAirtimeRequest buyAirtimeRequest,
+  );
+
+  @POST('/user/update-token')
+  Future<SendTokenResponse> sendToken(
+    @Body() SendTokenRequest sendTokenRequest,
   );
 
   @POST('/exam')

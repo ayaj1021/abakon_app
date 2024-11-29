@@ -179,7 +179,7 @@ class _CableScreenInputSectionState
                       labelStyle: context.textTheme.s10w500.copyWith(
                         color: AppColors.primary595857,
                       ),
-                      labelText: _selectedPlanPrice ?? 'Amount to pay',
+                      labelText: 'N ${_selectedPlanPrice ?? 'Amount to pay'}',
                       border: const OutlineInputBorder(),
                     ),
                   ),

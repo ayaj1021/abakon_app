@@ -76,6 +76,15 @@ class SecureStorage {
     return value;
   }
 
+  Future<void> saveUserFirebaseToken(String token) async {
+    await _storage.write(key: 'firebase_token', value: token);
+  }
+
+  Future<String?> getUserFirebaseToken() async {
+    String? value = await _storage.read(key: 'firebase_token');
+    return value;
+  }
+
   Future<void> clearToken() async {
     await _storage.delete(key: 'token');
   }

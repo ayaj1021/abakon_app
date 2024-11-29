@@ -1,11 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:abakon/core/extensions/build_context_extension.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/dashboard/widgets/dashboard.dart';
+import 'package:abakon/presentation/features/firebase_token/notifier/send_token_notifier.dart';
 import 'package:abakon/presentation/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,18 +25,23 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () async {
-      final token = await secureStorage.getUserToken();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      sendToken();
+    });
+    Future.delayed(const Duration(seconds: 3), () async {
       final accessToken = await secureStorage.getUserAccessToken();
 
-      log('token is ${token.toString()}');
-      log('accesstoken is ${accessToken.toString()}');
       if (accessToken != null) {
         context.pushReplacementNamed(Dashboard.routeName);
       } else {
         context.pushReplacementNamed(OnboardingScreen.routeName);
       }
     });
+  }
+
+  sendToken() async {
+    await ref.read(sendTokenNotifier.notifier).sendToken();
   }
 
   @override
@@ -55,7 +60,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(22),
                 child: Image.asset(
-                  'assets/logo/abakon_logo.png',
+                  'assets/logo/abakon_icon.png',
                 ),
               ),
             ),

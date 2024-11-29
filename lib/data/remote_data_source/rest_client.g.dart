@@ -229,6 +229,40 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<SendTokenResponse> sendToken(SendTokenRequest sendTokenRequest) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(sendTokenRequest.toJson());
+    final _options = _setStreamType<SendTokenResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/user/update-token',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SendTokenResponse _value;
+    try {
+      _value = SendTokenResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<BuyAirtimeResponse> buyExam(BuyExamRequest buyExamRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

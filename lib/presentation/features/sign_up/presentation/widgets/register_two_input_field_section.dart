@@ -123,7 +123,7 @@ class _RegisterTwoInputFieldSectionState
               ),
         const VerticalSpacing(11),
         AbakonFormfield(
-          validateFunction: Validators.pin(),
+          // validateFunction: Validators.pin(),
           controller: widget.pinController,
           hintText: Strings.setTransactionPin,
           keyboardType: TextInputType.number,

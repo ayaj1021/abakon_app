@@ -1,4 +1,4 @@
-package com.app.abakon
+package com.abakon.app
 
 import io.flutter.embedding.android.FlutterActivity
 
