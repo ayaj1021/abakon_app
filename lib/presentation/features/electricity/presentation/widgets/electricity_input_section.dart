@@ -117,6 +117,11 @@ class _ElectricityInputSectionState
             verifyElectricityNotifer
                 .select((v) => v.verifyElectricityState.isLoading),
           );
+
+          final isBuyEleLoading = re.watch(
+            buyElectricityNotifer
+                .select((v) => v.buyElectricityState.isLoading),
+          );
           return Stack(
             children: [
               Column(
@@ -170,6 +175,20 @@ class _ElectricityInputSectionState
                 ],
               ),
               isLoading
+                  ? Container(
+                      alignment: Alignment.center,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: AppColors.greyFill.withOpacity(0.2)),
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              isBuyEleLoading
                   ? Container(
                       alignment: Alignment.center,
                       height: MediaQuery.of(context).size.height,

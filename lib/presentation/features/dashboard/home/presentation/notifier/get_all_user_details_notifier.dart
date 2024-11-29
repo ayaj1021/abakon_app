@@ -32,6 +32,9 @@ class GetAllUserDetailsNotifier
           getAllDetails: AsyncResponse.success(value.data!));
       await SecureStorage()
           .saveUserPin(value.data!.allDetails!.sPin.toString());
+
+      await SecureStorage().saveUserAccountNumber(
+          value.data!.allDetails!.sPayvesselBank.toString());
     } catch (e) {
       state = state.copyWith(loadState: LoadState.idle);
     }

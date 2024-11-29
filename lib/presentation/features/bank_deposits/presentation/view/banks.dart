@@ -20,6 +20,7 @@ class BankScreen extends ConsumerStatefulWidget {
 
 class _BankScreenState extends ConsumerState<BankScreen> {
   List<Bank> bankList = [];
+  String userAccountNumber = '';
 
   @override
   void initState() {
@@ -34,8 +35,10 @@ class _BankScreenState extends ConsumerState<BankScreen> {
 
   getUserBankAccountDetails() async {
     final banks = await SecureStorage().getBankAccountDetails();
+    final accountNumber = await SecureStorage().getUserAccountNumber();
     setState(() {
       bankList = banks?.banks ?? [];
+      userAccountNumber = accountNumber.toString();
     });
   }
 
@@ -48,6 +51,8 @@ class _BankScreenState extends ConsumerState<BankScreen> {
         .select((state) => state.generateAccountState.data?.message));
     final allDetails = ref.watch(getUserDetailsNotifierProvider
         .select((v) => v.getAllDetails.data?.allDetails));
+    final status =
+        ref.watch(generateAccountNotifierProvider.select((v) => v.status));
     final loadState =
         ref.watch(generateAccountNotifierProvider.select((v) => v.loadState));
     return Scaffold(
@@ -71,6 +76,8 @@ class _BankScreenState extends ConsumerState<BankScreen> {
                     banks: bankList,
                     loadState: loadState,
                     allDetails: allDetails!,
+                    status: status,
+                    accountNumber: userAccountNumber,
                   ),
               }),
             ],

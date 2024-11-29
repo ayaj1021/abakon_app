@@ -4,7 +4,7 @@ import 'package:abakon/presentation/features/bank_deposits/data/model/generate_a
 
 class GenerateAccountState {
   final bool isLoading;
-  final bool isAuthenticated;
+  final bool status;
   final String? error;
   final String? message;
   final LoadState loadState;
@@ -12,7 +12,7 @@ class GenerateAccountState {
 
   GenerateAccountState({
     required this.isLoading,
-    required this.isAuthenticated,
+    required this.status,
     this.error,
     this.message,
     required this.loadState,
@@ -22,7 +22,7 @@ class GenerateAccountState {
   factory GenerateAccountState.initial() {
     return GenerateAccountState(
       isLoading: false,
-      isAuthenticated: false,
+      status: false,
       error: null,
       message: '',
       loadState: LoadState.loading,
@@ -32,7 +32,7 @@ class GenerateAccountState {
 
   GenerateAccountState copyWith({
     bool? isLoading,
-    bool? isAuthenticated,
+    bool? status,
     String? error,
     String? message,
     LoadState? loadState,
@@ -40,7 +40,7 @@ class GenerateAccountState {
   }) {
     return GenerateAccountState(
       isLoading: isLoading ?? this.isLoading,
-      isAuthenticated: isAuthenticated ?? this.isAuthenticated,
+      status: status ?? this.status,
       error: message,
       loadState: loadState ?? this.loadState,
       generateAccountState: generateAccountState ?? this.generateAccountState,

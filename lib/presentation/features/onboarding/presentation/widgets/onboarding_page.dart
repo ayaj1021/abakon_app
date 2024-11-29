@@ -25,9 +25,9 @@ class OnboardingDetailsWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 8.h,
+                  height: 48.h,
                   width: 48.w,
-                  child: Image.asset('assets/logo/abakon_text_logo.png'),
+                  child: Image.asset('assets/logo/abakon_logo.png'),
                 ),
                 const VerticalSpacing(26),
                 Align(
@@ -36,7 +36,7 @@ class OnboardingDetailsWidget extends StatelessWidget {
                     Strings.payAllYourBillsInSeconds,
                     textAlign: TextAlign.right,
                     style: context.textTheme.s20w500.copyWith(
-                      color: AppColors.white,
+                      color: AppColors.primaryColor,
                     ),
                   ),
                 ),

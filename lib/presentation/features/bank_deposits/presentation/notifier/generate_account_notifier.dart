@@ -32,7 +32,8 @@ class GenerateAccountNotifier
 
       state = state.copyWith(
           loadState: LoadState.idle,
-          generateAccountState: AsyncResponse.success(value.data!));
+          generateAccountState: AsyncResponse.success(value.data!),
+          status: value.status);
     } catch (e) {
       state = state.copyWith(loadState: LoadState.idle);
     }

@@ -4,7 +4,6 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/strings.dart';
 import 'package:abakon/presentation/general_widgets/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class BanksHeader extends StatelessWidget {
   const BanksHeader({super.key});
@@ -29,7 +28,7 @@ class BanksHeader extends StatelessWidget {
                 color: AppColors.black,
               ),
             ),
-            SvgPicture.asset('assets/icons/recent_icon.svg')
+            const Text('')
           ],
         ),
         const VerticalSpacing(8),
