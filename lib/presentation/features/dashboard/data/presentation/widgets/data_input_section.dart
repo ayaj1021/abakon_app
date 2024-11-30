@@ -1,4 +1,5 @@
 import 'package:abakon/core/extensions/overlay_extension.dart';
+import 'package:abakon/core/extensions/text_theme_extension.dart';
 import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
@@ -136,6 +137,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                 )),
               LoadState.error => const Center(child: Text('Error')),
               _ => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DataNetWorkDropDown(
                       dataPlans: dataPlans ?? [],
@@ -164,17 +166,39 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                       //int.tryParse(_selectedDataId.toString()),
                     ),
                     const VerticalSpacing(16),
-                    DataTextField(
-                      enable: false,
-                      labelText:  'N ${ _selectedPlanPrice ?? 'Amount to pay' }' ,
-                      controller: _phoneNumberController,
+                    // DataTextField(
+                    //   enable: false,
+                    //   labelText:  'N ${ _selectedPlanPrice ?? 'Amount to pay' }' ,
+                    //   controller: _phoneNumberController,
+                    // ),
+                    Text(
+                      'Amount',
+                      style: context.textTheme.s10w400.copyWith(
+                        color: AppColors.black,
+                      ),
+                    ),
+                    const VerticalSpacing(5),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 13),
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: AppColors.greyF1F1F1),
+                      child: Text(
+                        'N $_selectedPlanPrice',
+                        style: context.textTheme.s14w500.copyWith(
+                          color: AppColors.black,
+                        ),
+                      ),
                     ),
                     const VerticalSpacing(16),
                     DataTextField(
                       labelText: 'Phone Number',
                       controller: _phoneNumberController,
                     ),
-                    const VerticalSpacing(300),
+                    const VerticalSpacing(150),
                     ValueListenableBuilder(
                         valueListenable: _isBuyDataEnabled,
                         builder: (context, r, c) {

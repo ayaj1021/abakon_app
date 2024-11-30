@@ -72,6 +72,7 @@ class ConfirmTransactionsWidget extends StatelessWidget {
                // validateFunction: Validators.pin(),
                 controller: pinController,
                 hintText: 'Enter transaction pin',
+                obscureText: true,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
                 maxLength: 5,

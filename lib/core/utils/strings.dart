@@ -16,7 +16,8 @@ class Strings {
   static String otherServices = 'Other Services';
   static String lifeEssentials = 'Reduced cost of bills';
   static String successfulTransaction = 'Successful Transaction';
-  static String thisIsToConfirmTransactionSuccessful = 'This is to confirm that your transaction was successful.';
+  static String thisIsToConfirmTransactionSuccessful =
+      'This is to confirm that your transaction was successful.';
 
   static String enterVerificationCodeSub(String user) =>
       '''Enter the 4-digits verification code sent to this mail $user.''';
@@ -39,7 +40,8 @@ class Strings {
   static const String profile = 'Profile';
   static const String english = 'English';
   static const String payAllYourBillsInSeconds =
-      'Pay all your bills in \nseconds, from anywhere, \nwith ABAKON';
+      'Your All-in-One \nHub for Paying \nEvery Bill';
+  //'Pay all your bills in \nseconds, from anywhere, \nwith ABAKON';
   static const String accountStatement = 'Account statement';
   static const String language = 'Language';
   static const String dateOfbirth = 'Date of Birth';
@@ -87,7 +89,7 @@ class Strings {
   static String amount(String amount) => amount;
   static String nairaValue(String amount) => amount;
   static String accountHolderName(String accountName) => accountName;
- 
+
   static String balance(String balance) => 'Balance: $balance NGN';
   static String rmbBalance(String balance) => 'Balance: $balance RMB';
 
