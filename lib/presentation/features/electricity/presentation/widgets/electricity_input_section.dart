@@ -112,99 +112,53 @@ class _ElectricityInputSectionState
           color: AppColors.primaryColor,
         )),
       LoadState.error => const Text('Error'),
-      _ => Consumer(builder: (context, re, c) {
-          final isLoading = re.watch(
-            verifyElectricityNotifer
-                .select((v) => v.verifyElectricityState.isLoading),
-          );
-
-          final isBuyEleLoading = re.watch(
-            buyElectricityNotifer
-                .select((v) => v.buyElectricityState.isLoading),
-          );
-          return Stack(
-            children: [
-              Column(
-                children: [
-                  ElectricityProviderDropDown(
-                    electricityPlans: electricityPlans ?? [],
-                    selectedElectricityProvider: _selectedElectricityProvider,
-                    onElectricityProviderSelected:
-                        (selectedElectricityProvider) =>
-                            _onElectricityProviderSelected(
-                                selectedElectricityProvider,
-                                electricityPlans ?? []),
-                    selectedElectricityProviderId: int.tryParse(
-                      _selectedElectricityProviderId.toString(),
-                    ),
-                    onElectricityProviderIdSelected:
-                        _onElectricityProviderIdSelected,
-                  ),
-                  const VerticalSpacing(16),
-                  ElectricityMeterTypeDropDown(
-                    selectedMeterType: _selectedMeterType,
-                    onMeterTypeSelected: _onSelectMeterType,
-                  ),
-                  const VerticalSpacing(16),
-                  ElectricityTextField(
-                    labelText: 'Meter Number',
-                    controller: _meterNumberController,
-                  ),
-                  const VerticalSpacing(16),
-                  ElectricityTextField(
-                    maxLength: 11,
-                    labelText: 'Phone Number',
-                    controller: _phoneNumberController,
-                  ),
-                  const VerticalSpacing(16),
-                  ElectricityTextField(
-                    labelText: 'Amount',
-                    controller: _amountController,
-                  ),
-                  const VerticalSpacing(223),
-                  ValueListenableBuilder(
-                      valueListenable: _isVerifyElectricityEnabled,
-                      builder: (context, r, c) {
-                        return AbakonSendButton(
-                            //  isEnabled: r,
-                            onTap: () {
-                              _verifyElectricity();
-                            },
-                            title: 'Continue');
-                      })
-                ],
+      _ => Column(
+          children: [
+            ElectricityProviderDropDown(
+              electricityPlans: electricityPlans ?? [],
+              selectedElectricityProvider: _selectedElectricityProvider,
+              onElectricityProviderSelected: (selectedElectricityProvider) =>
+                  _onElectricityProviderSelected(
+                      selectedElectricityProvider, electricityPlans ?? []),
+              selectedElectricityProviderId: int.tryParse(
+                _selectedElectricityProviderId.toString(),
               ),
-              isLoading
-                  ? Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: AppColors.greyFill.withOpacity(0.2)),
-                      child: const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              isBuyEleLoading
-                  ? Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: AppColors.greyFill.withOpacity(0.2)),
-                      child: const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    )
-                  : const SizedBox.shrink()
-            ],
-          );
-        }),
+              onElectricityProviderIdSelected: _onElectricityProviderIdSelected,
+            ),
+            const VerticalSpacing(16),
+            ElectricityMeterTypeDropDown(
+              selectedMeterType: _selectedMeterType,
+              onMeterTypeSelected: _onSelectMeterType,
+            ),
+            const VerticalSpacing(16),
+            ElectricityTextField(
+              labelText: 'Meter Number',
+              controller: _meterNumberController,
+            ),
+            const VerticalSpacing(16),
+            ElectricityTextField(
+              maxLength: 11,
+              labelText: 'Phone Number',
+              controller: _phoneNumberController,
+            ),
+            const VerticalSpacing(16),
+            ElectricityTextField(
+              labelText: 'Amount',
+              controller: _amountController,
+            ),
+            const VerticalSpacing(223),
+            ValueListenableBuilder(
+                valueListenable: _isVerifyElectricityEnabled,
+                builder: (context, r, c) {
+                  return AbakonSendButton(
+                      //  isEnabled: r,
+                      onTap: () {
+                        _verifyElectricity();
+                      },
+                      title: 'Continue');
+                })
+          ],
+        ),
     });
   }
 

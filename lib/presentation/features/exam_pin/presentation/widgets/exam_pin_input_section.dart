@@ -92,118 +92,95 @@ class _ExamPinInputSectionState extends ConsumerState<ExamPinInputSection> {
         .select((v) => v.getAllExamData.data?.data?.toSet().toList()));
     final loadState =
         ref.watch(getAllExamDataNotifierProvider.select((v) => v.loadState));
-    return Consumer(builder: (context, re, c) {
-      final isLoading = re.watch(
-        buyExamNotifer.select((v) => v.buyExamState.isLoading),
-      );
-      return Stack(
-        children: [
-          SizedBox(
-              child: switch (loadState) {
-            LoadState.loading => const Center(
-                  child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              )),
-            LoadState.error => const Center(child: Text('Error')),
-            _ => Column(
-                children: [
-                  ExamPinProviderDropDown(
-                    examPlans: examPlans ?? [],
-                    selectedEid: int.tryParse(_selectedEid.toString()),
-                    selectedProvider: _selectedProvider,
-                    onNetworkSelected: _onProviderSelected,
-                    onEidSelected: _onEidSelected,
-                    selectedEPrice: num.tryParse(_selectedEPrice.toString()),
-                    onEPriceSelected: _onEPriceSelected,
-                  ),
-                  const VerticalSpacing(16),
-                  ExamPinTextField(
-                    labelText: 'Quantity',
-                    controller: _quantityController,
-                    onChanged: (p0) {
-                      setState(() {
-                        totalPrice = _selectedEPrice! *
-                            int.parse(_quantityController.text);
-                      });
-                    },
-                  ),
-                  const VerticalSpacing(16),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 15),
-                    decoration: BoxDecoration(
-                        color: AppColors.greyFill,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Text(
-                      "N ${totalPrice ?? _selectedEPrice ?? 0}",
-                    ),
-                  ),
-                  const VerticalSpacing(223),
-                  ValueListenableBuilder(
-                      valueListenable: _isBuyExamEnabled,
-                      builder: (context, r, c) {
-                        return AbakonSendButton(
-                          isEnabled: r,
-                          onTap: () {
-                            showModalBottomSheet<void>(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (context) {
-                                  return PurchaseBottomSheetWidget(
-                                    purchaseInfo:
-                                        'You are about to purchase an $_selectedProvider pin purchase of  of $totalPrice. Do you wish to continue?',
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      showModalBottomSheet<void>(
-                                          isScrollControlled: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return ConfirmTransactionsWidget(
-                                              onTap: () {
-                                                if (_pinController.text !=
-                                                    _userPin) {
-                                                  context.showError(
-                                                      message:
-                                                          'Pin is incorrect');
-                                                  return;
-                                                } else {
-                                                  Navigator.pop(context);
-                                                  _pinController.clear();
-                                                  _buyExam();
-                                                }
-                                              },
-                                              pinController: _pinController,
-                                              isEnabled:
-                                                  _pinController.text.isNotEmpty
-                                                      ? true
-                                                      : false,
-                                            );
-                                          });
-                                    },
-                                  );
-                                });
-                          },
-                          title: 'Continue',
-                        );
-                      }),
-                ],
+
+    return SizedBox(
+        child: switch (loadState) {
+      LoadState.loading => const Center(
+            child: CircularProgressIndicator(
+          color: AppColors.primaryColor,
+        )),
+      LoadState.error => const Center(child: Text('Error')),
+      _ => Column(
+          children: [
+            ExamPinProviderDropDown(
+              examPlans: examPlans ?? [],
+              selectedEid: int.tryParse(_selectedEid.toString()),
+              selectedProvider: _selectedProvider,
+              onNetworkSelected: _onProviderSelected,
+              onEidSelected: _onEidSelected,
+              selectedEPrice: num.tryParse(_selectedEPrice.toString()),
+              onEPriceSelected: _onEPriceSelected,
+            ),
+            const VerticalSpacing(16),
+            ExamPinTextField(
+              labelText: 'Quantity',
+              controller: _quantityController,
+              onChanged: (p0) {
+                setState(() {
+                  totalPrice =
+                      _selectedEPrice! * int.parse(_quantityController.text);
+                });
+              },
+            ),
+            const VerticalSpacing(16),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              decoration: BoxDecoration(
+                  color: AppColors.greyFill,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Text(
+                "N ${totalPrice ?? _selectedEPrice ?? 0}",
               ),
-          }),
-          isLoading
-              ? Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration:
-                      BoxDecoration(color: AppColors.greyFill.withOpacity(0.2)),
-                  child: const CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                )
-              : const SizedBox.shrink()
-        ],
-      );
+            ),
+            const VerticalSpacing(223),
+            ValueListenableBuilder(
+                valueListenable: _isBuyExamEnabled,
+                builder: (context, r, c) {
+                  return AbakonSendButton(
+                    isEnabled: r,
+                    onTap: () {
+                      showModalBottomSheet<void>(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return PurchaseBottomSheetWidget(
+                              purchaseInfo:
+                                  'You are about to purchase an $_selectedProvider pin purchase of  of $totalPrice. Do you wish to continue?',
+                              onTap: () {
+                                Navigator.pop(context);
+                                showModalBottomSheet<void>(
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return ConfirmTransactionsWidget(
+                                        onTap: () {
+                                          if (_pinController.text != _userPin) {
+                                            context.showError(
+                                                message: 'Pin is incorrect');
+                                            return;
+                                          } else {
+                                            Navigator.pop(context);
+                                            _pinController.clear();
+                                            _buyExam();
+                                          }
+                                        },
+                                        pinController: _pinController,
+                                        isEnabled:
+                                            _pinController.text.isNotEmpty
+                                                ? true
+                                                : false,
+                                      );
+                                    });
+                              },
+                            );
+                          });
+                    },
+                    title: 'Continue',
+                  );
+                }),
+          ],
+        ),
     });
   }
 

@@ -14,7 +14,8 @@ class DataPlanDropDown extends StatefulWidget {
       required this.selectedPlanPrice,
       required this.selectedDataId,
       this.selectedNetwork,
-      this.selectedType, required this.onPlanPriceSelected});
+      this.selectedType,
+      required this.onPlanPriceSelected});
   final List<Plan> dataPlans;
 
   String? selectedPlan;
@@ -83,7 +84,7 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
               .toString();
           widget.selectedPlanPrice = widget.dataPlans
               .firstWhere((discount) => discount.name == newValue)
-              .price
+              .userprice
               .toString();
         });
         widget.onPlanSelected(newValue!);
@@ -93,8 +94,3 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
     );
   }
 }
-
-List plans = [
-  {"title": "Vtu"},
-  {"title": "Share and sell"},
-];

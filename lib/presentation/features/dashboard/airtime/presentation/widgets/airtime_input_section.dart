@@ -102,120 +102,100 @@ class _AirtimeInputSectionState extends ConsumerState<AirtimeInputSection> {
         .select((v) => v.getAllAirtimeServices.data?.data?.toSet().toList()));
     final loadState = ref.watch(
         getAllAirtimeServicesNotifierProvider.select((v) => v.loadState));
-    return Consumer(builder: (context, re, c) {
-      final isLoading = re.watch(
-        buyAirtimeNotifer.select((v) => v.buyAirtimeState.isLoading),
-      );
-      return Stack(
-        children: [
-          SizedBox(
-              child: switch (loadState) {
-            LoadState.loading => const Center(
-                  child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              )),
-            LoadState.error => const Center(child: Text('Error')),
-            _ => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AirtimeNetWorkDropDown(
-                    airtimePlans: airtimePlans ?? [],
-                    selectedNetwork: _selectedNetwork,
-                    onNetworkSelected: _onNetworkSelected,
-                    onNidSelected: _onNidSelected,
-                    selectedNid: int.tryParse(_selectedNid.toString()),
-                  ),
-                  const VerticalSpacing(16),
-                  AirtimeTypeDropDown(
-                    airtimePlans: airtimePlans ?? [],
-                    onTypeSelected: onTypeSelected,
-                    selectedType: _selectedType,
-                  ),
-                  const VerticalSpacing(16),
-                  AirtimeTextField(
-                    maxLength: 11,
-                    labelText: 'Phone number',
-                    controller: _phoneNumberController,
-                    onChanged: (value) => _updateNetworkProvider(),
-                  ),
-                  const VerticalSpacing(5),
-                  _phoneNumberController.text.isNotEmpty
-                      ? Text(
-                          'Network Provider: $_networkProvider',
-                          style: context.textTheme.s10w400.copyWith(
-                            color: AppColors.black,
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                  const VerticalSpacing(16),
-                  AirtimeTextField(
-                    labelText: 'Amount to pay',
-                    controller: _amountController,
-                  ),
-                  const VerticalSpacing(197),
-                  ValueListenableBuilder(
-                      valueListenable: _isBuyAirtimeEnabled,
-                      builder: (context, r, c) {
-                        return AbakonSendButton(
-                            isEnabled: r,
-                            onTap: () {
-                              showModalBottomSheet<void>(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (context) {
-                                    return PurchaseBottomSheetWidget(
-                                        purchaseInfo:
-                                            'You are about to purchase an $_selectedNetwork airtime of ${_amountController.text} for the phone number ${_phoneNumberController.text} Do you wish to continue?',
-                                        onTap: () {
-                                          Navigator.pop(context);
 
-                                          showModalBottomSheet<void>(
-                                              isScrollControlled: true,
-                                              context: context,
-                                              builder: (context) {
-                                                return ConfirmTransactionsWidget(
-                                                  onTap: () {
-                                                    if (_pinController.text !=
-                                                        _userPin) {
-                                                      context.showError(
-                                                          message:
-                                                              'Pin is incorrect');
-                                                      return;
-                                                    } else {
-                                                      Navigator.pop(context);
-                                                      _pinController.clear();
-                                                      _buyAirtime();
-                                                    }
-                                                  },
-                                                  pinController: _pinController,
-                                                  isEnabled: _pinController
-                                                          .text.isNotEmpty
-                                                      ? true
-                                                      : false,
-                                                );
-                                              });
+    return SizedBox(
+        child: switch (loadState) {
+      LoadState.loading => const Center(
+            child: CircularProgressIndicator(
+          color: AppColors.primaryColor,
+        )),
+      LoadState.error => const Center(child: Text('Error')),
+      _ => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AirtimeNetWorkDropDown(
+              airtimePlans: airtimePlans ?? [],
+              selectedNetwork: _selectedNetwork,
+              onNetworkSelected: _onNetworkSelected,
+              onNidSelected: _onNidSelected,
+              selectedNid: int.tryParse(_selectedNid.toString()),
+            ),
+            const VerticalSpacing(16),
+            AirtimeTypeDropDown(
+              airtimePlans: airtimePlans ?? [],
+              onTypeSelected: onTypeSelected,
+              selectedType: _selectedType,
+            ),
+            const VerticalSpacing(16),
+            AirtimeTextField(
+              maxLength: 11,
+              labelText: 'Phone number',
+              controller: _phoneNumberController,
+              onChanged: (value) => _updateNetworkProvider(),
+            ),
+            const VerticalSpacing(5),
+            _phoneNumberController.text.isNotEmpty
+                ? Text(
+                    'Network Provider: $_networkProvider',
+                    style: context.textTheme.s10w400.copyWith(
+                      color: AppColors.black,
+                    ),
+                  )
+                : const SizedBox.shrink(),
+            const VerticalSpacing(16),
+            AirtimeTextField(
+              labelText: 'Amount to pay',
+              controller: _amountController,
+            ),
+            const VerticalSpacing(197),
+            ValueListenableBuilder(
+                valueListenable: _isBuyAirtimeEnabled,
+                builder: (context, r, c) {
+                  return AbakonSendButton(
+                      isEnabled: r,
+                      onTap: () {
+                        showModalBottomSheet<void>(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) {
+                              return PurchaseBottomSheetWidget(
+                                  purchaseInfo:
+                                      'You are about to purchase an $_selectedNetwork airtime of ${_amountController.text} for the phone number ${_phoneNumberController.text} Do you wish to continue?',
+                                  onTap: () {
+                                    Navigator.pop(context);
+
+                                    showModalBottomSheet<void>(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return ConfirmTransactionsWidget(
+                                            onTap: () {
+                                              if (_pinController.text !=
+                                                  _userPin) {
+                                                context.showError(
+                                                    message:
+                                                        'Pin is incorrect');
+                                                return;
+                                              } else {
+                                                Navigator.pop(context);
+                                                _pinController.clear();
+                                                _buyAirtime();
+                                              }
+                                            },
+                                            pinController: _pinController,
+                                            isEnabled:
+                                                _pinController.text.isNotEmpty
+                                                    ? true
+                                                    : false,
+                                          );
                                         });
                                   });
-                            },
-                            title: 'Buy Airtime');
-                      })
-                ],
-              ),
-          }),
-          isLoading
-              ? Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration:
-                      BoxDecoration(color: AppColors.greyFill.withOpacity(0.2)),
-                  child: const CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                )
-              : const SizedBox.shrink()
-        ],
-      );
+                            });
+                      },
+                      title: 'Buy Airtime');
+                })
+          ],
+        ),
     });
   }
 

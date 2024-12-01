@@ -95,7 +95,6 @@ class _CableScreenInputSectionState
     });
   }
 
-
   void _onCablePlanSelected(String selectedCablePlan) {
     setState(() {
       _selectedCablePlan = selectedCablePlan;
@@ -127,13 +126,6 @@ class _CableScreenInputSectionState
     final loadState =
         ref.watch(getAllCableDataNotifierProvider.select((v) => v.loadState));
     return Consumer(builder: (context, re, c) {
-      final isVerifyLoading = re.watch(
-        verifyCableNotifer.select((v) => v.verifyCableState.isLoading),
-      );
-      final isBuyLoading = re.watch(
-        buyCableNotifer.select((v) => v.buyCableState.isLoading),
-      );
-
       return Stack(
         children: [
           SizedBox(
@@ -211,30 +203,6 @@ class _CableScreenInputSectionState
                 ],
               ),
           }),
-          isVerifyLoading
-              ? Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration:
-                      BoxDecoration(color: AppColors.greyFill.withOpacity(0.2)),
-                  child: const CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                )
-              : const SizedBox.shrink(),
-          isBuyLoading
-              ? Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration:
-                      BoxDecoration(color: AppColors.greyFill.withOpacity(0.2)),
-                  child: const CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                )
-              : const SizedBox.shrink(),
         ],
       );
     });

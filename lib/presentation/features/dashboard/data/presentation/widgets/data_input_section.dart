@@ -122,150 +122,128 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
 
     final loadState = ref
         .watch(getAllDataServicesNotifierProvider.select((v) => v.loadState));
-    return Consumer(
-      builder: (context, re, c) {
-        final isLoading = re.watch(
-          buyDataNotifer.select((v) => v.buyDataState.isLoading),
-        );
-        return Stack(
-          children: [
-            SizedBox(
-                child: switch (loadState) {
-              LoadState.loading => const Center(
-                    child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                )),
-              LoadState.error => const Center(child: Text('Error')),
-              _ => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DataNetWorkDropDown(
-                      dataPlans: dataPlans ?? [],
-                      selectedNetwork: _selectedNetwork,
-                      onNetworkSelected: _onNetworkSelected,
-                      onNidSelected: _onNidSelected,
-                      selectedNid: int.tryParse(_selectedNid.toString()),
-                    ),
-                    const VerticalSpacing(16),
-                    DataTypeDropDown(
-                      dataPlans: dataPlans ?? [],
-                      selectedType: _selectedType,
-                      ontypeSelected: _onTypeSelected,
-                    ),
-                    const VerticalSpacing(16),
-                    DataPlanDropDown(
-                      dataPlans: dataPlans ?? [],
-                      onPlanSelected: _onPlanSelected,
-                      selectedPlan: _selectedPlan,
-                      selectedNetwork: _selectedNetwork,
-                      selectedType: _selectedType,
-                      onDataIdSelected: _onDataIdSelected,
-                      selectedDataId: _selectedDataId,
-                      selectedPlanPrice: _selectedPlanPrice,
-                      onPlanPriceSelected: _onPlanPriceSelected,
-                      //int.tryParse(_selectedDataId.toString()),
-                    ),
-                    const VerticalSpacing(16),
-                    // DataTextField(
-                    //   enable: false,
-                    //   labelText:  'N ${ _selectedPlanPrice ?? 'Amount to pay' }' ,
-                    //   controller: _phoneNumberController,
-                    // ),
-                    Text(
-                      'Amount',
-                      style: context.textTheme.s10w400.copyWith(
-                        color: AppColors.black,
-                      ),
-                    ),
-                    const VerticalSpacing(5),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 13),
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppColors.greyF1F1F1),
-                      child: Text(
-                        'N $_selectedPlanPrice',
-                        style: context.textTheme.s14w500.copyWith(
-                          color: AppColors.black,
-                        ),
-                      ),
-                    ),
-                    const VerticalSpacing(16),
-                    DataTextField(
-                      labelText: 'Phone Number',
-                      controller: _phoneNumberController,
-                    ),
-                    const VerticalSpacing(150),
-                    ValueListenableBuilder(
-                        valueListenable: _isBuyDataEnabled,
-                        builder: (context, r, c) {
-                          return AbakonSendButton(
-                              isEnabled: r,
-                              onTap: () {
-                                showModalBottomSheet<void>(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (context) {
-                                    return PurchaseBottomSheetWidget(
-                                      onTap: () {
-                                        Navigator.pop(context);
 
-                                        showModalBottomSheet<void>(
-                                            isScrollControlled: true,
-                                            context: context,
-                                            builder: (context) {
-                                              return ConfirmTransactionsWidget(
-                                                onTap: () {
-                                                  if (_pinController.text !=
-                                                      _userPin) {
-                                                    context.showError(
-                                                        message:
-                                                            'Pin is incorrect');
-                                                    return;
-                                                  } else {
-                                                    Navigator.pop(context);
-                                                    _pinController.clear();
-                                                    _buyData();
-                                                  }
-                                                },
-                                                pinController: _pinController,
-                                                isEnabled: _pinController
-                                                        .text.isNotEmpty
-                                                    ? true
-                                                    : false,
-                                              );
-                                            });
-                                      },
-                                      purchaseInfo:
-                                          'You are about to purchase an $_selectedNetwork airtime of $_selectedPlan for the phone number "${_phoneNumberController.text}"Do you wish to continue?',
-                                    );
-                                  },
-                                );
-                              },
-                              title: 'Buy Data Bundle');
-                        })
-                  ],
+    return SizedBox(
+        child: switch (loadState) {
+      LoadState.loading => const Center(
+            child: CircularProgressIndicator(
+          color: AppColors.primaryColor,
+        )),
+      LoadState.error => const Center(child: Text('Error')),
+      _ => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DataNetWorkDropDown(
+              dataPlans: dataPlans ?? [],
+              selectedNetwork: _selectedNetwork,
+              onNetworkSelected: _onNetworkSelected,
+              onNidSelected: _onNidSelected,
+              selectedNid: int.tryParse(_selectedNid.toString()),
+            ),
+            const VerticalSpacing(16),
+            DataTypeDropDown(
+              dataPlans: dataPlans ?? [],
+              selectedType: _selectedType,
+              ontypeSelected: _onTypeSelected,
+            ),
+            const VerticalSpacing(16),
+            DataPlanDropDown(
+              dataPlans: dataPlans ?? [],
+              onPlanSelected: _onPlanSelected,
+              selectedPlan: _selectedPlan,
+              selectedNetwork: _selectedNetwork,
+              selectedType: _selectedType,
+              onDataIdSelected: _onDataIdSelected,
+              selectedDataId: _selectedDataId,
+              selectedPlanPrice: _selectedPlanPrice,
+              onPlanPriceSelected: _onPlanPriceSelected,
+              //int.tryParse(_selectedDataId.toString()),
+            ),
+            const VerticalSpacing(16),
+            // DataTextField(
+            //   enable: false,
+            //   labelText:  'N ${ _selectedPlanPrice ?? 'Amount to pay' }' ,
+            //   controller: _phoneNumberController,
+            // ),
+            Text(
+              'Amount',
+              style: context.textTheme.s10w400.copyWith(
+                color: AppColors.black,
+              ),
+            ),
+            const VerticalSpacing(5),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
+              height: 50,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: AppColors.greyF1F1F1),
+              child: Text(
+                'N ${_selectedPlanPrice ?? ''}',
+                style: context.textTheme.s14w500.copyWith(
+                  color: AppColors.black,
                 ),
-            }),
-            isLoading
-                ? Container(
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: AppColors.greyFill.withOpacity(0.2)),
-                    child: const CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  )
-                : const SizedBox.shrink()
+              ),
+            ),
+            const VerticalSpacing(16),
+            DataTextField(
+              labelText: 'Phone Number',
+              controller: _phoneNumberController,
+            ),
+            const VerticalSpacing(150),
+            ValueListenableBuilder(
+                valueListenable: _isBuyDataEnabled,
+                builder: (context, r, c) {
+                  return AbakonSendButton(
+                      isEnabled: r,
+                      onTap: () {
+                        showModalBottomSheet<void>(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return PurchaseBottomSheetWidget(
+                              onTap: () {
+                                Navigator.pop(context);
+    
+                                showModalBottomSheet<void>(
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return ConfirmTransactionsWidget(
+                                        onTap: () {
+                                          if (_pinController.text !=
+                                              _userPin) {
+                                            context.showError(
+                                                message:
+                                                    'Pin is incorrect');
+                                            return;
+                                          } else {
+                                            Navigator.pop(context);
+                                            _pinController.clear();
+                                            _buyData();
+                                          }
+                                        },
+                                        pinController: _pinController,
+                                        isEnabled:
+                                            _pinController.text.isNotEmpty
+                                                ? true
+                                                : false,
+                                      );
+                                    });
+                              },
+                              purchaseInfo:
+                                  'You are about to purchase an $_selectedNetwork airtime of $_selectedPlan for the phone number "${_phoneNumberController.text}"Do you wish to continue?',
+                            );
+                          },
+                        );
+                      },
+                      title: 'Buy Data Bundle');
+                })
           ],
-        );
-      },
-    );
+        ),
+    });
   }
 
   Future<dynamic> successAlertDialog(BuildContext context,
