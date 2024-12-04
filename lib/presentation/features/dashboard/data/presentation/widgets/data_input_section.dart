@@ -4,13 +4,13 @@ import 'package:abakon/core/theme/app_colors.dart';
 import 'package:abakon/core/utils/enums.dart';
 import 'package:abakon/data/local_data_source/local_storage_impl.dart';
 import 'package:abakon/presentation/features/dashboard/data/data/models/buy_data_request.dart';
+import 'package:abakon/presentation/features/dashboard/data/data/models/get_all_data_service_response.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/notifier/buy_data_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/notifier/get_all_data_services_notifier.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_network_dropdown_widget.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_plan_dropdown.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_text_field.dart';
 import 'package:abakon/presentation/features/dashboard/data/presentation/widgets/data_type_dropdown_widget.dart';
-import 'package:abakon/presentation/features/services/data/model/get_all_services_response.dart';
 import 'package:abakon/presentation/general_widgets/app_button.dart';
 import 'package:abakon/presentation/general_widgets/confirm_transactions_widget.dart';
 import 'package:abakon/presentation/general_widgets/purchase_bottom_sheet_widget.dart';
@@ -73,7 +73,19 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
     });
   }
 
-  List<DataPlan> filteredPlans = [];
+  List<Plan> filteredPlans = [];
+
+  void _onDataProviderSelected(
+      String selectedNetworkProvider, List<Plan> allPlans) {
+    setState(() {
+      _selectedNetwork = selectedNetworkProvider;
+      filteredPlans =
+          allPlans.where((plan) => plan.network == _selectedNetwork).toList();
+      _selectedPlan = null;
+      _selectedPlanPrice = null;
+    });
+  }
+
   void _onNetworkSelected(String selectedNetwork) {
     setState(() {
       _selectedNetwork = selectedNetwork; // This updates the selected network
@@ -136,7 +148,11 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
             DataNetWorkDropDown(
               dataPlans: dataPlans ?? [],
               selectedNetwork: _selectedNetwork,
-              onNetworkSelected: _onNetworkSelected,
+              onNetworkSelected: (selectedCableProvider) =>
+                  _onDataProviderSelected(
+                      selectedCableProvider, dataPlans ?? []),
+
+              //_onNetworkSelected,
               onNidSelected: _onNidSelected,
               selectedNid: int.tryParse(_selectedNid.toString()),
             ),
@@ -148,7 +164,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
             ),
             const VerticalSpacing(16),
             DataPlanDropDown(
-              dataPlans: dataPlans ?? [],
+              filteredPlans: filteredPlans,
               onPlanSelected: _onPlanSelected,
               selectedPlan: _selectedPlan,
               selectedNetwork: _selectedNetwork,
@@ -174,8 +190,7 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
             const VerticalSpacing(5),
             Container(
               width: MediaQuery.of(context).size.width,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
               height: 50,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -206,18 +221,16 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
                             return PurchaseBottomSheetWidget(
                               onTap: () {
                                 Navigator.pop(context);
-    
+
                                 showModalBottomSheet<void>(
                                     isScrollControlled: true,
                                     context: context,
                                     builder: (context) {
                                       return ConfirmTransactionsWidget(
                                         onTap: () {
-                                          if (_pinController.text !=
-                                              _userPin) {
+                                          if (_pinController.text != _userPin) {
                                             context.showError(
-                                                message:
-                                                    'Pin is incorrect');
+                                                message: 'Pin is incorrect');
                                             return;
                                           } else {
                                             Navigator.pop(context);

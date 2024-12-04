@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class DataPlanDropDown extends StatefulWidget {
   DataPlanDropDown(
       {super.key,
-      required this.dataPlans,
+      required this.filteredPlans,
       required this.onPlanSelected,
       required this.onDataIdSelected,
       required this.selectedPlan,
@@ -16,7 +16,7 @@ class DataPlanDropDown extends StatefulWidget {
       this.selectedNetwork,
       this.selectedType,
       required this.onPlanPriceSelected});
-  final List<Plan> dataPlans;
+  final List<Plan> filteredPlans;
 
   String? selectedPlan;
   String? selectedPlanPrice;
@@ -35,12 +35,12 @@ class DataPlanDropDown extends StatefulWidget {
 class _DataPlanDropDownState extends State<DataPlanDropDown> {
   @override
   Widget build(BuildContext context) {
-    final filteredPlans = widget.dataPlans
-        .where((plan) =>
-            plan.network == widget.selectedNetwork &&
-            plan.type == widget.selectedType)
-        .toList();
-    final plans = filteredPlans.map((plan) => plan.name).toSet();
+    // final filteredPlans = widget.filteredPlans
+    //     .where((plan) =>
+    //         plan.network == widget.selectedNetwork &&
+    //         plan.type == widget.selectedType)
+    //     .toList();
+    final plans = widget.filteredPlans.map((plan) => plan.name).toSet();
     return DropdownButtonFormField(
       value: widget.selectedPlan,
       elevation: 0,
@@ -78,11 +78,11 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
       onChanged: (String? newValue) {
         setState(() {
           widget.selectedPlan = newValue!;
-          widget.selectedDataId = widget.dataPlans
+          widget.selectedDataId = widget.filteredPlans
               .firstWhere((discount) => discount.name == newValue)
               .pId
               .toString();
-          widget.selectedPlanPrice = widget.dataPlans
+          widget.selectedPlanPrice = widget.filteredPlans
               .firstWhere((discount) => discount.name == newValue)
               .userprice
               .toString();
