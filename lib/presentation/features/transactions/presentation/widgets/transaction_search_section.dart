@@ -19,8 +19,6 @@ class TransactionSearchSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-
-      //padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         border: Border.all(
           color: AppColors.primaryBFBCBB,
