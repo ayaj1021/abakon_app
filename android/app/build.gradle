@@ -39,8 +39,13 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     defaultConfig {
@@ -49,7 +54,9 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 30
+        
+        //flutter.targetSdkVersion
         versionCode = 6
         versionName = flutterVersionName
     }
@@ -67,11 +74,15 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now,
             // so `flutter run --release` works.
-           // signingConfig = signingConfigs.debug
-            signingConfig = signingConfigs.release
+            signingConfig = signingConfigs.debug
+          //  signingConfig = signingConfigs.release
         }
     }
 }
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+}
+
 
 flutter {
     source = "../.."

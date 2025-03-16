@@ -1,29 +1,35 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+class ChangeTransactionPinRequest {
+  final String oldPin;
+  final String newPin;
+  final String confirmNewPin;
 
-part 'change_transaction_pin_request.g.dart';
-
-@JsonSerializable(createFactory: false)
-class ChangeTransactionPinRequest implements EquatableMixin {
-  const ChangeTransactionPinRequest({
+  ChangeTransactionPinRequest({
     required this.oldPin,
     required this.newPin,
     required this.confirmNewPin,
   });
 
-  final String oldPin;
+  ChangeTransactionPinRequest copyWith({
+    String? oldPin,
+    String? newPin,
+    String? confirmNewPin,
+  }) =>
+      ChangeTransactionPinRequest(
+        oldPin: oldPin ?? this.oldPin,
+        newPin: newPin ?? this.newPin,
+        confirmNewPin: confirmNewPin ?? this.confirmNewPin,
+      );
 
-  final String newPin;
+  factory ChangeTransactionPinRequest.fromJson(Map<String, dynamic> json) =>
+      ChangeTransactionPinRequest(
+        oldPin: json["old_pin"],
+        newPin: json["new_pin"],
+        confirmNewPin: json["confirm_new_pin"],
+      );
 
-  final String confirmNewPin;
-
-  Map<String, dynamic> toJson() => _$ChangeTransactionPinRequestToJson(this);
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  List<Object> get props => [oldPin, newPin, confirmNewPin];
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  bool? get stringify => true;
+  Map<String, dynamic> toJson() => {
+        "old_pin": oldPin,
+        "new_pin": newPin,
+        "confirm_new_pin": confirmNewPin,
+      };
 }

@@ -75,23 +75,26 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
 
   List<Plan> filteredPlans = [];
 
+  // void _onDataProviderSelected(
+  //     String selectedNetworkProvider, List<Plan> allPlans) {
+  //   setState(() {
+  //     _selectedNetwork = selectedNetworkProvider;
+  //     filteredPlans =
+  //         allPlans.where((plan) => plan.network == _selectedNetwork).toList();
+  //     _selectedPlan = null;
+  //     _selectedPlanPrice = null;
+  //   });
+  // }
+
   void _onDataProviderSelected(
       String selectedNetworkProvider, List<Plan> allPlans) {
     setState(() {
       _selectedNetwork = selectedNetworkProvider;
-      filteredPlans =
-          allPlans.where((plan) => plan.network == _selectedNetwork).toList();
-      _selectedPlan = null;
-      _selectedPlanPrice = null;
-    });
-  }
-
-  void _onNetworkSelected(String selectedNetwork) {
-    setState(() {
-      _selectedNetwork = selectedNetwork; // This updates the selected network
-      _selectedType = null; // Reset type and name when network changes
-      _selectedPlan = null;
-      _selectedPlanPrice = null;
+      _selectedType = null; // Reset type when network changes
+      _selectedPlan = null; // Reset plan when network changes
+      _selectedPlanPrice = null; // Reset price when network changes
+      _updateFilteredPlans(
+          allPlans); // Update filtered plans based on the new network
     });
   }
 
@@ -107,17 +110,29 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
     });
   }
 
-  void _onTypeSelected(String selectedNetwork) {
-    setState(() {
-      _selectedType = selectedNetwork;
+  // void _onTypeSelected(String selectedNetwork) {
+  //   setState(() {
+  //     _selectedType = selectedNetwork;
 
-      _selectedPlan = null;
+  //     _selectedPlan = null;
+  //     _selectedPlanPrice = null;
+  //   });
+  // }
+
+  void _onTypeSelected(String selectedType, List<Plan>? dataPlans) {
+    setState(() {
+      _selectedType = selectedType;
+      _selectedPlan = null; // Reset plan when type changes
+      _selectedPlanPrice = null; // Reset price when type changes
+      _updateFilteredPlans(
+          dataPlans ?? []); // Update filtered plans based on the new type
     });
   }
 
   void _onPlanSelected(String selectedNetwork) {
     setState(() {
       _selectedPlan = selectedNetwork;
+      _selectedPlanPrice = null;
     });
   }
 
@@ -125,6 +140,15 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
     setState(() {
       _selectedPlanPrice = selectedPlanPrice;
     });
+  }
+
+  void _updateFilteredPlans(List<Plan> allPlans) {
+    filteredPlans = allPlans.where((plan) {
+      final matchesNetwork =
+          _selectedNetwork == null || plan.network == _selectedNetwork;
+      final matchesType = _selectedType == null || plan.type == _selectedType;
+      return matchesNetwork && matchesType;
+    }).toList();
   }
 
   @override
@@ -160,9 +184,22 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
             DataTypeDropDown(
               dataPlans: dataPlans ?? [],
               selectedType: _selectedType,
-              ontypeSelected: _onTypeSelected,
+              ontypeSelected: (selectedType) =>
+                  _onTypeSelected(selectedType.toString(), dataPlans),
             ),
             const VerticalSpacing(16),
+            // DataPlanDropDown(
+            //   filteredPlans: filteredPlans,
+            //   onPlanSelected: _onPlanSelected,
+            //   selectedPlan: _selectedPlan,
+            //   selectedNetwork: _selectedNetwork,
+            //   selectedType: _selectedType,
+            //   onDataIdSelected: _onDataIdSelected,
+            //   selectedDataId: _selectedDataId,
+            //   selectedPlanPrice: _selectedPlanPrice,
+            //   onPlanPriceSelected: _onPlanPriceSelected,
+            // ),
+
             DataPlanDropDown(
               filteredPlans: filteredPlans,
               onPlanSelected: _onPlanSelected,
@@ -173,7 +210,6 @@ class _DataInputSectionState extends ConsumerState<DataInputSection> {
               selectedDataId: _selectedDataId,
               selectedPlanPrice: _selectedPlanPrice,
               onPlanPriceSelected: _onPlanPriceSelected,
-              //int.tryParse(_selectedDataId.toString()),
             ),
             const VerticalSpacing(16),
             // DataTextField(

@@ -67,18 +67,6 @@ class _DataNetWorkDropDownState extends State<DataNetWorkDropDown> {
               value: dataPlans.toString(),
               child: Row(
                 children: [
-                  // SizedBox(
-                  //   height: 32.h,
-                  //   width: 32.w,
-                  //   child:
-
-                  //   Image.asset(
-                  //     //logo
-                  //    // logo
-                  //     networkProvidersImage[2],
-                  //     // fit: BoxFit.cover,
-                  //   ),
-                  // ),
                   Text(dataPlans.toString(),
                       style: const TextStyle(color: Colors.black)),
                 ],
@@ -90,17 +78,3 @@ class _DataNetWorkDropDownState extends State<DataNetWorkDropDown> {
     );
   }
 }
-
-List cables = [
-  {"logo": "assets/logo/mtn.png", "title": "Mtn"},
-  {"logo": "assets/logo/airtel.png", "title": "Airtel"},
-  {"logo": "assets/logo/glo.png", "title": "Glo"},
-  {"logo": "assets/logo/9mobile.png", "title": "9mobile"},
-];
-
-List<String> networkProvidersImage = [
-  'assets/logo/mtn.png',
-  'assets/logo/glo.png',
-  'assets/logo/airtel.png',
-  'assets/logo/9mobile.png',
-];

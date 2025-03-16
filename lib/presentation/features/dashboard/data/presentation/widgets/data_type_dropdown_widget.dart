@@ -65,8 +65,3 @@ class _DataTypeDropDownState extends State<DataTypeDropDown> {
     );
   }
 }
-
-List planss = [
-  {"title": "Vtu"},
-  {"title": "Share and sell"},
-];

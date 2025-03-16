@@ -35,11 +35,6 @@ class DataPlanDropDown extends StatefulWidget {
 class _DataPlanDropDownState extends State<DataPlanDropDown> {
   @override
   Widget build(BuildContext context) {
-    // final filteredPlans = widget.filteredPlans
-    //     .where((plan) =>
-    //         plan.network == widget.selectedNetwork &&
-    //         plan.type == widget.selectedType)
-    //     .toList();
     final plans = widget.filteredPlans.map((plan) => plan.name).toSet();
     return DropdownButtonFormField(
       value: widget.selectedPlan,
@@ -76,20 +71,37 @@ class _DataPlanDropDownState extends State<DataPlanDropDown> {
         );
       }).toList(),
       onChanged: (String? newValue) {
-        setState(() {
-          widget.selectedPlan = newValue!;
-          widget.selectedDataId = widget.filteredPlans
-              .firstWhere((discount) => discount.name == newValue)
-              .pId
-              .toString();
-          widget.selectedPlanPrice = widget.filteredPlans
-              .firstWhere((discount) => discount.name == newValue)
-              .userprice
-              .toString();
-        });
-        widget.onPlanSelected(newValue!);
-        widget.onDataIdSelected(widget.selectedDataId.toString());
-        widget.onPlanPriceSelected(widget.selectedPlanPrice.toString());
+        // setState(() {
+        //   widget.selectedPlan = newValue!;
+        //   widget.selectedDataId = widget.filteredPlans
+        //       .firstWhere((discount) => discount.name == newValue)
+        //       .pId
+        //       .toString();
+        //   widget.selectedPlanPrice = widget.filteredPlans
+        //       .firstWhere((discount) => discount.name == widget.selectedDataId)
+        //       .userprice
+        //       .toString();
+        // });
+        // widget.onPlanSelected(newValue!);
+        // widget.onDataIdSelected(widget.selectedDataId.toString());
+        // widget.onPlanPriceSelected(widget.selectedPlanPrice.toString());
+
+        if (newValue != null) {
+          final selectedPlan = widget.filteredPlans.firstWhere(
+            (plan) => plan.name == newValue,
+            orElse: () => throw Exception('Plan not found'),
+          );
+
+          setState(() {
+            widget.selectedPlan = newValue;
+            widget.selectedDataId = selectedPlan.pId.toString();
+            widget.selectedPlanPrice = selectedPlan.userprice.toString();
+          });
+
+          widget.onPlanSelected(newValue);
+          widget.onDataIdSelected(widget.selectedDataId!);
+          widget.onPlanPriceSelected(widget.selectedPlanPrice!);
+        }
       },
     );
   }

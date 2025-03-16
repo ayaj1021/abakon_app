@@ -67,7 +67,7 @@ class ReferralNumberSection extends StatelessWidget {
                           onTap: () => copyToClipboard(
                               context: context,
                               message: 'Copied successfully',
-                              value: ''),
+                              value: referralLink),
                           title: 'Copy link',
                           buttonColor: AppColors.primaryColor,
                           textColor: AppColors.white,

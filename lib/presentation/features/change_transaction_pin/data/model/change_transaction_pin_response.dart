@@ -1,8 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'change_transaction_pin_response.g.dart';
-
-@JsonSerializable()
 class ChangeTransactionPinResponse {
   final bool? status;
   final String? msg;
@@ -12,8 +7,23 @@ class ChangeTransactionPinResponse {
     this.msg,
   });
 
-  factory ChangeTransactionPinResponse.fromJson(Map<String, dynamic> json) =>
-      _$ChangeTransactionPinResponseFromJson(json);
+  ChangeTransactionPinResponse copyWith({
+    bool? status,
+    String? msg,
+  }) =>
+      ChangeTransactionPinResponse(
+        status: status ?? this.status,
+        msg: msg ?? this.msg,
+      );
 
-  Map<String, dynamic> toJson() => _$ChangeTransactionPinResponseToJson(this);
+  factory ChangeTransactionPinResponse.fromJson(Map<String, dynamic> json) =>
+      ChangeTransactionPinResponse(
+        status: json["status"],
+        msg: json["msg"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "msg": msg,
+      };
 }
