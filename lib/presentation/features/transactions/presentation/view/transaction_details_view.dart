@@ -24,7 +24,7 @@ class TransactionDetailsView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric( horizontal: 20, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -64,13 +64,11 @@ class TransactionDetailsView extends StatelessWidget {
               //       child: AbakonSendButton(
               //         onTap: () {},
               //         title: 'Download',
-                    
+
               //       ),
               //     )
               //   ],
               // )
-           
-           
             ],
           ),
         ),

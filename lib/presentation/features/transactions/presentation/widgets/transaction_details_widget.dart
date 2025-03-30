@@ -25,12 +25,12 @@ class TransactionDetailsWidget extends StatelessWidget {
     return Stack(
       children: [
         SizedBox(
-          height: 408.h,
+          height: MediaQuery.of(context).size.height * 0.5,
           width: MediaQuery.of(context).size.width,
           child: Image.asset('assets/images/details_receipt_image.png'),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: Column(
             children: [
               status == 0
